@@ -1,0 +1,20 @@
+---
+title: Result
+description: The outcome of an operation, with a status icon in a tinted circle, a title, a subtitle and actions.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`feedback.Result` centers a status icon, a title and a subtitle, with actions below.
+
+## Basic Usage
+
+<GoDemo name="result/basic" title="Statuses" height={380} source={basic} />
+
+## API
+
+<GoApi data={api} name="ResultProps" />

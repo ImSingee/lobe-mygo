@@ -1,0 +1,25 @@
+---
+title: Spin
+description: A loading indicator, turning or as a network of pulsing nodes, alone or over dimmed content with a tip.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import content from './content.go?raw';
+
+`feedback.Spin` shows a turning loader in three sizes, a ring filled to `Percent`, or with `SpinNetwork` a network of pulsing nodes for work over a network. Given content, it dims it and shows the indicator and tip over it while `Spinning`.
+
+## Basic Usage
+
+<GoDemo name="spin/basic" title="Sizes, percent and network" height={190} source={basic} />
+
+## Over Content
+
+<GoDemo name="spin/content" title="Over content" height={240} source={content} />
+
+## API
+
+<GoApi data={api} name="SpinProps" />

@@ -238,3 +238,19 @@ func TestDataEntryBatchThreeDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestDatePickerDemos(t *testing.T) {
+	for _, demo := range []string{"date-picker/basic", "date-picker/calendar", "date-picker/disabled"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
+
+func TestFeedbackBatchTwoDemos(t *testing.T) {
+	for _, demo := range []string{"badge/basic", "badge/status", "progress/basic", "progress/variants", "spin/basic", "spin/content", "result/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}

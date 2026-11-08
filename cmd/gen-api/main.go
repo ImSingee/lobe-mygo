@@ -11,10 +11,10 @@ import (
 	"go/token"
 	"go/types"
 	"log"
-	"maps"
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"strings"
 	"unicode"
@@ -53,24 +53,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	pages := map[string]map[string]apiStruct{}
-	for name, s := range api {
-		if pages[s.Page] == nil {
-			pages[s.Page] = map[string]apiStruct{}
-		}
-		pages[s.Page][name] = s
-	}
-	merged := map[string]map[string]apiStruct{}
-	for page, structs := range pages {
-		dir, ok := pageDir(*out, page)
-		if !ok {
-			continue
-		}
-		if merged[dir] == nil {
-			merged[dir] = map[string]apiStruct{}
-		}
-		maps.Copy(merged[dir], structs)
-	}
+	merged := pagesOf(*out, api)
 	for dir, structs := range merged {
 		data, err := json.MarshalIndent(structs, "", "  ")
 		if err != nil {
@@ -81,6 +64,38 @@ func main() {
 		}
 	}
 }
+
+// pagesOf groups the structs by the catalog page directory each belongs to, and adds to a page
+// the structs its index.mdx names in a GoApi, as date-picker shows CalendarProps.
+func pagesOf(out string, api map[string]apiStruct) map[string]map[string]apiStruct {
+	merged := map[string]map[string]apiStruct{}
+	add := func(dir, name string, s apiStruct) {
+		if merged[dir] == nil {
+			merged[dir] = map[string]apiStruct{}
+		}
+		merged[dir][name] = s
+	}
+	for name, s := range api {
+		if dir, ok := pageDir(out, s.Page); ok {
+			add(dir, name, s)
+		}
+	}
+	pages, _ := filepath.Glob(filepath.Join(out, "*", "index.mdx"))
+	for _, mdx := range pages {
+		data, err := os.ReadFile(mdx)
+		if err != nil {
+			continue
+		}
+		for _, m := range goAPIName.FindAllSubmatch(data, -1) {
+			if s, ok := api[string(m[1])]; ok {
+				add(filepath.Dir(mdx), string(m[1]), s)
+			}
+		}
+	}
+	return merged
+}
+
+var goAPIName = regexp.MustCompile(`<GoApi[^>]*\bname="(\w+)"`)
 
 // pageDir finds the catalog page a struct's page name belongs to: the page itself, or the nearest
 // shorter one, as toast for ToastHostProps.

@@ -1,0 +1,27 @@
+---
+title: Badge
+description: A count or dot on the corner of an icon or avatar, or a status dot with text.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import status from './status.go?raw';
+
+`feedback.Badge` puts a count on the top right corner of what its content builds, "99+" past `OverflowCount`, or a dot. Without content it is a status dot beside its text.
+
+## Basic Usage
+
+<GoDemo name="badge/basic" title="Counts and dots" height={140} source={basic} />
+
+## Status
+
+`BadgeProcessing` pulses.
+
+<GoDemo name="badge/status" title="Status" height={200} source={status} />
+
+## API
+
+<GoApi data={api} name="BadgeProps" />

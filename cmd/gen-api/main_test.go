@@ -228,3 +228,23 @@ func TestPageDirFallsBackToTheNearestPage(t *testing.T) {
 		}
 	}
 }
+
+func TestReferencedStructsJoinThePageThatNamesThem(t *testing.T) {
+	out := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(out, "date-picker"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	mdx := "## API\n\n<GoApi data={api} name=\"DatePickerProps\" />\n\n<GoApi data={api} name=\"CalendarProps\" />\n"
+	if err := os.WriteFile(filepath.Join(out, "date-picker", "index.mdx"), []byte(mdx), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	api := map[string]apiStruct{
+		"DatePickerProps": {Page: "date-picker"},
+		"CalendarProps":   {Page: "calendar"},
+	}
+	got := pagesOf(out, api)
+	dir := filepath.Join(out, "date-picker")
+	if _, ok := got[dir]["CalendarProps"]; !ok {
+		t.Errorf("date-picker structs %v, want CalendarProps, which its index.mdx names", slices.Collect(maps.Keys(got[dir])))
+	}
+}

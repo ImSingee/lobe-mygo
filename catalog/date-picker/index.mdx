@@ -1,0 +1,36 @@
+---
+title: DatePicker
+description: A date field that opens a calendar with month and year views, a Today button, disabled dates and keyboard navigation.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import calendar from './calendar.go?raw';
+import disabled from './disabled.go?raw';
+
+`field.DatePicker` opens a `field.Calendar` below its trigger and closes once a day is chosen. The month and year in the header open views to choose them; the arrows, Page Up and Page Down move between days while a day has the focus, and Enter chooses one.
+
+## Basic Usage
+
+<GoDemo name="date-picker/basic" title="Formats, variants and sizes" height={500} source={basic} />
+
+## Calendar
+
+`field.Calendar` is the panel on its own.
+
+<GoDemo name="date-picker/calendar" title="Calendar" height={460} source={calendar} />
+
+## Disabled Dates
+
+`DisabledDate` keeps days from being chosen; `WeekStart` starts the weeks on another day.
+
+<GoDemo name="date-picker/disabled" title="Weekdays only, from Monday" height={500} source={disabled} />
+
+## API
+
+<GoApi data={api} name="DatePickerProps" />
+
+<GoApi data={api} name="CalendarProps" />

@@ -1,0 +1,25 @@
+---
+title: Progress
+description: A line or circle showing how far along a task is, with status colors, a moving shine, segments and an inset pill.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`feedback.Progress` takes a percent from 0 to 100; the fill grows to a new one over 300 ms. `ProgressSuccess` and `ProgressException` show a check and a cross instead of the percent.
+
+## Basic Usage
+
+<GoDemo name="progress/basic" title="Lines and circles" height={360} source={basic} />
+
+## Variants
+
+<GoDemo name="progress/variants" title="Segments and inset" height={160} source={variants} />
+
+## API
+
+<GoApi data={api} name="ProgressProps" />

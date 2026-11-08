@@ -126,6 +126,10 @@ func styleField(root ui.Element, tk *theme.Tokens, v InputVariant, invalid, focu
 }
 
 func fieldRow(c *ui.Context, tk *theme.Tokens, size theme.Size) ui.Element {
+	return styleFieldRow(ui.Row(c), tk, size)
+}
+
+func styleFieldRow(e ui.Element, tk *theme.Tokens, size theme.Size) ui.Element {
 	minHeight, fontSize, radius, padding := float32(32), float32(14), tk.BorderRadius, float32(12)
 	switch size {
 	case theme.Small:
@@ -133,6 +137,6 @@ func fieldRow(c *ui.Context, tk *theme.Tokens, size theme.Size) ui.Element {
 	case theme.Large:
 		minHeight, fontSize, radius = 40, 16, tk.BorderRadiusLG
 	}
-	return ui.Row(c).MinHeight(minHeight).PaddingX(padding).Radius(radius).AlignItems(ui.Center).
+	return e.MinHeight(minHeight).PaddingX(padding).Radius(radius).AlignItems(ui.Center).
 		FontSize(fontSize).TextColor(tk.Text).Cursor(ui.CursorText).Transition(fieldTransition)
 }
