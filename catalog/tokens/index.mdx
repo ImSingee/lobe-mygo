@@ -16,7 +16,10 @@ An app with its own brand makes a `theme.Config` from a light and a dark set of 
 ```go
 var brand = func() *theme.Config {
 	light, dark := *theme.Light(), *theme.Dark()
-	light.Primary, dark.Primary = ui.Hex("#0559ff"), ui.Hex("#1e61e6")
+	// Set the whole primary family: Lobe UI's dark PrimaryHover and
+	// PrimaryActive are near white, which a light label would vanish on.
+	light.Primary, light.PrimaryHover, light.PrimaryActive = ui.Hex("#0559ff"), ui.Hex("#044ee0"), ui.Hex("#0343c2")
+	dark.Primary, dark.PrimaryHover, dark.PrimaryActive = ui.Hex("#1e61e6"), ui.Hex("#1c5ad6"), ui.Hex("#174bb3")
 	light.PrimaryForeground, dark.PrimaryForeground = light.TextLightSolid, dark.TextLightSolid
 	return theme.NewConfig(light, dark)
 }()
@@ -27,7 +30,7 @@ func view(c *ui.Context) {
 }
 ```
 
-`PrimaryForeground` is the text and glyphs on a solid `Primary` surface: primary buttons, checked boxes and radios, toast actions. Lobe UI uses the layout background there; a saturated brand primary takes `TextLightSolid` instead, as a web app does when it gives its primary buttons a light label.
+`PrimaryForeground` is the text and glyphs on a solid `Primary` surface: primary buttons, checked boxes and radios, the current step, toast actions. Lobe UI uses the layout background there; a saturated brand primary takes `TextLightSolid` instead, as a web app does when it gives its primary buttons a light label.
 
 ## Semantic Colors
 

@@ -8,7 +8,8 @@ import (
 
 func brand() *Config {
 	light, dark := *Light(), *Dark()
-	light.Primary, dark.Primary = ui.Hex("#0559ff"), ui.Hex("#1e61e6")
+	light.Primary, light.PrimaryHover, light.PrimaryActive = ui.Hex("#0559ff"), ui.Hex("#044ee0"), ui.Hex("#0343c2")
+	dark.Primary, dark.PrimaryHover, dark.PrimaryActive = ui.Hex("#1e61e6"), ui.Hex("#1c5ad6"), ui.Hex("#174bb3")
 	light.PrimaryForeground, dark.PrimaryForeground = light.TextLightSolid, dark.TextLightSolid
 	return NewConfig(light, dark)
 }
