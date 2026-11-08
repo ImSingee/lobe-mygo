@@ -30,17 +30,26 @@ var closeTransition = ui.ElementTransition{Duration: 160 * time.Millisecond, Eas
 // leaves *open to the caller, which closes it once the action succeeds.
 func Modal(c *ui.Context, open *bool, p ModalProps, content func()) bool {
 	tk := theme.TokensOf(c)
-	ok := false
-	ui.DialogBase(c, open, func(backdrop, panel ui.Element) {
-		backdrop.Padding(32, 16).Background(tk.BgContainer.Alpha(0.6)).Transition(motion.Backdrop())
+	st := ui.Local(ui.Box(c).Absolute().Size(0, 0), "modal", func() modalState { return modalState{} })
+	if *open {
+		st.shown, st.closing = true, false
+	} else if st.shown {
+		st.closing = true
+	}
+	if !st.shown {
+		return false
+	}
+	ok, gone := false, false
+	ui.DialogBase(c, &st.shown, func(backdrop, panel ui.Element) {
+		backdrop.Padding(32, 16)
 		width := p.Width
 		if width == 0 {
 			width = 520
 		}
 		panel.Width(width).MaxWidthPercent(100).MaxHeightPercent(100).Radius(12).Clip().
 			Background(tk.BgElevated).TextColor(tk.Text).FontSize(tk.FontSize)
-		scaleIn(c, panel)
 		tk.Elevate(panel, theme.BoxShadow)
+		gone = animateModal(tk, backdrop, panel, st)
 		panel.Children(func() {
 			if p.Title != "" {
 				ui.Row(c).MinHeight(48).Padding(8, 56, 8, 16).Children(func() {
@@ -70,20 +79,42 @@ func Modal(c *ui.Context, open *bool, p ModalProps, content func()) bool {
 			}
 		})
 	})
+	switch {
+	case !st.shown:
+		*open, st.shown, st.closing = false, true, true
+		c.Invalidate()
+	case gone:
+		*st = modalState{}
+		c.Invalidate()
+	}
 	return ok
 }
 
-// The panel is built inside the backdrop, which appears in the same frame, so its Transition's
-// Enter would never play: it scales in with a pose instead, and leaves inside the backdrop's exit.
-func scaleIn(c *ui.Context, panel ui.Element) {
-	tr := motion.Modal()
-	entered := ui.Local(panel, "entered", func() bool { return false })
-	pose := ui.Pose{}
-	if !*entered {
-		pose, *entered = ui.Pose{Scale: tr.Enter.Scale}, true
-		c.Invalidate()
+// DialogBase stops building the dialog the frame it closes, and builds the panel inside the
+// backdrop, which appears in the same frame, so neither the panel's Enter nor its Exit would play:
+// the modal keeps the dialog built while it leaves and animates values it jumps to their start,
+// which hold across the two builds of a frame a click makes, where a first pose would not. The
+// backdrop animates its color, not its opacity, which the panel inside it would take too.
+type modalState struct{ shown, closing, entered bool }
+
+func animateModal(tk *theme.Tokens, backdrop, panel ui.Element, st *modalState) (gone bool) {
+	m, b := motion.Modal(), motion.Backdrop()
+	if !st.entered {
+		st.entered = true
+		panel.Jump("shown", 0)
+		backdrop.Jump("dim", 0)
 	}
-	panel.AnimatePose(pose, ui.Animation{Duration: tr.Duration, Ease: tr.Ease})
+	target, from, anim := float32(1), m.Enter.Scale, ui.Animation{Duration: m.Duration, Ease: m.Ease}
+	if st.closing {
+		target, from, anim = 0, m.Exit.Scale, ui.Animation{Duration: m.ExitDuration, Ease: m.ExitEase}
+		backdrop.IgnoreInput(true)
+	}
+	shown := panel.AnimateTo("shown", target, anim)
+	dim := backdrop.AnimateTo("dim", target, ui.Animation{Duration: b.Duration, Ease: b.Ease})
+	scale := from + (1-from)*shown
+	panel.Scale(scale, scale).Opacity(shown)
+	backdrop.Background(tk.BgContainer.Alpha(0.6 * dim))
+	return st.closing && shown <= 0 && dim <= 0
 }
 
 func closeButton(c *ui.Context, tk *theme.Tokens) ui.Element {

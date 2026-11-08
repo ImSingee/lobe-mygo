@@ -17,9 +17,11 @@ func modalTester(open *bool, p ModalProps, oks *int) *ui.Tester {
 	}), 800, 600)
 }
 
-// The panel's pose runs in frames that only paint, and Find reads the boxes of the last build, so a
-// frame is built once the pose has settled.
+// A change made outside the view needs a frame before Advance has any due. The panel's pose runs in
+// frames that only paint, and Find reads the boxes of the last build, so a frame is built once the
+// pose has settled too.
 func settle(tt *ui.Tester) {
+	tt.Frame()
 	tt.Advance(time.Second)
 	tt.Frame()
 }
@@ -160,5 +162,92 @@ func TestModalPanelScalesInFromTheCenter(t *testing.T) {
 		if end := leftInk(tt, 800, title); end != rest {
 			t.Errorf("%s open: title ink settles at %v, want %v", pass, end, rest)
 		}
+	}
+}
+
+func TestModalStaysBuiltWhileItAnimatesOut(t *testing.T) {
+	open, oks := true, 0
+	tt := modalTester(&open, ModalProps{Title: "Delete files"}, &oks)
+	settle(tt)
+	title, _ := tt.Find("Delete files")
+	rest, restInk := leftInk(tt, 800, title), darkest(tt, 800, title)
+	tt.Key(0, ui.KeyEscape)
+	tt.Frame()
+	if open {
+		t.Fatal("Escape did not report the modal closed")
+	}
+	tt.Advance(90 * time.Millisecond)
+	if !tt.HasText("Delete files") {
+		t.Fatal("dialog gone 90 ms into its exit, want it still built")
+	}
+	if x := leftInk(tt, 800, title); x-rest < 1 {
+		t.Errorf("title ink at %v 90 ms into the exit, rest %v: want the panel shrinking toward its center", x, rest)
+	}
+	if ink := darkest(tt, 800, title); ink <= restInk+30 {
+		t.Errorf("title ink %d 90 ms into the exit, rest %d: want it fading", ink, restInk)
+	}
+	tt.Advance(time.Second)
+	tt.Frame()
+	if tt.HasText("Delete files") {
+		t.Error("dialog still built after its exit")
+	}
+}
+
+func TestModalReopenedWhileClosingSettlesOpen(t *testing.T) {
+	open, oks := true, 0
+	tt := modalTester(&open, ModalProps{Title: "Delete files"}, &oks)
+	settle(tt)
+	title, _ := tt.Find("Delete files")
+	rest := leftInk(tt, 800, title)
+	tt.Key(0, ui.KeyEscape)
+	tt.Advance(50 * time.Millisecond)
+	open = true
+	settle(tt)
+	if !tt.HasText("Delete files") || leftInk(tt, 800, title) != rest {
+		t.Errorf("reopened mid-exit: shown %v, ink %v, want shown at rest %v", tt.HasText("Delete files"), leftInk(tt, 800, title), rest)
+	}
+}
+
+func TestModalHostTakesNoRoom(t *testing.T) {
+	open := false
+	tt := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		ui.Column(c).Gap(20).Children(func() {
+			ui.Text(c, "above")
+			Modal(c, &open, ModalProps{}, func() {})
+			ui.Text(c, "below")
+		})
+	}, 300, 200)
+	a, _ := tt.Find("above")
+	b, _ := tt.Find("below")
+	if gap := b.Y - (a.Y + a.H); gap != 20 {
+		t.Errorf("gap between siblings around a closed modal = %v, want 20", gap)
+	}
+}
+
+func TestModalOpenedByAClickScalesIn(t *testing.T) {
+	open, oks := false, 0
+	tt := ui.NewTester(testkit.Centered(func(c *ui.Context) {
+		if ui.ButtonBase(c).Size(120, 32).Label("Open").Clicked() {
+			open = true
+		}
+		if Modal(c, &open, ModalProps{Title: "Delete files"}, func() { ui.Text(c, "Delete 3 files?") }) {
+			oks++
+		}
+	}), 800, 600)
+	open = true
+	settle(tt)
+	title, _ := tt.Find("Delete files")
+	rest := leftInk(tt, 800, title)
+	open = false
+	settle(tt)
+	info, ok := tt.AccessByRole(ui.RoleButton, "Open")
+	if !ok {
+		t.Fatal("no Open button")
+	}
+	tt.ClickAt(info.Bounds.X+info.Bounds.W/2, info.Bounds.Y+info.Bounds.H/2)
+	tt.Advance(30 * time.Millisecond)
+	if start := leftInk(tt, 800, title); start-rest < 3 {
+		t.Errorf("title ink at x %v 30 ms after the click, rest %v: want the panel scaled toward its center", start, rest)
 	}
 }
