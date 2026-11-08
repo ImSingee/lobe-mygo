@@ -14,8 +14,8 @@ var (
 )
 
 var fileItems = []overlay.MenuItem{
-	{Key: "rename", Label: "Rename", Icon: lucide.Pencil(), Extra: "F2"},
-	{Key: "duplicate", Label: "Duplicate", Icon: lucide.Copy(), Extra: "⌘D"},
+	{Key: "rename", Label: "Rename", Icon: lucide.Pencil(), Hotkey: "f2"},
+	{Key: "duplicate", Label: "Duplicate", Icon: lucide.Copy(), Hotkey: "mod+d"},
 	{Key: "share", Label: "Share", Icon: lucide.Share2(), Disabled: true},
 	{Divider: true},
 	{Key: "archive", Label: "Archive", Icon: lucide.Archive()},

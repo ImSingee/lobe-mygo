@@ -1,0 +1,27 @@
+---
+title: Steps
+description: The steps of a process as numbered circles or dots, linked by connectors that turn primary after the finished steps.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import vertical from './vertical.go?raw';
+
+`nav.Steps` finishes the steps before `Current`, puts `Current` in process and leaves the rest waiting; an item's `Status` overrides that, as `StepError` does.
+
+## Basic Usage
+
+<GoDemo name="steps/basic" title="Numbered and dot steps" height={220} source={basic} />
+
+## Vertical
+
+<GoDemo name="steps/vertical" title="Vertical steps" height={260} source={vertical} />
+
+## API
+
+<GoApi data={api} name="StepsProps" />
+
+<GoApi data={api} name="StepItem" />

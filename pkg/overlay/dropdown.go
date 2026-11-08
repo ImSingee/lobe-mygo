@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/lobehub/lobe-mygo/pkg/display"
 	"github.com/lobehub/lobe-mygo/pkg/motion"
 	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
@@ -15,7 +16,10 @@ type MenuItem struct {
 	Label string
 	// Icon shows before the label.
 	Icon *ui.SVG
-	// Extra shows at the end of the row, as a shortcut.
+	// Hotkey shows a key combination in a key cap at the end of the row, written as display.Hotkey
+	// takes it, as "mod+d"; it does not bind the keys.
+	Hotkey string
+	// Extra shows text at the end of the row, after the label.
 	Extra string
 	// Danger colors the item with the error color.
 	Danger bool
@@ -45,17 +49,7 @@ func DropdownMenu(c *ui.Context, open *bool, p DropdownMenuProps, trigger func(t
 		panel.Margin(6, 0, 0, 0).Padding(4).Radius(tk.BorderRadius).MinWidth(220).
 			Background(tk.BgElevated).Transition(motion.Popup()).AttachedOrigin()
 		tk.Elevate(panel, theme.BoxShadowSecondary)
-		panel.Children(func() {
-			for i, it := range p.Items {
-				if it.Divider {
-					ui.Box(c.Key(i)).Height(1).Margin(4, 0).AlignSelf(ui.Stretch).Background(tk.Border)
-					continue
-				}
-				if menuItem(c, tk, m, it).Clicked() && !it.Disabled {
-					chosen = it.Key
-				}
-			}
-		})
+		panel.Children(func() { menuRows(c, tk, m, p.Items, &chosen) })
 	})
 	return chosen
 }
@@ -89,7 +83,41 @@ func menuItem(c *ui.Context, tk *theme.Tokens, m ui.MenuParts, it MenuItem) ui.E
 			if it.Extra != "" {
 				ui.Text(c, it.Extra).Font("monospace").FontSize(12).TextColor(tk.TextTertiary).Padding(0, 0, 0, 16).SingleLine()
 			}
+			if it.Hotkey != "" {
+				// The cap sits 5 DIPs from the row's top, bottom and end alike, so its glyphs line up
+				// with the icon's 12 DIP inset; the negative margins keep it from growing the 32 DIP row.
+				display.Hotkey(c, it.Hotkey, display.HotkeyProps{Compact: true}).Margin(-2, -7, -2, 16)
+			}
 		})
 	})
 	return item
+}
+
+// ContextMenu gives target a menu of p.Items that opens where target is clicked with the secondary
+// button, or Control-clicked on macOS, and below it on the menu key or Shift+F10 while it has the
+// focus. It returns the Key of the item chosen in the frame, which closes the menu, or "".
+func ContextMenu(c *ui.Context, target ui.Element, p DropdownMenuProps) string {
+	tk := theme.TokensOf(c)
+	open := ui.Local(target, "contextMenu", func() bool { return false })
+	m := ui.ContextMenuBase(c, target, open)
+	chosen := ""
+	m.Popup(func(panel ui.Element) {
+		panel.Padding(4).Radius(tk.BorderRadius).MinWidth(220).
+			Background(tk.BgElevated).Transition(motion.Popup()).AttachedOrigin()
+		tk.Elevate(panel, theme.BoxShadowSecondary)
+		panel.Children(func() { menuRows(c, tk, m, p.Items, &chosen) })
+	})
+	return chosen
+}
+
+func menuRows(c *ui.Context, tk *theme.Tokens, m ui.MenuParts, items []MenuItem, chosen *string) {
+	for i, it := range items {
+		if it.Divider {
+			ui.Box(c.Key(i)).Height(1).Margin(4, 0).AlignSelf(ui.Stretch).Background(tk.Border)
+			continue
+		}
+		if menuItem(c, tk, m, it).Clicked() && !it.Disabled {
+			*chosen = it.Key
+		}
+	}
 }

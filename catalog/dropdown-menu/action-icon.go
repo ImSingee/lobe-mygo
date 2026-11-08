@@ -11,7 +11,7 @@ var moreOpen bool
 
 var moreItems = []overlay.MenuItem{
 	{Key: "copy-link", Label: "Copy link", Icon: lucide.Link()},
-	{Key: "search", Label: "Find in page", Icon: lucide.Search(), Extra: "⌘F"},
+	{Key: "search", Label: "Find in page", Icon: lucide.Search(), Hotkey: "mod+f"},
 }
 
 func ActionIconTrigger(c *ui.Context) {

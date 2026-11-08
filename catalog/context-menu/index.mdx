@@ -1,0 +1,22 @@
+---
+title: ContextMenu
+description: A menu in the Lobe UI look that opens where an element is right-clicked, with the same items as DropdownMenu.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`overlay.ContextMenu` opens at the pointer when its target is clicked with the secondary button, or Control-clicked on macOS, and below the target on the menu key or Shift+F10 while it has the focus.
+
+## Basic Usage
+
+<GoDemo name="context-menu/basic" title="Right-click menu" height={260} source={basic} />
+
+## API
+
+<GoApi data={api} name="DropdownMenuProps" />
+
+<GoApi data={api} name="MenuItem" />

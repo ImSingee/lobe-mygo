@@ -1,0 +1,25 @@
+---
+title: Pagination
+description: A pager in the Lobe UI look with previous and next buttons, the pages around the current one, and ellipses that jump several pages.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import options from './options.go?raw';
+
+`nav.Pagination` keeps the 1-based current page in `*current`, clamped to the pages `Total` and `PageSize` give. Under the pointer an ellipsis turns into a double chevron that jumps 5 pages, or 3 with `ShowLessItems`.
+
+## Basic Usage
+
+<GoDemo name="pagination/basic" title="Few and many pages" height={140} source={basic} />
+
+## Options
+
+<GoDemo name="pagination/options" title="Total, fewer items, small and disabled" height={240} source={options} />
+
+## API
+
+<GoApi data={api} name="PaginationProps" />

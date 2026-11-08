@@ -1,0 +1,32 @@
+---
+title: Tabs
+description: Tabs in the Lobe UI look with an indicator that slides to the chosen tab, in rounded, square and point variants.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+import vertical from './vertical.go?raw';
+
+`nav.Tabs` keeps the chosen index in `*selected` and builds the chosen tab's panel with the function it is given. The arrows, Home and End move between tabs that have the focus, past the disabled ones.
+
+## Basic Usage
+
+<GoDemo name="tabs/basic" title="Tabs with panels" height={180} source={basic} />
+
+## Variants
+
+<GoDemo name="tabs/variants" title="Sizes, square and point" height={300} source={variants} />
+
+## Vertical
+
+<GoDemo name="tabs/vertical" title="Vertical tabs" height={200} source={vertical} />
+
+## API
+
+<GoApi data={api} name="TabsProps" />
+
+<GoApi data={api} name="TabItem" />

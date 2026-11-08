@@ -254,3 +254,11 @@ func TestFeedbackBatchTwoDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestNavigationDemos(t *testing.T) {
+	for _, demo := range []string{"tabs/basic", "tabs/variants", "tabs/vertical", "pagination/basic", "pagination/options", "breadcrumb/basic", "steps/basic", "steps/vertical", "context-menu/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}

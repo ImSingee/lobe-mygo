@@ -10,8 +10,8 @@ import (
 )
 
 var menuItems = []MenuItem{
-	{Key: "rename", Label: "Rename", Extra: "F2"},
-	{Key: "duplicate", Label: "Duplicate"},
+	{Key: "rename", Label: "Rename", Hotkey: "f2"},
+	{Key: "duplicate", Label: "Duplicate", Extra: "x2"},
 	{Key: "share", Label: "Share", Disabled: true},
 	{Divider: true},
 	{Key: "delete", Label: "Delete", Danger: true},
@@ -59,10 +59,19 @@ func TestDropdownMenuOpensBelowTriggerAndReturnsTheChoice(t *testing.T) {
 	if first.Y < trigger.Y+trigger.H+6 {
 		t.Errorf("first item at %+v, want below the trigger %+v past the gap", first, trigger)
 	}
-	extra, ok := tt.Find("F2")
+	tk := theme.Light()
 	rowEnd := first.X + 220 - 2*(4+12)
-	if !ok || extra.X < first.X+first.W-0.5 || extra.X+extra.W < rowEnd-0.5 || extra.X+extra.W > rowEnd+0.5 {
-		t.Errorf("extra at %+v (shown %v), want flush with the row end %v after %+v", extra, ok, rowEnd, first)
+	key, ok := tt.Find("F2")
+	if capEnd := key.X + key.W + 8; !ok || capEnd < rowEnd+7-0.5 || capEnd > rowEnd+7+0.5 {
+		t.Errorf("hotkey F2 at %+v (shown %v), want its cap 5 DIPs from the row edge, as far as above and below it", key, ok)
+	}
+	if got := testkit.PixelAt(tt, 400, key.X-4, key.Y+key.H/2); !testkit.Near(got, testkit.Over(tk.BgElevated, tk.FillTertiary)) {
+		t.Errorf("behind the hotkey %+v, want a filled key cap", got)
+	}
+	dup, _ := tt.Find("Duplicate")
+	extra, ok := tt.Find("x2")
+	if !ok || extra.X+extra.W < rowEnd-0.5 || extra.X+extra.W > rowEnd+0.5 {
+		t.Errorf("extra at %+v (shown %v), want flush with the row end %v after %+v", extra, ok, rowEnd, dup)
 	}
 	clickText(t, tt, "Duplicate")
 	if len(chosen) != 1 || chosen[0] != "duplicate" {

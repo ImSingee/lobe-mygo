@@ -1,0 +1,22 @@
+---
+title: Breadcrumb
+description: The path to the current page, with each earlier item a button and the current page last in text color.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`nav.Breadcrumb` makes an item a button when it has `OnClick`, except the last one, which is the current page.
+
+## Basic Usage
+
+<GoDemo name="breadcrumb/basic" title="Chevron and text separators" height={160} source={basic} />
+
+## API
+
+<GoApi data={api} name="BreadcrumbProps" />
+
+<GoApi data={api} name="BreadcrumbItem" />
