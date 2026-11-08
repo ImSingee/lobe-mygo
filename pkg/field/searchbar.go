@@ -31,13 +31,6 @@ type SearchBarProps struct {
 // and an optional window-wide shortcut that focuses it. It returns the text input.
 func SearchBar(c *ui.Context, query *string, p SearchBarProps) ui.Element {
 	tk := theme.TokensOf(c)
-	minHeight, fontSize, radius, padding := float32(32), float32(14), tk.BorderRadius, float32(12)
-	switch p.Size {
-	case theme.Small:
-		minHeight, fontSize, radius, padding = 24, 12, tk.BorderRadiusSM, 8
-	case theme.Large:
-		minHeight, fontSize, radius = 40, 16, tk.BorderRadiusLG
-	}
 	focusNow := false
 	if p.ShortKey != "" {
 		if mods, key, ok := display.HotkeyBinding(p.ShortKey, p.Platform); ok && c.Shortcut(mods, key) {
@@ -49,8 +42,7 @@ func SearchBar(c *ui.Context, query *string, p SearchBarProps) ui.Element {
 		placeholder = "Type keywords..."
 	}
 
-	root := ui.Row(c).MinHeight(minHeight).PaddingX(padding).Gap(4).Radius(radius).AlignItems(ui.Center).
-		FontSize(fontSize).TextColor(tk.Text).Cursor(ui.CursorText).Transition(fieldTransition)
+	root := fieldRow(c, tk, p.Size).Gap(4)
 	var input ui.Element
 	root.Children(func() {
 		icon := ui.Icon(c, lucide.Search()).TextColor(tk.TextPlaceholder).Shrink(0)

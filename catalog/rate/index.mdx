@@ -1,0 +1,27 @@
+---
+title: Rate
+description: A star rating in the Lobe UI look, with half stars, a hover preview, custom characters and keyboard control.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import half from './half.go?raw';
+
+`choice.Rate` sets a rating by clicking a star; the pointer previews the rating it would set, and the arrows, Home and End move it while it has the focus.
+
+## Basic Usage
+
+<GoDemo name="rate/basic" title="Stars, hearts and read only" height={180} source={basic} />
+
+## Half Stars
+
+`AllowHalf` lets a click on the left half of a star choose half of it.
+
+<GoDemo name="rate/half" title="Half stars" height={120} source={half} />
+
+## API
+
+<GoApi data={api} name="RateProps" />

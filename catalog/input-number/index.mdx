@@ -1,0 +1,20 @@
+---
+title: InputNumber
+description: A number field in the Input look, with step arrows at the end, bounds, a step and a fixed precision.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`field.InputNumber` edits a float. Typed text takes effect on Enter or when the field loses the focus, clamped to `Min` and `Max`; the arrows at the end, Up and Down step it.
+
+## Basic Usage
+
+<GoDemo name="input-number/basic" title="Bounds, step and precision" height={200} source={basic} />
+
+## API
+
+<GoApi data={api} name="InputNumberProps" />

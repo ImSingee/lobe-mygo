@@ -49,16 +49,7 @@ var fieldTransition = ui.ElementTransition{Duration: 150 * time.Millisecond, Eas
 
 func Input(c *ui.Context, value *string, p InputProps) ui.Element {
 	tk := theme.TokensOf(c)
-	minHeight, fontSize, radius, padding := float32(32), float32(14), tk.BorderRadius, float32(12)
-	switch p.Size {
-	case theme.Small:
-		minHeight, fontSize, radius, padding = 24, 12, tk.BorderRadiusSM, 8
-	case theme.Large:
-		minHeight, fontSize, radius = 40, 16, tk.BorderRadiusLG
-	}
-
-	root := ui.Row(c).MinHeight(minHeight).PaddingX(padding).Gap(8).Radius(radius).
-		FontSize(fontSize).TextColor(tk.Text).Cursor(ui.CursorText).Transition(fieldTransition)
+	root := fieldRow(c, tk, p.Size).Gap(8)
 	var input ui.Element
 	root.Children(func() {
 		affix(c, tk, p.Prefix)
@@ -132,4 +123,16 @@ func styleField(root ui.Element, tk *theme.Tokens, v InputVariant, invalid, focu
 	case focused && v == InputOutlined:
 		root.Shadow(0, 0, 0, 2, tk.PrimaryBg)
 	}
+}
+
+func fieldRow(c *ui.Context, tk *theme.Tokens, size theme.Size) ui.Element {
+	minHeight, fontSize, radius, padding := float32(32), float32(14), tk.BorderRadius, float32(12)
+	switch size {
+	case theme.Small:
+		minHeight, fontSize, radius, padding = 24, 12, tk.BorderRadiusSM, 8
+	case theme.Large:
+		minHeight, fontSize, radius = 40, 16, tk.BorderRadiusLG
+	}
+	return ui.Row(c).MinHeight(minHeight).PaddingX(padding).Radius(radius).AlignItems(ui.Center).
+		FontSize(fontSize).TextColor(tk.Text).Cursor(ui.CursorText).Transition(fieldTransition)
 }

@@ -206,3 +206,27 @@ func TestDataEntryDemos(t *testing.T) {
 		t.Errorf("select/basic: options not shown; texts %q", tt.Texts())
 	}
 }
+
+func TestDataEntryBatchTwoDemos(t *testing.T) {
+	for _, demo := range []string{
+		"input-number/basic", "input-password/basic", "rate/basic", "rate/half", "copy-button/basic", "editable-text/basic",
+	} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+	view, ok := registry.Get("editable-text/basic")
+	if !ok {
+		return
+	}
+	tt := ui.NewTester(func(ctx *ui.Context) { preview(ctx, view) }, 720, 400)
+	info, ok := tt.AccessByRole(ui.RoleButton, "Edit")
+	if !ok {
+		t.Fatalf("editable-text/basic: no Edit button; texts %q", tt.Texts())
+	}
+	tt.ClickAt(info.Bounds.X+info.Bounds.W/2, info.Bounds.Y+info.Bounds.H/2)
+	tt.Frame()
+	if _, ok := tt.AccessByRole(ui.RoleTextField, ""); !ok {
+		t.Error("editable-text/basic: no field after clicking Edit")
+	}
+}
