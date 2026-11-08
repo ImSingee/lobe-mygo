@@ -159,7 +159,32 @@ React-only props (`className`, `classNames`, `styles`, `ref`, `as`, controlled/`
 - [ ] **P2** Submit loading while an async `OnSubmit` runs; `enableUnsavedWarning` (ask before leaving).
 - [ ] **P3** `extra`, `avatar`, `hidden` on fields; `activeKey` / `onCollapse` to control groups; `itemsType: 'flat'`.
 
+### Upload
+- [ ] **P2** `beforeUpload` returning a promise: `BeforeUpload` runs on the UI thread, so a slow check (reading a file's header) freezes it.
+- [ ] **P3** Picking on the web needs the input's `cancel` event (Chrome 113, Firefox 91, Safari 16.4): an older browser never reports a canceled chooser and the Upload opens no other until a reload.
+
+### ImageSelect
+- [ ] **P2** Pictures by URL (`img: string`): options take a decoded `ui.ImageSource`, so the app loads remote pictures itself.
+
 ## Data Display
+
+### Markdown
+- [ ] **P2** Code blocks grow at the reveal's pace while streaming but don't fade in per character (Highlighter's text isn't one mygo's reveal tracks).
+- [ ] **P3** `enableStream: false` while `animated` (re-render without pacing): use `Animated: false`.
+- [ ] **P2** Images open in the Image viewer as a gallery (`enableImageGallery`); mygo draws them itself, with only `LoadImage` to hook.
+- [ ] **P2** Lists in the default variant use Lobe's "-" bullets; mygo draws its own markers.
+- [ ] **P2** Table cells at least 120 DIPs wide; `details` / `summary` blocks.
+- [ ] **mygo** Mermaid (planned through pele) and LaTeX: blocks show their source.
+- [ ] **P3** `citations`, `allowHtml` component lists, `customRender`, remark/rehype plugins: mygo's parser takes no syntax plugins, only render hooks.
+
+### Highlighter
+- [ ] **P2** File type icon before the full-featured header's name (`icon`, Lobe's MaterialFileTypeIcon), with FileTypeIcon.
+- [ ] **P2** `animated`: code fading in as it streams, for Markdown's Stream.
+- [ ] **P3** `allowChangeLanguage` (a language select in the header), `theme` (other code themes), `actionIconSize`.
+- [ ] **P3** Languages beyond the ~30 lexers of mygo's editor (Vue/Svelte templates, Elixir, Haskell, …) show plain.
+
+### Snippet
+- [ ] **P3** `spotlight` (the glow following the pointer).
 
 ### Avatar
 - [ ] **P1** `AvatarGroup` (overlapping stack, `max` with "+N").
@@ -258,12 +283,11 @@ Not started; see below.
 
 In the order agreed for consumer apps; B-end components last.
 
-1. Upload, ImageSelect.
-2. Snippet, Highlighter, Markdown (with code blocks and Mermaid later).
-3. EmojiPicker, FluentEmoji, GroupAvatar.
-4. Collapsible, SideNav / DraggableSideNav, Burger.
-5. Carousel, Video, QRCode, DownloadButton, FileTypeIcon.
-6. FloatingPanel, FloatingSheet, Toc, Anchor, ScrollShadow, ProgressiveBlur, MaskShadow, GuideCard.
-7. Descriptions, Statistic, Table / ProTable, Tree, SortableList.
-8. CodeEditor, CodeDiff, HtmlPreview, EditorSlashMenu.
-9. Subpath entries: `chat` (ChatItem, MessageInput, ChatList), `mobile`, `awesome`, `dashboard`.
+1. Mermaid through pele (goja natively, the browser's JS on the web).
+2. EmojiPicker, FluentEmoji, GroupAvatar.
+3. Collapsible, SideNav / DraggableSideNav, Burger.
+4. Carousel, Video, QRCode, DownloadButton, FileTypeIcon.
+5. FloatingPanel, FloatingSheet, Toc, Anchor, ScrollShadow, ProgressiveBlur, MaskShadow, GuideCard.
+6. Descriptions, Statistic, Table / ProTable, Tree, SortableList.
+7. CodeEditor, CodeDiff, HtmlPreview, EditorSlashMenu.
+8. Subpath entries: `chat` (ChatItem, MessageInput, ChatList), `mobile`, `awesome`, `dashboard`.

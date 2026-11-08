@@ -100,7 +100,7 @@ var goAPIName = regexp.MustCompile(`<GoApi[^>]*\bname="(\w+)"`)
 // pageDir finds the catalog page a struct's page name belongs to: the page itself, or the nearest
 // shorter one, as toast for ToastHostProps.
 func pageDir(out, page string) (string, bool) {
-	for {
+	for page != "" {
 		dir := filepath.Join(out, page)
 		if info, err := os.Stat(dir); err == nil && info.IsDir() {
 			return dir, true
@@ -111,6 +111,7 @@ func pageDir(out, page string) (string, bool) {
 		}
 		page = page[:i]
 	}
+	return "", false
 }
 
 func writeIfChanged(file string, data []byte) error {
@@ -166,10 +167,17 @@ func extract(dirs ...string) (map[string]apiStruct, error) {
 			page := pageOf(ts.Name.Name)
 			api[ts.Name.Name] = apiStruct{Fields: pkg.fieldsOf(ts, byName), Page: page}
 			for _, f := range ts.Type.(*ast.StructType).Fields.List {
-				elem := strings.TrimLeft(types.ExprString(f.Type), "[]*")
+				elem, _, _ := strings.Cut(strings.TrimLeft(types.ExprString(f.Type), "[]*"), "[")
 				if nested, ok := pkg.structs[elem]; ok && !strings.HasSuffix(elem, "Props") {
 					api[elem] = apiStruct{Fields: pkg.fieldsOf(nested, byName), Page: page}
 				}
+			}
+		}
+	}
+	for _, pkg := range pkgs {
+		for name, ts := range pkg.structs {
+			if _, ok := api[name]; !ok {
+				api[name] = apiStruct{Fields: pkg.fieldsOf(ts, byName)}
 			}
 		}
 	}

@@ -1,0 +1,31 @@
+---
+title: Upload
+description: A trigger or a dashed drop zone that opens the system file picker, filters files by accept, BeforeUpload and MaxCount, and hands the files to the app.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import dragger from './dragger.go?raw';
+
+`field.Upload` shows no file list and sends nothing anywhere: it picks files and gives the ones it accepts to `OnFiles`, for the app to show and upload as it likes. A click or Enter opens the picker, mygo's `Dialog.Open` in a native app and the browser's file chooser on the web; a file from the chooser has no path, so `ReadAll` returns the `Data` read with it, and a file from a native dialog or a drop is read from its `Path`.
+
+## Basic Usage
+
+Content of its own makes the trigger; `action.StyleButton` gives it the look of a button.
+
+<GoDemo name="upload/basic" title="Pick files" height={260} source={basic} />
+
+## Dragger
+
+`Dragger` takes files dragged from Finder or Explorer too, and lights up while they are over it. A dropped folder gives the files in it, without hidden ones.
+
+<GoDemo name="upload/dragger" title="Drop images" height={320} source={dragger} />
+
+## API
+
+<GoApi data={api} name="UploadProps" />
+
+<GoApi data={api} name="File" />

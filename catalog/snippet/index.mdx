@@ -1,0 +1,20 @@
+---
+title: Snippet
+description: A line of code, as a command to run, highlighted with a prefix and a copy button.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`code.Snippet` keeps its code on one line, scrolling sideways when it is longer than the room it has. `Prefix` shows before the code, as `$`, and Copy leaves it out.
+
+## Basic Usage
+
+<GoDemo name="snippet/basic" title="Commands" height={200} source={basic} />
+
+## API
+
+<GoApi data={api} name="SnippetProps" />

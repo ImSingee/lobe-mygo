@@ -1,0 +1,39 @@
+---
+title: Markdown
+description: Markdown in Lobe's typography, with default and chat variants and code blocks through Highlighter and Snippet.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import chat from './chat.go?raw';
+import codeSrc from './code.go?raw';
+import stream from './stream.go?raw';
+
+`markdown.Markdown` renders with mygo's `ui/markdown`: CommonMark with tables, task lists, strikethrough, autolinks, footnotes and GitHub's alerts, parsed again only where the source changed. Its text is selectable and copies as text, HTML or Markdown. The wrapper maps Lobe's typography onto it (sizes, room between blocks, quotes, tables, alert colors) and shows code blocks with `code.Highlighter`, or `code.Snippet` for one short line.
+
+## Basic Usage
+
+<GoDemo name="markdown/basic" title="An article" height={900} scrollable source={basic} />
+
+## Chat
+
+`Chat` is for messages: 14 DIP text, headings barely larger than it and half the room between blocks. `FontSize`, `HeaderMultiple`, `MarginMultiple` and `LineHeight` tune either variant.
+
+<GoDemo name="markdown/chat" title="A reply" height={420} source={chat} />
+
+## Code Blocks
+
+<GoDemo name="markdown/code" title="Full-featured code blocks" height={360} source={codeSrc} />
+
+## Streaming
+
+`Animated` shows a reply still being written through mygo's `Stream`: text comes in at an even pace, a character at a time (`Granularity: ByWord` for words), each fading in over 180 ms, and what is half written shows as it will most likely end. `Smoothing` picks how far behind the source it may fall: `Realtime` 40 ms, `Balanced` 120 ms, `Silky` 170 ms. Clear `Animated` once the reply is complete, and show what follows it once `Revealed` reports it all shown.
+
+<GoDemo name="markdown/stream" title="A streaming reply" height={640} scrollable source={stream} />
+
+## API
+
+<GoApi data={api} name="MarkdownProps" />

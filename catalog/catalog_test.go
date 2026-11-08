@@ -286,3 +286,27 @@ func TestFormDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestUploadDemos(t *testing.T) {
+	for _, demo := range []string{"upload/basic", "upload/dragger", "image-select/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
+
+func TestCodeDemos(t *testing.T) {
+	for _, demo := range []string{"highlighter/basic", "highlighter/variants", "highlighter/full-featured", "snippet/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
+
+func TestMarkdownDemos(t *testing.T) {
+	for _, demo := range []string{"markdown/basic", "markdown/chat", "markdown/code", "markdown/stream"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}

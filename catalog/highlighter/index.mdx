@@ -1,0 +1,32 @@
+---
+title: Highlighter
+description: A block of code highlighted in Lobe's code colors, with a copy button and the language on hover, and a full-featured header that collapses it.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import fullFeatured from './fullfeatured.go?raw';
+import variants from './variants.go?raw';
+
+`code.Highlighter` tokenizes with the lexers of mygo's editor, which know about thirty languages by name, alias or extension (`go`, `ts`, `tsx`, `py`, `sh`, `sql`, `yaml`, …); other code shows plain. Tabs are four spaces wide. `code.Theme` and `code.Spans` give the same colors to code drawn elsewhere.
+
+## Basic Usage
+
+<GoDemo name="highlighter/basic" title="Go and TypeScript" height={420} source={basic} />
+
+## Variants
+
+<GoDemo name="highlighter/variants" title="Filled, outlined, borderless and shadow" height={360} source={variants} />
+
+## Full Featured
+
+The header shows the language, or `FileName`, with the actions and a toggle; a click on the name collapses the code too. `Actions` adds buttons before Copy.
+
+<GoDemo name="highlighter/full-featured" title="Header, actions and collapse" height={400} source={fullFeatured} />
+
+## API
+
+<GoApi data={api} name="HighlighterProps" />

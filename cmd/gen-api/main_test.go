@@ -248,3 +248,39 @@ func TestReferencedStructsJoinThePageThatNamesThem(t *testing.T) {
 		t.Errorf("date-picker structs %v, want CalendarProps, which its index.mdx names", slices.Collect(maps.Keys(got[dir])))
 	}
 }
+
+func TestExtractListsGenericItemStructs(t *testing.T) {
+	api, err := extract("../../pkg/choice", "../../pkg/theme")
+	if err != nil {
+		t.Fatal(err)
+	}
+	item, ok := api["ImageSelectItem"]
+	if !ok || item.Page != "image-select" {
+		t.Fatalf("ImageSelectItem = %+v (listed %v), want it on image-select", item, ok)
+	}
+	if f := field(t, item, "Label"); f.Type != "string" {
+		t.Errorf("Label = %+v", f)
+	}
+}
+
+func TestMdxNamesAnyExportedStruct(t *testing.T) {
+	out := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(out, "upload"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	mdx := "<GoApi data={api} name=\"UploadProps\" />\n<GoApi data={api} name=\"File\" />\n"
+	if err := os.WriteFile(filepath.Join(out, "upload", "index.mdx"), []byte(mdx), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	api, err := extract("../../pkg/field", "../../pkg/theme")
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := pagesOf(out, api)
+	if f := field(t, got[filepath.Join(out, "upload")]["File"], "Path"); f.Type != "string" {
+		t.Errorf("Path = %+v", f)
+	}
+	if structs, ok := got[out]; ok {
+		t.Errorf("structs %v written to the catalog root", slices.Collect(maps.Keys(structs)))
+	}
+}

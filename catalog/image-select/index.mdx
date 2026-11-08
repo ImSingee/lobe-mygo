@@ -1,0 +1,22 @@
+---
+title: ImageSelect
+description: Chooses one option from a row of pictures with labels, as a theme or layout picker, ringing the chosen picture.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`choice.ImageSelect` binds a value of any comparable type. The options form a radio group: a click or the arrows choose, and the picture of the chosen one shows a ring, which turns to the text color on hover.
+
+## Basic Usage
+
+<GoDemo name="image-select/basic" title="Theme picker" height={200} source={basic} />
+
+## API
+
+<GoApi data={api} name="ImageSelectProps" />
+
+<GoApi data={api} name="ImageSelectItem" />
