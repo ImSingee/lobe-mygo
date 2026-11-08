@@ -34,6 +34,7 @@ import (
 	_ "github.com/lobehub/lobe-mygo/catalog/hotkey"
 	_ "github.com/lobehub/lobe-mygo/catalog/hotkey-input"
 	_ "github.com/lobehub/lobe-mygo/catalog/icon"
+	_ "github.com/lobehub/lobe-mygo/catalog/image"
 	_ "github.com/lobehub/lobe-mygo/catalog/input"
 	_ "github.com/lobehub/lobe-mygo/catalog/input-number"
 	_ "github.com/lobehub/lobe-mygo/catalog/input-otp"

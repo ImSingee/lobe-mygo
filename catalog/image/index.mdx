@@ -1,0 +1,32 @@
+---
+title: Image
+description: A picture in a rounded frame that opens in a preview viewer, which zooms with the wheel, a pinch, a double click or its toolbar and pans when dragged.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import gallery from './gallery.go?raw';
+import states from './states.go?raw';
+
+`display.Image` takes a decoded `ui.ImageSource`. Clicked, the picture flies out of its frame into a viewer over the window, fitted 24 DIPs inside it and at most at its own size. Escape or a click outside the picture closes it; a click on the unzoomed picture does too, unless a second click follows within 250 ms and zooms it.
+
+## Basic Usage
+
+<GoDemo name="image/basic" title="Click to preview" height={300} scrollable source={basic} />
+
+## Gallery
+
+`display.ImageGroup` shares one viewer between its images: arrows, Left and Right step between them, the counter shows where it is, and closing flies back to the thumbnail of the image shown. Rotation turns the picture by quarters and refits it as it turns. `OnDownload` adds a Download button and leaves saving to the app, as a native app can ask where with mygo's `Dialog.Save` and a browser cannot.
+
+<GoDemo name="image/gallery" title="Gallery with download" height={240} scrollable source={gallery} />
+
+## States
+
+<GoDemo name="image/states" title="Contain, actions, loading and failed" height={220} scrollable source={states} />
+
+## API
+
+<GoApi data={api} name="ImageProps" />

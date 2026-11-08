@@ -270,3 +270,11 @@ func TestGeneralBatchDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestImageDemos(t *testing.T) {
+	for _, demo := range []string{"image/basic", "image/states", "image/gallery"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
