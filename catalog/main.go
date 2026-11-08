@@ -30,6 +30,7 @@ import (
 	_ "github.com/lobehub/lobe-mygo/catalog/dropdown-menu"
 	_ "github.com/lobehub/lobe-mygo/catalog/editable-text"
 	_ "github.com/lobehub/lobe-mygo/catalog/empty"
+	_ "github.com/lobehub/lobe-mygo/catalog/form"
 	_ "github.com/lobehub/lobe-mygo/catalog/grid"
 	_ "github.com/lobehub/lobe-mygo/catalog/hotkey"
 	_ "github.com/lobehub/lobe-mygo/catalog/hotkey-input"

@@ -1,0 +1,43 @@
+---
+title: Form
+description: Settings-style groups and fields over values the app holds, with required and custom checks, async validation, dependent fields, unsaved changes and auto-save.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import autosave from './autosave.go?raw';
+import basic from './basic.go?raw';
+import validation from './validation.go?raw';
+import variants from './variants.go?raw';
+
+`form.New` holds a value of the app's own type; controls bind its fields directly, as `&f.Values.Name`. The form keeps the rest: the values it started from, for `IsDirty` and `Reset`, and each field's touched state, error and running checks. A field checks itself as it loses the focus once edited, and as it changes once it shows an error; Submit checks them all and calls `OnSubmit` only when every one passes.
+
+## Basic Usage
+
+<GoDemo name="form/basic" title="Groups and fields" height={480} source={basic} />
+
+## Validation
+
+`Validate` returns a field's error; `ValidateAsync` runs off the UI thread after it, cancelled when a newer check starts. `Deps` checks a field again when a field it depends on changes.
+
+<GoDemo name="form/validation" title="Vertical layout, async check and deps" height={620} source={validation} />
+
+## Variants
+
+<GoDemo name="form/variants" title="Filled and outlined, collapsible" height={320} source={variants} />
+
+## Auto-save and floating footer
+
+<GoDemo name="form/autosave" title="OnValuesChange and Float" height={300} source={autosave} />
+
+## API
+
+<GoApi data={api} name="Props" />
+
+<GoApi data={api} name="FieldProps" />
+
+<GoApi data={api} name="GroupProps" />
+
+<GoApi data={api} name="SubmitFooterProps" />

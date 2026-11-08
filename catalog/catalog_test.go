@@ -278,3 +278,11 @@ func TestImageDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestFormDemos(t *testing.T) {
+	for _, demo := range []string{"form/basic", "form/validation", "form/variants", "form/autosave"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
