@@ -84,8 +84,15 @@ type CardProps struct {
 }
 
 func TestPageOf(t *testing.T) {
-	if got := pageOf("ButtonProps"); got != "button" {
-		t.Errorf("pageOf(ButtonProps) = %q", got)
+	for name, want := range map[string]string{
+		"ButtonProps":     "button",
+		"ActionIconProps": "action-icon",
+		"TagProps":        "tag",
+		"SVGIconProps":    "svg-icon",
+	} {
+		if got := pageOf(name); got != want {
+			t.Errorf("pageOf(%s) = %q, want %q", name, got, want)
+		}
 	}
 }
 

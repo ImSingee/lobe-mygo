@@ -17,20 +17,12 @@ const (
 	Link
 )
 
-type ButtonSize int
-
-const (
-	Middle ButtonSize = iota
-	Small
-	Large
-)
-
 type ButtonProps struct {
 	// Variant picks the surface: Primary fills with the primary color, Default and Dashed sit on
 	// the container with a border, Filled uses a neutral fill, Text and Link have no surface.
 	Variant ButtonVariant
 	// Size sets the height (24, 32 or 40), padding, font size and corner radius.
-	Size ButtonSize
+	Size Size
 }
 
 type buttonMetrics struct {
@@ -52,14 +44,7 @@ func Button(c *ui.Context, label string, p ButtonProps) ui.Element {
 		FontSize(m.fontSize).FontWeight(500).
 		Cursor(ui.CursorPointer).Transition(buttonTransition)
 
-	state := buttonRest
-	switch {
-	case b.Pressed():
-		state = buttonActive
-	case b.Hovered():
-		state = buttonHover
-	}
-	bg, border, fg := buttonColors(tk, p.Variant, state)
+	bg, border, fg := buttonColors(tk, p.Variant, stateOf(b))
 	b.Background(bg).Border(1, border).TextColor(fg)
 	switch p.Variant {
 	case Dashed:
@@ -74,7 +59,7 @@ func Button(c *ui.Context, label string, p ButtonProps) ui.Element {
 	return b
 }
 
-func buttonSize(tk *Tokens, s ButtonSize) (buttonMetrics, float32) {
+func buttonSize(tk *Tokens, s Size) (buttonMetrics, float32) {
 	switch s {
 	case Small:
 		return buttonMetrics{24, 8, 12}, tk.BorderRadiusSM
@@ -92,6 +77,16 @@ const (
 	buttonHover
 	buttonActive
 )
+
+func stateOf(e ui.Element) buttonState {
+	switch {
+	case e.Pressed():
+		return buttonActive
+	case e.Hovered():
+		return buttonHover
+	}
+	return buttonRest
+}
 
 func buttonColors(tk *Tokens, v ButtonVariant, s buttonState) (bg, border, fg ui.Color) {
 	pick := func(rest, hover, active ui.Color) ui.Color {

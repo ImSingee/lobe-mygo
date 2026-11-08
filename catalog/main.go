@@ -7,8 +7,11 @@ import (
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
 	lobe "github.com/lobehub/lobe-mygo"
+	_ "github.com/lobehub/lobe-mygo/catalog/action-icon"
 	_ "github.com/lobehub/lobe-mygo/catalog/button"
+	_ "github.com/lobehub/lobe-mygo/catalog/icon"
 	"github.com/lobehub/lobe-mygo/catalog/registry"
+	_ "github.com/lobehub/lobe-mygo/catalog/tag"
 	_ "github.com/lobehub/lobe-mygo/catalog/tokens"
 )
 

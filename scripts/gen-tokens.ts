@@ -46,7 +46,12 @@ const fieldName = (key: string) => {
   return name[0].toUpperCase() + name.slice(1);
 };
 
-const EXTRA_COLORS = new Set(['yellow9']);
+const PRESETS = ['red', 'volcano', 'orange', 'gold', 'yellow', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple', 'magenta', 'gray'];
+
+const EXTRA_COLORS = new Set([
+  'yellow9',
+  ...PRESETS.flatMap((p) => [p, `${p}Active`, `${p}FillTertiary`, `${p}FillQuaternary`]),
+]);
 
 const colorKeys = Object.keys(light)
   .filter((k) => (k.startsWith('color') || EXTRA_COLORS.has(k)) && typeof light[k] === 'string')

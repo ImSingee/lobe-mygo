@@ -95,3 +95,30 @@ func TestTokensOfResultIsACopy(t *testing.T) {
 		t.Errorf("mutating one TokensOf result changed the next: Text = %+v", second.Text)
 	}
 }
+
+func TestPresetPaletteTokens(t *testing.T) {
+	l := Light()
+	cases := []struct {
+		name      string
+		got, want ui.Color
+	}{
+		{"Red", l.Red, ui.Hex("#f4416c")},
+		{"RedActive", l.RedActive, ui.Hex("#d6225d")},
+		{"RedFillTertiary", l.RedFillTertiary, ui.RGBA(255, 15, 15, 0.05)},
+		{"Gray", l.Gray, ui.Hex("#888888")},
+		{"GeekblueFillQuaternary", l.GeekblueFillQuaternary, l.GeekblueFillQuaternary},
+	}
+	for _, c := range cases {
+		if c.got != c.want {
+			t.Errorf("%s = %+v, want %+v", c.name, c.got, c.want)
+		}
+	}
+	if got, ok := l.Color("RedActive"); !ok || got != l.RedActive {
+		t.Errorf("Color(RedActive) = %+v, %v", got, ok)
+	}
+	for _, n := range ColorTokenNames() {
+		if n == "Red" || n == "GrayFillTertiary" {
+			t.Errorf("ColorTokenNames includes palette token %s", n)
+		}
+	}
+}

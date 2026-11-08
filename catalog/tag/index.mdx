@@ -1,0 +1,37 @@
+---
+title: Tag
+description: A small label in the Lobe UI look, in preset palettes, status colors or any hex color, with four variants, three sizes and a close button.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import colors from './colors.go?raw';
+import sizes from './sizes.go?raw';
+import variants from './variants.go?raw';
+
+`lobe.Tag` marks an item with a short label. A closable tag hides itself when its close button is pressed and calls `OnClose`.
+
+## Basic Usage
+
+<GoDemo name="tag/basic" title="Basic usage" height={130} source={basic} />
+
+## Colors
+
+Thirteen preset palettes, the four status colors, and any hex color.
+
+<GoDemo name="tag/colors" title="Colors" height={170} source={colors} />
+
+## Variants
+
+<GoDemo name="tag/variants" title="Variants" height={170} source={variants} />
+
+## Sizes
+
+<GoDemo name="tag/sizes" title="Sizes" height={130} source={sizes} />
+
+## API
+
+<GoApi data={api} name="TagProps" />

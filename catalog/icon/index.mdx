@@ -1,0 +1,25 @@
+---
+title: Icon
+description: An SVG icon from the generated lucide package, sized 14, 20 or 24 DIPs or following the font size, optionally spinning.
+category: General
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import sizes from './sizes.go?raw';
+import spin from './spin.go?raw';
+
+`lobe.Icon` draws any `*ui.SVG` in the color of the text around it. The `lucide` package has every Lucide icon as a function, `lucide.Save()`; an icon is parsed the first time it is used, and icons a program never calls are left out of the binary.
+
+## Sizes
+
+<GoDemo name="icon/sizes" title="Sizes" height={140} source={sizes} />
+
+## Spin
+
+<GoDemo name="icon/spin" title="Spin" height={100} source={spin} />
+
+## API
+
+<GoApi data={api} name="IconProps" />

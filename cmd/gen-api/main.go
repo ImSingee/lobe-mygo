@@ -15,6 +15,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"unicode"
 )
 
 type apiField struct {
@@ -62,7 +63,20 @@ func main() {
 }
 
 func pageOf(structName string) string {
-	return strings.ToLower(strings.TrimSuffix(structName, "Props"))
+	name := []rune(strings.TrimSuffix(structName, "Props"))
+	var b strings.Builder
+	for i, r := range name {
+		upper := unicode.IsUpper(r)
+		if upper && i > 0 {
+			prevLower := unicode.IsLower(name[i-1])
+			nextLower := i+1 < len(name) && unicode.IsLower(name[i+1])
+			if prevLower || (unicode.IsUpper(name[i-1]) && nextLower) {
+				b.WriteByte('-')
+			}
+		}
+		b.WriteRune(unicode.ToLower(r))
+	}
+	return b.String()
 }
 
 func extract(dir string) (map[string]apiStruct, error) {

@@ -6,7 +6,7 @@ import (
 )
 
 func Sizes(c *ui.Context) {
-	for _, size := range []lobe.ButtonSize{lobe.Small, lobe.Middle, lobe.Large} {
+	for _, size := range []lobe.Size{lobe.Small, lobe.Middle, lobe.Large} {
 		ui.Row(c).Gap(8).Children(func() {
 			lobe.Button(c, "Primary", lobe.ButtonProps{Variant: lobe.Primary, Size: size})
 			lobe.Button(c, "Default", lobe.ButtonProps{Size: size})

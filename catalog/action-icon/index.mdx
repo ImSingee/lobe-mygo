@@ -1,0 +1,34 @@
+---
+title: ActionIcon
+description: An icon-only button in the Lobe UI look, with borderless, filled and outlined surfaces, an active state and a danger color.
+category: General
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import sizes from './sizes.go?raw';
+import variants from './variants.go?raw';
+
+`lobe.ActionIcon` is a button that shows only an icon. Its `Title` names it for assistive technology and shows as a tooltip, so give every ActionIcon one.
+
+## Basic Usage
+
+The pin toggles `Active`; the trash uses `Danger`.
+
+<GoDemo name="action-icon/basic" title="Basic usage" height={120} source={basic} />
+
+## Variants
+
+<GoDemo name="action-icon/variants" title="Variants" height={120} source={variants} />
+
+## Sizes
+
+`Small`, `Middle` and `Large` are 24, 36 and 44 DIPs square, with 14, 20 and 24 DIP glyphs.
+
+<GoDemo name="action-icon/sizes" title="Sizes" height={120} source={sizes} />
+
+## API
+
+<GoApi data={api} name="ActionIconProps" />

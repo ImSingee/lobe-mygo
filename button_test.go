@@ -104,7 +104,7 @@ func TestFilledButtonWashesOnHoverAndPress(t *testing.T) {
 
 func TestButtonHeightsMatchLobeSizes(t *testing.T) {
 	for _, c := range []struct {
-		size   ButtonSize
+		size   Size
 		height float32
 	}{{Small, 24}, {Middle, 32}, {Large, 40}} {
 		h := newButtonHarness(t, ButtonProps{Size: c.size})

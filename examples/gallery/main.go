@@ -23,7 +23,7 @@ var variants = []struct {
 	{"Link", lobe.Link},
 }
 
-var sizes = []lobe.ButtonSize{lobe.Small, lobe.Middle, lobe.Large}
+var sizes = []lobe.Size{lobe.Small, lobe.Middle, lobe.Large}
 
 func view(c *ui.Context) {
 	lobe.Apply(c)

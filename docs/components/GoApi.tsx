@@ -37,9 +37,12 @@ export function GoApi({ data, name }: GoApiProps) {
             <code style={{ ...mono, color: 'var(--docs-text-primary)', fontWeight: 600 }}>{field.name}</code>
           </dt>
           <dd style={{ display: 'grid', gap: '0.375rem', margin: 0 }}>
-            <code style={{ ...mono, color: 'var(--docs-accent)' }}>
-              {field.values ? field.values.join(' | ') : field.type}
-            </code>
+            <code style={{ ...mono, color: 'var(--docs-accent)' }}>{field.type}</code>
+            {field.values ? (
+              <p style={{ fontSize: '0.8125rem', margin: 0 }}>
+                One of <code style={{ ...mono, color: 'var(--docs-text-primary)' }}>{field.values.join(', ')}</code>.
+              </p>
+            ) : null}
             {field.doc ? <p style={{ fontSize: '0.875rem', margin: 0 }}>{field.doc.replaceAll('\n', ' ')}</p> : null}
             {field.default ? (
               <p style={{ fontSize: '0.8125rem', margin: 0 }}>
