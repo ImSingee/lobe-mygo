@@ -1,0 +1,27 @@
+---
+title: ToggleGroup
+description: Toggle buttons pressed one at a time or many at once, joined in a border, spaced apart, or on a segmented track.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`choice.ToggleGroup` keeps the pressed values in a slice, in the order of the items. One item is pressed at a time, and pressing it again releases it; `Multiple` lets any number be pressed.
+
+## Basic Usage
+
+<GoDemo name="toggle-group/basic" title="Single and multiple" height={160} source={basic} />
+
+## Variants
+
+<GoDemo name="toggle-group/variants" title="Outlined, borderless, segmented, small" height={240} source={variants} />
+
+## API
+
+<GoApi data={api} name="ToggleGroupProps" />
+
+<GoApi data={api} name="ToggleItem" />

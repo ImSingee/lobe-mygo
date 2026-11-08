@@ -1,0 +1,20 @@
+---
+title: SearchBar
+description: A search input with a search icon, a clear button, a loading state and a window-wide shortcut shown as a key tag.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`field.SearchBar` is an Input for a query. `ShortKey` focuses it from anywhere in the window and shows as a tag while it is empty and not focused; Enter runs `OnSearch`.
+
+## Basic Usage
+
+<GoDemo name="search-bar/basic" title="Search" height={180} source={basic} />
+
+## API
+
+<GoApi data={api} name="SearchBarProps" />

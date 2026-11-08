@@ -19,3 +19,5 @@ func appleDevice() bool {
 	s := strings.ToLower(p.String())
 	return strings.Contains(s, "mac") || strings.Contains(s, "iphone") || strings.Contains(s, "ipad")
 }
+
+func browserOnMac() bool { return isApple() }

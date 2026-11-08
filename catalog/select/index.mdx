@@ -1,0 +1,29 @@
+---
+title: Select
+description: A drop-down choosing one option, with a trigger in the Input look and a popup that marks the chosen option.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`field.Select` opens its options below the trigger, at least as wide as it. The arrows open the popup and move among the options, Enter or Space chooses one, Escape closes it.
+
+## Basic Usage
+
+<GoDemo name="select/basic" title="Model" height={320} source={basic} />
+
+## Variants and Sizes
+
+The trigger takes Input's variants and sizes.
+
+<GoDemo name="select/variants" title="Variants" height={360} source={variants} />
+
+## API
+
+<GoApi data={api} name="SelectProps" />
+
+<GoApi data={api} name="SelectOption" />

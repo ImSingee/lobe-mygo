@@ -50,3 +50,38 @@ func TestHotkeyChipsAndCompact(t *testing.T) {
 		t.Errorf("compact: between keys %+v, want the one chip's fill", got)
 	}
 }
+
+func TestParseHotkey(t *testing.T) {
+	for _, c := range []struct {
+		keys  string
+		apple bool
+		mods  ui.Modifiers
+		key   ui.Key
+	}{
+		{"mod+k", true, ui.Super, ui.KeyK},
+		{"mod+k", false, ui.Ctrl, ui.KeyK},
+		{"ctrl+shift+p", true, ui.Ctrl | ui.Shift, ui.KeyP},
+		{"alt+3", false, ui.Alt, ui.Key3},
+		{"escape", false, 0, ui.KeyEscape},
+	} {
+		mods, key, ok := parseHotkey(c.keys, c.apple)
+		if !ok || mods != c.mods || key != c.key {
+			t.Errorf("%q apple %v: %v %v %v, want %v %v", c.keys, c.apple, mods, key, ok, c.mods, c.key)
+		}
+	}
+	if _, _, ok := parseHotkey("mod+", false); ok {
+		t.Error("mod+ parsed without a key")
+	}
+}
+
+func TestBrowserOnMacSwapsCommandAndControl(t *testing.T) {
+	if got := swapCmd(ui.Super|ui.Shift, true); got != ui.Ctrl|ui.Shift {
+		t.Errorf("⌘⇧ in a browser on a Mac: %v, want Ctrl|Shift as mygo's web backend reports it", got)
+	}
+	if got := swapCmd(ui.Ctrl, true); got != ui.Super {
+		t.Errorf("⌃ in a browser on a Mac: %v, want Super", got)
+	}
+	if got := swapCmd(ui.Super|ui.Alt, false); got != ui.Super|ui.Alt {
+		t.Errorf("native: %v changed", got)
+	}
+}

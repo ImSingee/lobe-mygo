@@ -183,3 +183,26 @@ func TestDataDisplayDemos(t *testing.T) {
 		t.Errorf("accordion/basic: answer not shown after clicking the question; texts %q", tt.Texts())
 	}
 }
+
+func TestDataEntryDemos(t *testing.T) {
+	for _, demo := range []string{
+		"radio/basic", "radio/vertical", "select/basic", "select/variants", "slider/basic",
+		"search-bar/basic", "toggle-group/basic", "toggle-group/variants",
+	} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+	view, ok := registry.Get("select/basic")
+	if !ok {
+		return
+	}
+	tt := ui.NewTester(func(ctx *ui.Context) { preview(ctx, view) }, 720, 400)
+	if err := tt.Click("Select a model"); err != nil {
+		t.Fatalf("select/basic: %v; texts %q", err, tt.Texts())
+	}
+	tt.Advance(time.Second)
+	if !tt.HasText("Claude Opus") {
+		t.Errorf("select/basic: options not shown; texts %q", tt.Texts())
+	}
+}

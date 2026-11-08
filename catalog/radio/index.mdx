@@ -1,0 +1,29 @@
+---
+title: Radio
+description: A radio button in the Lobe UI look, choosing one value of a group, with the arrows moving between the choices.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import vertical from './vertical.go?raw';
+
+`choice.Radio` chooses its value into the pointer it shares with the other radios of the choice. Build them in a `RadioGroup`: Tab stops at the chosen radio and the arrows choose among them.
+
+## Basic Usage
+
+<GoDemo name="radio/basic" title="Plan" height={140} source={basic} />
+
+## Vertical
+
+`Vertical` stacks the radios; `Size` sets the circle's diameter.
+
+<GoDemo name="radio/vertical" title="Vertical, size 20" height={160} source={vertical} />
+
+## API
+
+<GoApi data={api} name="RadioProps" />
+
+<GoApi data={api} name="RadioGroupProps" />

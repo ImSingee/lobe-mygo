@@ -151,3 +151,77 @@ func startCase(s string) string {
 	r[0] = unicode.ToUpper(r[0])
 	return string(r)
 }
+
+// HotkeyBinding reads keys written as Hotkey takes them into the modifiers and key that
+// Context.Shortcut takes, with mod as Command on Apple devices and Ctrl elsewhere. It reports
+// false when keys names no key it knows.
+func HotkeyBinding(keys string, platform HotkeyPlatform) (ui.Modifiers, ui.Key, bool) {
+	mods, key, ok := parseHotkey(keys, platform == HotkeyApple || platform == HotkeyAuto && isApple())
+	return swapCmd(mods, browserOnMac()), key, ok
+}
+
+// mygo's web backend reports Command as Control on a Mac, and Control as Super, so that its
+// Cmd shortcuts work in browsers on every system.
+func swapCmd(m ui.Modifiers, swap bool) ui.Modifiers {
+	if !swap {
+		return m
+	}
+	ctrl, super := m&ui.Ctrl != 0, m&ui.Super != 0
+	m &^= ui.Ctrl | ui.Super
+	if ctrl {
+		m |= ui.Super
+	}
+	if super {
+		m |= ui.Ctrl
+	}
+	return m
+}
+
+var namedKeys = map[string]ui.Key{
+	"enter": ui.KeyEnter, "escape": ui.KeyEscape, "esc": ui.KeyEscape, "backspace": ui.KeyBackspace,
+	"tab": ui.KeyTab, "space": ui.KeySpace, "delete": ui.KeyDelete, "home": ui.KeyHome, "end": ui.KeyEnd,
+	"pageup": ui.KeyPageUp, "pagedown": ui.KeyPageDown, "left": ui.KeyLeft, "right": ui.KeyRight,
+	"up": ui.KeyUp, "down": ui.KeyDown, "minus": ui.KeyMinus, "equal": ui.KeyEqual, "comma": ui.KeyComma,
+	"period": ui.KeyPeriod, "slash": ui.KeySlash, "semicolon": ui.KeySemicolon,
+	"f1": ui.KeyF1, "f2": ui.KeyF2, "f3": ui.KeyF3, "f4": ui.KeyF4, "f5": ui.KeyF5, "f6": ui.KeyF6,
+	"f7": ui.KeyF7, "f8": ui.KeyF8, "f9": ui.KeyF9, "f10": ui.KeyF10, "f11": ui.KeyF11, "f12": ui.KeyF12,
+}
+
+func parseHotkey(keys string, apple bool) (ui.Modifiers, ui.Key, bool) {
+	var mods ui.Modifiers
+	var key ui.Key
+	found := false
+	for _, k := range splitKeys(keys) {
+		switch k = strings.ToLower(k); k {
+		case "mod":
+			if apple {
+				mods |= ui.Super
+			} else {
+				mods |= ui.Ctrl
+			}
+		case "ctrl", "control":
+			mods |= ui.Ctrl
+		case "shift":
+			mods |= ui.Shift
+		case "alt", "option":
+			mods |= ui.Alt
+		case "meta", "cmd", "command":
+			mods |= ui.Super
+		default:
+			switch r := []rune(k); {
+			case len(r) == 1 && r[0] >= 'a' && r[0] <= 'z':
+				key = ui.KeyA + ui.Key(r[0]-'a')
+			case len(r) == 1 && r[0] >= '0' && r[0] <= '9':
+				key = ui.Key0 + ui.Key(r[0]-'0')
+			default:
+				named, ok := namedKeys[k]
+				if !ok {
+					return 0, 0, false
+				}
+				key = named
+			}
+			found = true
+		}
+	}
+	return mods, key, found
+}

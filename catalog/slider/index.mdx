@@ -1,0 +1,20 @@
+---
+title: Slider
+description: A slider in the Lobe UI look, with a thin track, a pill thumb that rings on hover, and steps that snap the value.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`choice.Slider` sets a value between `Min` and `Max` by dragging or clicking along the track, or with the arrows, Home and End.
+
+## Basic Usage
+
+<GoDemo name="slider/basic" title="Model parameters" height={240} source={basic} />
+
+## API
+
+<GoApi data={api} name="SliderProps" />
