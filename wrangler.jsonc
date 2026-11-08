@@ -1,7 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "lobe-mygo",
+  "account_id": "d35842305b91be4b48e06ff9a9ad83f5",
   "compatibility_date": "2026-11-01",
+  "routes": [{ "pattern": "mygo.lobehub.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     "html_handling": "drop-trailing-slash",
