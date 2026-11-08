@@ -56,6 +56,20 @@
         p.textContent = text
         document.body.replaceChildren(p)
       }
+      const reloadUrl = __RELOAD__
+      if (reloadUrl && parent === window) {
+        let loaded, failed = false
+        new EventSource(reloadUrl).addEventListener("message", (message) => {
+          const event = JSON.parse(message.data)
+          if (event.type === "error") {
+            failed = true
+            showError(event.message)
+          }
+          if (event.type !== "built") return
+          if (failed || (loaded !== undefined && event.id !== loaded)) location.reload()
+          loaded ??= event.id
+        })
+      }
       WebAssembly.instantiateStreaming(fetch("/mygo/" + wasm, dev ? { cache: "no-store" } : {}), go.importObject)
         .then((r) => go.run(r.instance))
         .then(() => showError(`The demo "${demo}" stopped. The browser console has the reason.`))

@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"slices"
 	"testing"
+	"time"
 )
 
 func field(t *testing.T, s apiStruct, name string) apiField {
@@ -149,5 +150,30 @@ type PanelProps struct {
 	}
 	if mode := field(t, panel, "Mode"); !slices.Equal(mode.Values, []string{"demo.ModeNone", "demo.ModeAuto"}) || mode.Default != "demo.ModeNone" {
 		t.Errorf("Mode = %+v, want qualified values and default demo.ModeNone", mode)
+	}
+}
+
+func TestWriteIfChangedLeavesIdenticalFileUntouched(t *testing.T) {
+	file := filepath.Join(t.TempDir(), "api.json")
+	if err := os.WriteFile(file, []byte("{}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	old := time.Now().Add(-time.Hour).Truncate(time.Second)
+	if err := os.Chtimes(file, old, old); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := writeIfChanged(file, []byte("{}\n")); err != nil {
+		t.Fatal(err)
+	}
+	if info, _ := os.Stat(file); !info.ModTime().Equal(old) {
+		t.Fatalf("identical content rewrote the file: mtime %v, want %v", info.ModTime(), old)
+	}
+
+	if err := writeIfChanged(file, []byte("{\"a\":1}\n")); err != nil {
+		t.Fatal(err)
+	}
+	if got, _ := os.ReadFile(file); string(got) != "{\"a\":1}\n" {
+		t.Fatalf("changed content not written: %q", got)
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"cmp"
 	"encoding/json"
 	"flag"
@@ -67,10 +68,17 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		if err := os.WriteFile(filepath.Join(pageDir, "api.json"), append(data, '\n'), 0o644); err != nil {
+		if err := writeIfChanged(filepath.Join(pageDir, "api.json"), append(data, '\n')); err != nil {
 			log.Fatal(err)
 		}
 	}
+}
+
+func writeIfChanged(file string, data []byte) error {
+	if old, err := os.ReadFile(file); err == nil && bytes.Equal(old, data) {
+		return nil
+	}
+	return os.WriteFile(file, data, 0o644)
 }
 
 func pageOf(structName string) string {

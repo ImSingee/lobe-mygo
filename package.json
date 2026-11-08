@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun scripts/build-wasm.ts && bun run --parallel dev:wasm dev:docs",
+    "dev": "bun run --parallel dev:wasm dev:docs",
     "dev:wasm": "bun scripts/build-wasm.ts --watch",
     "dev:docs": "lobedocs dev",
     "build": "bun scripts/build-wasm.ts --prod && lobedocs build",
@@ -14,6 +14,7 @@
     "@lobehub/docs-kit": "6.3.1",
     "@lobehub/ui": "6.15.2",
     "@react-router/dev": "8.4.0",
+    "@types/bun": "^1.4.4",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.0",
     "lucide-react": "^1.55.0",
