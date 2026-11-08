@@ -1,0 +1,25 @@
+---
+title: Popover
+description: A floating panel in the Lobe UI look that opens from an element on click and closes on a press outside or Escape.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import placement from './placement.go?raw';
+
+`overlay.Popover` shows any content in a panel by its anchor while a `*bool` is true. Clicking the anchor toggles it; a press outside the panel or Escape closes it. It comes in on `motion.Popup`.
+
+## Basic Usage
+
+<GoDemo name="popover/basic" title="Basic usage" height={300} source={basic} />
+
+## Placement
+
+<GoDemo name="popover/placement" title="Placement" height={240} source={placement} />
+
+## API
+
+<GoApi data={api} name="PopoverProps" />

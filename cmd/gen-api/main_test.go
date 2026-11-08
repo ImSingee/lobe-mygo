@@ -1,6 +1,7 @@
 package main
 
 import (
+	"maps"
 	"os"
 	"path/filepath"
 	"slices"
@@ -175,5 +176,28 @@ func TestWriteIfChangedLeavesIdenticalFileUntouched(t *testing.T) {
 	}
 	if got, _ := os.ReadFile(file); string(got) != "{\"a\":1}\n" {
 		t.Fatalf("changed content not written: %q", got)
+	}
+}
+
+func TestExtractListsStructsOfPropsFieldsOnTheSamePage(t *testing.T) {
+	api, err := extract("../../pkg/overlay", "../../pkg/motion")
+	if err != nil {
+		t.Fatal(err)
+	}
+	item, ok := api["MenuItem"]
+	if !ok {
+		t.Fatalf("no MenuItem in %v", slices.Collect(maps.Keys(api)))
+	}
+	if item.Page != "dropdown-menu" {
+		t.Errorf("MenuItem page = %q, want dropdown-menu", item.Page)
+	}
+	if f := field(t, item, "Disabled"); f.Type != "bool" || f.Default != "false" {
+		t.Errorf("Disabled = %+v", f)
+	}
+	if got := api["DropdownMenuProps"].Page; got != "dropdown-menu" {
+		t.Errorf("DropdownMenuProps page = %q", got)
+	}
+	if _, listed := api["Placement"]; listed {
+		t.Error("an enum type is listed as a struct")
 	}
 }

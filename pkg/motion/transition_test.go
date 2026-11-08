@@ -82,3 +82,24 @@ func TestDrawerComesFromItsSide(t *testing.T) {
 		}
 	}
 }
+
+func TestTowardTurnsTheOffsetToStartAtTheAnchor(t *testing.T) {
+	cases := []struct {
+		side Side
+		x, y float32
+	}{{Bottom, 0, -6}, {Top, 0, 6}, {Right, -6, 0}, {Left, 6, 0}}
+	for _, c := range cases {
+		tr := Toward(Popup(), c.side)
+		for name, m := range map[string]*ui.Motion{"enter": tr.Enter, "exit": tr.Exit} {
+			if m.X != c.x || m.Y != c.y {
+				t.Errorf("side %v %s = (%v, %v), want (%v, %v)", c.side, name, m.X, m.Y, c.x, c.y)
+			}
+			if m.Scale != 0.96 || !m.Flip {
+				t.Errorf("side %v %s lost scale or flip: %+v", c.side, name, m)
+			}
+		}
+	}
+	if p := Popup(); p.Enter.Y != -6 {
+		t.Errorf("Toward changed the preset it was given: %+v", p.Enter)
+	}
+}

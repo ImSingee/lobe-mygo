@@ -37,11 +37,16 @@ var buttonTransition = ui.ElementTransition{
 }
 
 func Button(c *ui.Context, label string, p ButtonProps) ui.Element {
+	return StyleButton(c, ui.ButtonBase(c), label, p)
+}
+
+// StyleButton gives b, a button of any kind, as a menu's trigger (ui.MenuBase), the look of Button
+// with label.
+func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.Element {
 	tk := theme.TokensOf(c)
 	m, radius := buttonSize(tk, p.Size)
 
-	b := ui.ButtonBase(c).
-		Height(m.height).PaddingX(m.paddingX).Gap(6).Radius(radius).
+	b.Height(m.height).PaddingX(m.paddingX).Gap(6).Radius(radius).
 		FontSize(m.fontSize).FontWeight(500).
 		Cursor(ui.CursorPointer).Transition(buttonTransition)
 

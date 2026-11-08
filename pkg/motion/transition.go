@@ -103,3 +103,25 @@ func Collapse() ui.ElementTransition {
 		Exit:     &ui.Motion{Collapse: true, Y: -6},
 	}
 }
+
+// Toward turns the offset of a preset made for an element below its anchor, as Popup and Tooltip
+// are, so that it starts at the anchor from side.
+func Toward(tr ui.ElementTransition, side Side) ui.ElementTransition {
+	turn := func(m *ui.Motion) *ui.Motion {
+		if m == nil {
+			return nil
+		}
+		t := *m
+		switch side {
+		case Top:
+			t.Y = -m.Y
+		case Right:
+			t.X, t.Y = m.Y, 0
+		case Left:
+			t.X, t.Y = -m.Y, 0
+		}
+		return &t
+	}
+	tr.Enter, tr.Exit = turn(tr.Enter), turn(tr.Exit)
+	return tr
+}

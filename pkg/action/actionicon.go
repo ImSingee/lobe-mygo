@@ -28,10 +28,16 @@ type ActionIconProps struct {
 }
 
 func ActionIcon(c *ui.Context, svg *ui.SVG, p ActionIconProps) ui.Element {
+	return StyleActionIcon(c, ui.ButtonBase(c), svg, p)
+}
+
+// StyleActionIcon gives b, a button of any kind, as a menu's trigger (ui.MenuBase), the look of
+// ActionIcon with svg.
+func StyleActionIcon(c *ui.Context, b ui.Element, svg *ui.SVG, p ActionIconProps) ui.Element {
 	tk := theme.TokensOf(c)
 	box, radius, glyph := actionIconSize(p.Size)
 
-	b := ui.ButtonBase(c).Size(box, box).Radius(radius).
+	b.Size(box, box).Radius(radius).
 		Cursor(ui.CursorPointer).Transition(buttonTransition)
 	if p.Title != "" {
 		b.Label(p.Title).Tooltip(p.Title)

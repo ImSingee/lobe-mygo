@@ -1,0 +1,27 @@
+---
+title: DropdownMenu
+description: A menu in the Lobe UI look that opens below a trigger, with icons, shortcuts, dividers, danger and disabled items.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import actionIcon from './action-icon.go?raw';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`overlay.DropdownMenu` builds a menu from `[]overlay.MenuItem` and returns the `Key` of the item chosen in the frame. The trigger is a button without a look: give it one with `action.StyleButton` or `action.StyleActionIcon`. Arrow keys, Home, End, typing and Escape work as in a native menu.
+
+## Basic Usage
+
+<GoDemo name="dropdown-menu/basic" title="Basic usage" height={420} source={basic} />
+
+## Action Icon Trigger
+
+<GoDemo name="dropdown-menu/action-icon" title="Action icon trigger" height={240} source={actionIcon} />
+
+## API
+
+<GoApi data={api} name="DropdownMenuProps" />
+
+<GoApi data={api} name="MenuItem" />

@@ -1,0 +1,29 @@
+---
+title: Tooltip
+description: A short hint in the Lobe UI look that shows by an element once the pointer rests on it, springing in toward its anchor.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import placement from './placement.go?raw';
+
+`overlay.Tooltip` attaches a tip to any `ui.Element`. It shows after the pointer rests for 0.6 seconds, at once when the keyboard focus arrives, and describes the element to assistive technology. It comes in on `motion.Tooltip`, from the side of its anchor.
+
+## Basic Usage
+
+`Hotkey` shows a key combination after the text.
+
+<GoDemo name="tooltip/basic" title="Basic usage" height={160} source={basic} />
+
+## Placement
+
+`Top`, `Bottom`, `Left` and `Right` pick the side; where there is no room, the tip moves to the opposite side and its motion follows.
+
+<GoDemo name="tooltip/placement" title="Placement" height={180} source={placement} />
+
+## API
+
+<GoApi data={api} name="TooltipProps" />

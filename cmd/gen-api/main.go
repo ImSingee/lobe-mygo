@@ -29,6 +29,7 @@ type apiField struct {
 
 type apiStruct struct {
 	Fields []apiField `json:"fields"`
+	Page   string     `json:"-"`
 }
 
 func main() {
@@ -53,11 +54,10 @@ func main() {
 	}
 	pages := map[string]map[string]apiStruct{}
 	for name, s := range api {
-		page := pageOf(name)
-		if pages[page] == nil {
-			pages[page] = map[string]apiStruct{}
+		if pages[s.Page] == nil {
+			pages[s.Page] = map[string]apiStruct{}
 		}
-		pages[page][name] = s
+		pages[s.Page][name] = s
 	}
 	for page, structs := range pages {
 		pageDir := filepath.Join(*out, page)
@@ -102,6 +102,7 @@ type parsedPackage struct {
 	name       string
 	underlying map[string]string
 	props      []*ast.TypeSpec
+	structs    map[string]*ast.TypeSpec
 	values     map[string][]string
 	zero       map[string]string
 }
@@ -123,34 +124,45 @@ func extract(dirs ...string) (map[string]apiStruct, error) {
 	api := map[string]apiStruct{}
 	for _, pkg := range pkgs {
 		for _, ts := range pkg.props {
-			var s apiStruct
+			page := pageOf(ts.Name.Name)
+			api[ts.Name.Name] = apiStruct{Fields: pkg.fieldsOf(ts, byName), Page: page}
 			for _, f := range ts.Type.(*ast.StructType).Fields.List {
-				typ := types.ExprString(f.Type)
-				owner, local := pkg, typ
-				if before, after, ok := strings.Cut(typ, "."); ok && byName[before] != nil {
-					owner, local = byName[before], after
-				}
-				shown := typ
-				if _, declared := owner.underlying[local]; declared && owner == pkg {
-					shown = pkg.name + "." + typ
-				}
-				for _, name := range f.Names {
-					if !name.IsExported() {
-						continue
-					}
-					s.Fields = append(s.Fields, apiField{
-						Name:    name.Name,
-						Type:    shown,
-						Default: owner.defaultOf(local),
-						Doc:     strings.TrimSpace(f.Doc.Text()),
-						Values:  owner.qualified(local),
-					})
+				elem := strings.TrimLeft(types.ExprString(f.Type), "[]*")
+				if nested, ok := pkg.structs[elem]; ok && !strings.HasSuffix(elem, "Props") {
+					api[elem] = apiStruct{Fields: pkg.fieldsOf(nested, byName), Page: page}
 				}
 			}
-			api[ts.Name.Name] = s
 		}
 	}
 	return api, nil
+}
+
+func (p *parsedPackage) fieldsOf(ts *ast.TypeSpec, byName map[string]*parsedPackage) []apiField {
+	var fields []apiField
+	for _, f := range ts.Type.(*ast.StructType).Fields.List {
+		typ := types.ExprString(f.Type)
+		owner, local := p, typ
+		if before, after, ok := strings.Cut(typ, "."); ok && byName[before] != nil {
+			owner, local = byName[before], after
+		}
+		shown := typ
+		if _, declared := owner.underlying[local]; declared && owner == p {
+			shown = p.name + "." + typ
+		}
+		for _, name := range f.Names {
+			if !name.IsExported() {
+				continue
+			}
+			fields = append(fields, apiField{
+				Name:    name.Name,
+				Type:    shown,
+				Default: owner.defaultOf(local),
+				Doc:     strings.TrimSpace(f.Doc.Text()),
+				Values:  owner.qualified(local),
+			})
+		}
+	}
+	return fields
 }
 
 func (p *parsedPackage) qualified(typ string) []string {
@@ -169,7 +181,7 @@ func parseDir(dir string) (*parsedPackage, error) {
 	slices.Sort(files)
 
 	fset := token.NewFileSet()
-	pkg := &parsedPackage{underlying: map[string]string{}}
+	pkg := &parsedPackage{underlying: map[string]string{}, structs: map[string]*ast.TypeSpec{}}
 	var parsed []*ast.File
 	for _, file := range files {
 		if strings.HasSuffix(file, "_test.go") {
@@ -189,8 +201,11 @@ func parseDir(dir string) (*parsedPackage, error) {
 			for _, spec := range gen.Specs {
 				ts := spec.(*ast.TypeSpec)
 				pkg.underlying[ts.Name.Name] = types.ExprString(ts.Type)
-				if _, isStruct := ts.Type.(*ast.StructType); isStruct && ts.Name.IsExported() && strings.HasSuffix(ts.Name.Name, "Props") {
-					pkg.props = append(pkg.props, ts)
+				if _, isStruct := ts.Type.(*ast.StructType); isStruct && ts.Name.IsExported() {
+					pkg.structs[ts.Name.Name] = ts
+					if strings.HasSuffix(ts.Name.Name, "Props") {
+						pkg.props = append(pkg.props, ts)
+					}
 				}
 			}
 		}

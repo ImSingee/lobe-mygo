@@ -11,15 +11,19 @@ import (
 	_ "github.com/lobehub/lobe-mygo/catalog/action-icon"
 	_ "github.com/lobehub/lobe-mygo/catalog/button"
 	_ "github.com/lobehub/lobe-mygo/catalog/checkbox"
+	_ "github.com/lobehub/lobe-mygo/catalog/dropdown-menu"
 	_ "github.com/lobehub/lobe-mygo/catalog/icon"
 	_ "github.com/lobehub/lobe-mygo/catalog/input"
+	_ "github.com/lobehub/lobe-mygo/catalog/modal"
 	_ "github.com/lobehub/lobe-mygo/catalog/motion"
+	_ "github.com/lobehub/lobe-mygo/catalog/popover"
 	"github.com/lobehub/lobe-mygo/catalog/registry"
 	_ "github.com/lobehub/lobe-mygo/catalog/segmented"
 	_ "github.com/lobehub/lobe-mygo/catalog/switch"
 	_ "github.com/lobehub/lobe-mygo/catalog/tag"
 	_ "github.com/lobehub/lobe-mygo/catalog/text-area"
 	_ "github.com/lobehub/lobe-mygo/catalog/tokens"
+	_ "github.com/lobehub/lobe-mygo/catalog/tooltip"
 )
 
 func main() {

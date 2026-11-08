@@ -92,3 +92,34 @@ func TestEveryGoDemoNameInMDXIsRegistered(t *testing.T) {
 		}
 	}
 }
+
+func TestOverlayDemosOpen(t *testing.T) {
+	for _, c := range []struct{ demo, trigger, shows string }{
+		{"modal/basic", "Open modal", "Publish changes"},
+		{"popover/basic", "Share", "Copy link"},
+		{"dropdown-menu/basic", "Actions", "Duplicate"},
+	} {
+		view, ok := registry.Get(c.demo)
+		if !ok {
+			t.Errorf("%s not registered", c.demo)
+			continue
+		}
+		tt := ui.NewTester(func(ctx *ui.Context) { preview(ctx, view) }, 720, 400)
+		r, ok := tt.Find(c.trigger)
+		if !ok {
+			t.Errorf("%s: no %q; texts %q", c.demo, c.trigger, tt.Texts())
+			continue
+		}
+		tt.Press(r.X+r.W/2, r.Y+r.H/2)
+		tt.Release(r.X+r.W/2, r.Y+r.H/2)
+		tt.Advance(time.Second)
+		if !tt.HasText(c.shows) {
+			t.Errorf("%s: %q not shown after pressing %q; texts %q", c.demo, c.shows, c.trigger, tt.Texts())
+		}
+	}
+	for _, demo := range []string{"tooltip/basic", "tooltip/placement", "popover/placement", "dropdown-menu/action-icon", "modal/texts"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
