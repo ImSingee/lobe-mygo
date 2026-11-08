@@ -1,0 +1,20 @@
+---
+title: Burger
+description: A mobile header's menu button that opens a drawer of rows from the top, or a fullscreen menu.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`nav.Burger` opens its rows under the app header, `HeaderHeight` DIPs down, and stays a close button there. `Fullscreen` covers the window with large rows, a close button of its own and an optional `Footer`.
+
+## Basic Usage
+
+<GoDemo name="burger/basic" title="Drawer and fullscreen menus" height={520} source={basic} />
+
+## API
+
+<GoApi data={api} name="BurgerProps" />

@@ -1,0 +1,22 @@
+---
+title: GroupAvatar
+description: A group shown by its members' avatars in a grid, as a group chat in a list.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`display.GroupAvatar` lays out up to four members in two columns, or nine in three, on a light fill; one member shows large. `GroupCornerCircle` shrinks the avatars to fit a circle. Lobe draws the squircle corners with an SVG mask; mygo has no mask of a path, so they are rounded squares nearest each curve.
+
+## Basic Usage
+
+<GoDemo name="group-avatar/basic" title="Counts, grids and corners" height={200} source={basic} />
+
+## API
+
+<GoApi data={api} name="GroupAvatarProps" />
+
+<GoApi data={api} name="GroupAvatarItem" />

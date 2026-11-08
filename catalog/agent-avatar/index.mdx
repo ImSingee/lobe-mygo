@@ -1,0 +1,25 @@
+---
+title: AgentAvatar
+description: An agent drawn as a flat silhouette with the logo's eyes, its shape, color and lean seeded by its name, its state shown by its eyes and pose.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import states from './states.go?raw';
+
+`display.AgentAvatar` hashes `Seed` (or `Name`) as Lobe does, so the same name gets the same agent in both. `Animated` blinks, glances and moves as the state does; without it the agent holds the pose of its state.
+
+## Basic Usage
+
+<GoDemo name="agent-avatar/basic" title="Twelve shapes and seven colors" height={220} source={basic} />
+
+## States
+
+<GoDemo name="agent-avatar/states" title="Idle, working, waiting, blocked, thinking and done" height={160} source={states} />
+
+## API
+
+<GoApi data={api} name="AgentAvatarProps" />

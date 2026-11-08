@@ -1,0 +1,20 @@
+---
+title: SideNav
+description: An app's 58 DIP rail of icon buttons along the left edge, with an avatar at the top and actions at the bottom.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.SideNav` stacks the `Avatar` and the `TopActions` at the top and the `BottomActions` at the bottom. It takes the height of its row, at least 640 DIPs.
+
+## Basic Usage
+
+<GoDemo name="side-nav/basic" title="Basic usage" height={680} source={basic} />
+
+## API
+
+<GoApi data={api} name="SideNavProps" />

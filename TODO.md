@@ -216,6 +216,16 @@ React-only props (`className`, `classNames`, `styles`, `ref`, `as`, controlled/`
 ### Accordion
 - [ ] **P3** `keepMounted`.
 
+### GroupAvatar
+- [ ] **P3** Squircle / smooth / iOS corners are rounded squares: mygo has no path masks.
+
+### QRCode
+- [ ] **P3** `statusRender` (a custom overlay per status), `iconSize`.
+
+### SortableList
+- [ ] **P2** Scroll the container while a row is dragged near its edge.
+- [ ] **P3** The copy under the pointer stays inside the window's top only, not all its edges.
+
 ### Collapsible, Descriptions, Statistic, Table, Tree
 Not started; see below.
 
@@ -250,6 +260,13 @@ Not started; see below.
 ### Result
 - Complete.
 
+### FloatingPanel
+- [ ] **P2** Move the bottom-right toasts out of the panel's way while it shows (Lobe's `ToastDodge`).
+- [ ] **P3** `modal` (focus kept inside), separate x / y `offset`, `afterClose`.
+
+### FloatingSheet
+- Complete.
+
 ## Overlay
 
 ### Tooltip
@@ -272,6 +289,13 @@ Not started; see below.
 ### Grid
 - [ ] **P3** `rows`.
 
+### Header, Layout
+- [ ] **P2** `Mobile` is the caller's: no breakpoint follows the window's width.
+- [ ] **P2** Layout scrolls its content in a region under the header, so the footer spans the content column, not the sidebar too, and nothing shows through the header (backdrop blur is blocked on mygo).
+
+### SideNav, DraggableSideNav, GuideCard
+- Complete.
+
 ## Blocked on mygo
 
 - Backdrop blur (`backdrop-filter`): `glass` everywhere, the viewer toolbar and floating footers. Today they fall back to a 60 % layout-color fill.
@@ -284,10 +308,10 @@ Not started; see below.
 In the order agreed for consumer apps; B-end components last.
 
 1. Mermaid through pele (goja natively, the browser's JS on the web).
-2. EmojiPicker, FluentEmoji, GroupAvatar.
-3. Collapsible, SideNav / DraggableSideNav, Burger.
-4. Carousel, Video, QRCode, DownloadButton, FileTypeIcon.
-5. FloatingPanel, FloatingSheet, Toc, Anchor, ScrollShadow, ProgressiveBlur, MaskShadow, GuideCard.
-6. Descriptions, Statistic, Table / ProTable, Tree, SortableList.
+2. EmojiPicker, FluentEmoji.
+3. Collapsible.
+4. Carousel, Video, DownloadButton, FileTypeIcon.
+5. Toc, Anchor, ScrollShadow, ProgressiveBlur, MaskShadow.
+6. Descriptions, Statistic, Table / ProTable, Tree.
 7. CodeEditor, CodeDiff, HtmlPreview, EditorSlashMenu.
 8. Subpath entries: `chat` (ChatItem, MessageInput, ChatList), `mobile`, `awesome`, `dashboard`.

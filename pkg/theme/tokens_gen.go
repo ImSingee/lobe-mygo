@@ -136,6 +136,8 @@ type Tokens struct {
 	CyanFillQuaternary     ui.Color
 	CyanFillTertiary       ui.Color
 	Geekblue               ui.Color
+	Geekblue8              ui.Color
+	Geekblue9              ui.Color
 	GeekblueActive         ui.Color
 	GeekblueFillQuaternary ui.Color
 	GeekblueFillTertiary   ui.Color
@@ -144,6 +146,10 @@ type Tokens struct {
 	GoldFillQuaternary     ui.Color
 	GoldFillTertiary       ui.Color
 	Gray                   ui.Color
+	Gray10                 ui.Color
+	Gray11                 ui.Color
+	Gray7                  ui.Color
+	Gray9                  ui.Color
 	GrayActive             ui.Color
 	GrayFillQuaternary     ui.Color
 	GrayFillTertiary       ui.Color
@@ -156,14 +162,19 @@ type Tokens struct {
 	LimeFillQuaternary     ui.Color
 	LimeFillTertiary       ui.Color
 	Magenta                ui.Color
+	Magenta8               ui.Color
+	Magenta9               ui.Color
 	MagentaActive          ui.Color
 	MagentaFillQuaternary  ui.Color
 	MagentaFillTertiary    ui.Color
 	Orange                 ui.Color
+	Orange9                ui.Color
 	OrangeActive           ui.Color
 	OrangeFillQuaternary   ui.Color
 	OrangeFillTertiary     ui.Color
 	Purple                 ui.Color
+	Purple8                ui.Color
+	Purple9                ui.Color
 	PurpleActive           ui.Color
 	PurpleFillQuaternary   ui.Color
 	PurpleFillTertiary     ui.Color
@@ -172,6 +183,8 @@ type Tokens struct {
 	RedFillQuaternary      ui.Color
 	RedFillTertiary        ui.Color
 	Volcano                ui.Color
+	Volcano8               ui.Color
+	Volcano9               ui.Color
 	VolcanoActive          ui.Color
 	VolcanoFillQuaternary  ui.Color
 	VolcanoFillTertiary    ui.Color
@@ -333,6 +346,8 @@ var lightTokens = Tokens{
 	CyanFillQuaternary:     ui.RGBA(55, 255, 122, 0.03),
 	CyanFillTertiary:       ui.RGBA(26, 255, 155, 0.07),
 	Geekblue:               ui.RGB(0, 114, 245),
+	Geekblue8:              ui.RGB(76, 144, 255),
+	Geekblue9:              ui.RGB(0, 114, 245),
 	GeekblueActive:         ui.RGB(0, 90, 224),
 	GeekblueFillQuaternary: ui.RGBA(105, 55, 255, 0.02),
 	GeekblueFillTertiary:   ui.RGBA(22, 88, 255, 0.06),
@@ -341,6 +356,10 @@ var lightTokens = Tokens{
 	GoldFillQuaternary:     ui.RGBA(255, 145, 55, 0.04),
 	GoldFillTertiary:       ui.RGBA(255, 155, 55, 0.08),
 	Gray:                   ui.RGB(136, 136, 136),
+	Gray10:                 ui.RGB(102, 102, 102),
+	Gray11:                 ui.RGB(51, 51, 51),
+	Gray7:                  ui.RGB(170, 170, 170),
+	Gray9:                  ui.RGB(136, 136, 136),
 	GrayActive:             ui.RGB(102, 102, 102),
 	GrayFillQuaternary:     ui.RGBA(0, 0, 0, 0.03),
 	GrayFillTertiary:       ui.RGBA(0, 0, 0, 0.06),
@@ -353,14 +372,19 @@ var lightTokens = Tokens{
 	LimeFillQuaternary:     ui.RGBA(242, 255, 5, 0.08),
 	LimeFillTertiary:       ui.RGBA(218, 255, 11, 0.16),
 	Magenta:                ui.RGB(227, 75, 169),
+	Magenta8:               ui.RGB(239, 103, 186),
+	Magenta9:               ui.RGB(227, 75, 169),
 	MagentaActive:          ui.RGB(163, 36, 102),
 	MagentaFillQuaternary:  ui.RGBA(255, 55, 105, 0.04),
 	MagentaFillTertiary:    ui.RGBA(255, 22, 133, 0.09),
 	Orange:                 ui.RGB(248, 140, 19),
+	Orange9:                ui.RGB(248, 140, 19),
 	OrangeActive:           ui.RGB(209, 128, 0),
 	OrangeFillQuaternary:   ui.RGBA(255, 105, 255, 0.03),
 	OrangeFillTertiary:     ui.RGBA(255, 80, 30, 0.08),
 	Purple:                 ui.RGB(189, 84, 198),
+	Purple8:                ui.RGB(203, 110, 210),
+	Purple9:                ui.RGB(189, 84, 198),
 	PurpleActive:           ui.RGB(137, 43, 138),
 	PurpleFillQuaternary:   ui.RGBA(255, 30, 155, 0.04),
 	PurpleFillTertiary:     ui.RGBA(255, 15, 235, 0.08),
@@ -369,6 +393,8 @@ var lightTokens = Tokens{
 	RedFillQuaternary:      ui.RGBA(255, 55, 255, 0.02),
 	RedFillTertiary:        ui.RGBA(255, 15, 15, 0.05),
 	Volcano:                ui.RGB(236, 94, 65),
+	Volcano8:               ui.RGB(251, 116, 90),
+	Volcano9:               ui.RGB(236, 94, 65),
 	VolcanoActive:          ui.RGB(165, 55, 22),
 	VolcanoFillQuaternary:  ui.RGBA(255, 55, 30, 0.04),
 	VolcanoFillTertiary:    ui.RGBA(255, 44, 11, 0.06),
@@ -530,6 +556,8 @@ var darkTokens = Tokens{
 	CyanFillQuaternary:     ui.RGBA(0, 250, 150, 0.02),
 	CyanFillTertiary:       ui.RGBA(0, 243, 200, 0.14),
 	Geekblue:               ui.RGB(0, 114, 245),
+	Geekblue8:              ui.RGB(0, 108, 243),
+	Geekblue9:              ui.RGB(0, 114, 245),
 	GeekblueActive:         ui.RGB(0, 101, 237),
 	GeekblueFillQuaternary: ui.RGBA(0, 18, 245, 0.11),
 	GeekblueFillTertiary:   ui.RGBA(0, 43, 253, 0.3),
@@ -538,6 +566,10 @@ var darkTokens = Tokens{
 	GoldFillQuaternary:     ui.RGBA(233, 100, 0, 0.03),
 	GoldFillTertiary:       ui.RGBA(247, 159, 0, 0.17),
 	Gray:                   ui.RGB(119, 119, 119),
+	Gray10:                 ui.RGB(170, 170, 170),
+	Gray11:                 ui.RGB(221, 221, 221),
+	Gray7:                  ui.RGB(102, 102, 102),
+	Gray9:                  ui.RGB(119, 119, 119),
 	GrayActive:             ui.RGB(102, 102, 102),
 	GrayFillQuaternary:     ui.RGBA(255, 255, 255, 0.02),
 	GrayFillTertiary:       ui.RGBA(255, 255, 255, 0.06),
@@ -550,14 +582,19 @@ var darkTokens = Tokens{
 	LimeFillQuaternary:     ui.RGBA(100, 200, 0, 0.02),
 	LimeFillTertiary:       ui.RGBA(154, 254, 0, 0.13),
 	Magenta:                ui.RGB(227, 75, 169),
+	Magenta8:               ui.RGB(206, 62, 145),
+	Magenta9:               ui.RGB(227, 75, 169),
 	MagentaActive:          ui.RGB(184, 49, 123),
 	MagentaFillQuaternary:  ui.RGBA(229, 0, 29, 0.07),
 	MagentaFillTertiary:    ui.RGBA(252, 0, 81, 0.21),
 	Orange:                 ui.RGB(255, 153, 39),
+	Orange9:                ui.RGB(255, 153, 39),
 	OrangeActive:           ui.RGB(232, 139, 0),
 	OrangeFillQuaternary:   ui.RGBA(233, 100, 0, 0.03),
 	OrangeFillTertiary:     ui.RGBA(241, 147, 0, 0.17),
 	Purple:                 ui.RGB(189, 84, 198),
+	Purple8:                ui.RGB(171, 70, 178),
+	Purple9:                ui.RGB(189, 84, 198),
 	PurpleActive:           ui.RGB(154, 57, 158),
 	PurpleFillQuaternary:   ui.RGBA(217, 0, 183, 0.06),
 	PurpleFillTertiary:     ui.RGBA(242, 0, 221, 0.19),
@@ -566,6 +603,8 @@ var darkTokens = Tokens{
 	RedFillQuaternary:      ui.RGBA(250, 0, 50, 0.06),
 	RedFillTertiary:        ui.RGBA(255, 0, 95, 0.22),
 	Volcano:                ui.RGB(236, 94, 65),
+	Volcano8:               ui.RGB(212, 81, 50),
+	Volcano9:               ui.RGB(236, 94, 65),
 	VolcanoActive:          ui.RGB(188, 68, 36),
 	VolcanoFillQuaternary:  ui.RGBA(240, 20, 0, 0.05),
 	VolcanoFillTertiary:    ui.RGBA(247, 53, 0, 0.19),
@@ -981,6 +1020,10 @@ func (t *Tokens) Color(name string) (ui.Color, bool) {
 		return t.CyanFillTertiary, true
 	case "Geekblue":
 		return t.Geekblue, true
+	case "Geekblue8":
+		return t.Geekblue8, true
+	case "Geekblue9":
+		return t.Geekblue9, true
 	case "GeekblueActive":
 		return t.GeekblueActive, true
 	case "GeekblueFillQuaternary":
@@ -997,6 +1040,14 @@ func (t *Tokens) Color(name string) (ui.Color, bool) {
 		return t.GoldFillTertiary, true
 	case "Gray":
 		return t.Gray, true
+	case "Gray10":
+		return t.Gray10, true
+	case "Gray11":
+		return t.Gray11, true
+	case "Gray7":
+		return t.Gray7, true
+	case "Gray9":
+		return t.Gray9, true
 	case "GrayActive":
 		return t.GrayActive, true
 	case "GrayFillQuaternary":
@@ -1021,6 +1072,10 @@ func (t *Tokens) Color(name string) (ui.Color, bool) {
 		return t.LimeFillTertiary, true
 	case "Magenta":
 		return t.Magenta, true
+	case "Magenta8":
+		return t.Magenta8, true
+	case "Magenta9":
+		return t.Magenta9, true
 	case "MagentaActive":
 		return t.MagentaActive, true
 	case "MagentaFillQuaternary":
@@ -1029,6 +1084,8 @@ func (t *Tokens) Color(name string) (ui.Color, bool) {
 		return t.MagentaFillTertiary, true
 	case "Orange":
 		return t.Orange, true
+	case "Orange9":
+		return t.Orange9, true
 	case "OrangeActive":
 		return t.OrangeActive, true
 	case "OrangeFillQuaternary":
@@ -1037,6 +1094,10 @@ func (t *Tokens) Color(name string) (ui.Color, bool) {
 		return t.OrangeFillTertiary, true
 	case "Purple":
 		return t.Purple, true
+	case "Purple8":
+		return t.Purple8, true
+	case "Purple9":
+		return t.Purple9, true
 	case "PurpleActive":
 		return t.PurpleActive, true
 	case "PurpleFillQuaternary":
@@ -1053,6 +1114,10 @@ func (t *Tokens) Color(name string) (ui.Color, bool) {
 		return t.RedFillTertiary, true
 	case "Volcano":
 		return t.Volcano, true
+	case "Volcano8":
+		return t.Volcano8, true
+	case "Volcano9":
+		return t.Volcano9, true
 	case "VolcanoActive":
 		return t.VolcanoActive, true
 	case "VolcanoFillQuaternary":

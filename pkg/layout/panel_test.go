@@ -182,3 +182,46 @@ func TestDraggablePanelContentStartsAtTheTop(t *testing.T) {
 		}
 	}
 }
+
+func TestDraggablePanelToggleHidesAfterAClickOnceThePointerLeaves(t *testing.T) {
+	tk := theme.Light()
+	size, expanded := float32(280), true
+	tt := panelTester(&size, &expanded, DraggablePanelProps{})
+	tt.Frame()
+	tt.Move(600, 150)
+	tt.Advance(time.Second)
+	collapse, _ := tt.AccessByRole(ui.RoleButton, "Collapse panel")
+	tt.ClickAt(collapse.Bounds.X+collapse.Bounds.W/2, collapse.Bounds.Y+collapse.Bounds.H/2)
+	tt.Advance(time.Second)
+	expand, _ := tt.AccessByRole(ui.RoleButton, "Expand panel")
+	tt.ClickAt(expand.Bounds.X+expand.Bounds.W/2, expand.Bounds.Y+expand.Bounds.H/2)
+	tt.Advance(time.Second)
+	tt.Move(200, 150)
+	tt.Advance(time.Second)
+	tt.Frame()
+	if got := testkit.PixelAt(tt, 800, 515, 150); !testkit.Near(got, tk.BgLayout) {
+		t.Errorf("toggle %+v after the click and the pointer left: want hidden", got)
+	}
+}
+
+func TestDraggablePanelToggleShowsOnKeyboardFocus(t *testing.T) {
+	tk := theme.Light()
+	size, expanded := float32(280), true
+	tt := panelTester(&size, &expanded, DraggablePanelProps{})
+	tt.Move(200, 150)
+	tt.Advance(time.Second)
+	for range 4 {
+		if tt.Focused("Collapse panel") {
+			break
+		}
+		tt.Key(0, ui.KeyTab)
+	}
+	tt.Advance(time.Second)
+	tt.Frame()
+	if !tt.Focused("Collapse panel") {
+		t.Fatal("Tab never reached the toggle")
+	}
+	if got := testkit.PixelAt(tt, 800, 515, 150); testkit.Near(got, tk.BgLayout) {
+		t.Error("toggle hidden while focused from the keyboard")
+	}
+}

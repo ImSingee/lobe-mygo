@@ -310,3 +310,33 @@ func TestMarkdownDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestBatchAvatarsQRBurgerGuideDemos(t *testing.T) {
+	for _, demo := range []string{"group-avatar/basic", "agent-avatar/basic", "agent-avatar/states", "qr-code/basic", "qr-code/status", "burger/basic", "guide-card/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
+
+func TestFloatingDemos(t *testing.T) {
+	for _, demo := range []string{"floating-panel/basic", "floating-sheet/basic", "floating-sheet/inline"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
+
+func TestSortableListDemos(t *testing.T) {
+	if _, ok := registry.Get("sortable-list/basic"); !ok {
+		t.Error("sortable-list/basic not registered")
+	}
+}
+
+func TestBatchLayoutShellDemos(t *testing.T) {
+	for _, demo := range []string{"header/basic", "side-nav/basic", "draggable-side-nav/basic", "layout/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}

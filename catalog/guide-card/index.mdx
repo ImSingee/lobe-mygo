@@ -1,0 +1,20 @@
+---
+title: GuideCard
+description: A dismissible tip with a cover, a title and a description, as a feature's introduction.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.GuideCard` hides itself for good when closed and calls `OnClose`.
+
+## Basic Usage
+
+<GoDemo name="guide-card/basic" title="Filled, outlined with a shadow, borderless" height={200} source={basic} />
+
+## API
+
+<GoApi data={api} name="GuideCardProps" />

@@ -1,0 +1,20 @@
+---
+title: Header
+description: A site's 64 DIP top bar with a logo, links and actions over a line, and a mobile arrangement.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.Header` puts the `Logo` first, the `Nav` 48 DIPs after it and the `Actions` at the end, 8 DIPs apart. `Mobile` puts the `Nav` first, as a menu button, and gives the `Logo` the room left.
+
+## Basic Usage
+
+<GoDemo name="header/basic" title="Desktop and mobile" height={240} source={basic} />
+
+## API
+
+<GoApi data={api} name="HeaderProps" />

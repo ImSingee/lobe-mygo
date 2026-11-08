@@ -1,0 +1,20 @@
+---
+title: SortableList
+description: Rows that drag into a new order by a handle, making room as the dragged row passes, and reorder from the keyboard.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.SortableList` keeps the order in a `*[]T`, naming each item by `key`. Each row builds its handle where it goes by calling the `handle` func it gets. While a row is dragged, a copy follows the pointer, the row fades in the slot it would drop into and the others make room. From the keyboard, Space on a handle picks the row up and drops it, the arrow keys move it and Escape puts it back.
+
+## Basic Usage
+
+<GoDemo name="sortable-list/basic" title="Reorder tasks" height={320} source={basic} />
+
+## API
+
+<GoApi data={api} name="SortableListProps" />

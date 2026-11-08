@@ -1,0 +1,22 @@
+---
+title: DraggableSideNav
+description: A side navigation that resizes by dragging its edge, collapses to a slim rail, and tells its content which way it shows.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.DraggableSideNav` keeps its expanded width in a `*float32` and its state in a `*bool`. The tab on its edge, shown on hover, toggles it; a drag resizes it, and leaving it under a third of the way from `MinWidth` to its width collapses it. The body, `Header` and `Footer` get a `SideNavState`: `Expanded` says which content to build, kept at its width and clipped while the nav animates, and `Collapse` goes from 0 to 1 with the width. Given to `List`'s `Collapse` with `RailWidth`, it slides the rows into centered squares along the way.
+
+## Basic Usage
+
+<GoDemo name="draggable-side-nav/basic" title="Basic usage" height={520} source={basic} />
+
+## API
+
+<GoApi data={api} name="DraggableSideNavProps" />
+
+<GoApi data={api} name="SideNavState" />

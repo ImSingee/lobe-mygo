@@ -48,6 +48,12 @@ type ListProps struct {
 	Variant ListVariant
 	// Compact narrows the rows' side padding from 12 to 8.
 	Compact bool
+	// Collapse turns the rows, from 0 to 1, into squares centered in RailWidth that show only
+	// their icon or avatar, as a side nav collapsing to a rail: follow its progress for the rows
+	// to slide along with its width.
+	Collapse float32
+	// RailWidth is the width the collapsed rows center in: the list's own when zero.
+	RailWidth float32
 }
 
 var listTransition = ui.ElementTransition{Duration: 150 * time.Millisecond, Ease: motion.EaseOut, Colors: true}
@@ -70,7 +76,7 @@ func List(c *ui.Context, p ListProps) string {
 				ui.Box(c.Key(i)).Height(1).Margin(4, 0).AlignSelf(ui.Stretch).Background(tk.BorderSecondary)
 				continue
 			}
-			if listRow(c.Key(it.Key), tk, it, it.Key == p.Active, p.Compact) {
+			if listRow(c.Key(it.Key), tk, it, it.Key == p.Active, p, root.LayoutBounds().W) {
 				clicked = it.Key
 			}
 		}
@@ -78,16 +84,19 @@ func List(c *ui.Context, p ListProps) string {
 	return clicked
 }
 
-func listRow(c *ui.Context, tk *theme.Tokens, it ListItem, active, compact bool) bool {
+func listRow(c *ui.Context, tk *theme.Tokens, it ListItem, active bool, p ListProps, width float32) bool {
 	clicked := false
 	cell := ui.Box(c).AlignSelf(ui.Stretch)
 	cell.Children(func() {
 		row := ui.ButtonBase(c).Label(it.Label).Disabled(it.Disabled).Row().Gap(12).AlignItems(ui.Center).
 			Justify(ui.Start).MinHeight(32).PaddingY(6).PaddingX(12).Radius(tk.BorderRadius).
 			FontSize(14).AlignSelf(ui.Stretch).Transition(listTransition)
-		if compact {
+		pad := float32(12)
+		if p.Compact {
+			pad = 8
 			row.PaddingX(8)
 		}
+		k := min(max(p.Collapse, 0), 1)
 		fg := tk.TextSecondary
 		switch {
 		case it.Disabled:
@@ -105,14 +114,21 @@ func listRow(c *ui.Context, tk *theme.Tokens, it ListItem, active, compact bool)
 			fg = tk.Error
 		}
 		row.TextColor(fg)
+		var lead ui.Element
 		row.Children(func() {
-			switch {
-			case it.Avatar != nil:
-				it.Avatar()
-			case it.Icon != nil:
-				ui.Icon(c, it.Icon).FontSize(16)
+			lead = ui.Row(c).Shrink(0).Children(func() {
+				switch {
+				case it.Avatar != nil:
+					it.Avatar()
+				case it.Icon != nil:
+					ui.Icon(c, it.Icon).FontSize(16)
+				}
+			})
+			text := ui.Column(c).Gap(1).Grow(1).Basis(0).MinWidth(0)
+			if k > 0 {
+				text.Clip().Opacity(1 - k)
 			}
-			ui.Column(c).Gap(1).Grow(1).Basis(0).MinWidth(0).Children(func() {
+			text.Children(func() {
 				label := ui.Text(c, it.Label).SingleLine()
 				if active {
 					label.FontWeight(500)
@@ -121,14 +137,33 @@ func listRow(c *ui.Context, tk *theme.Tokens, it ListItem, active, compact bool)
 					ui.Text(c, it.Description).SingleLine().FontSize(12).LineHeight(1.4).TextColor(tk.TextDescription)
 				}
 			})
-			if it.Extra != "" {
-				ui.Text(c, it.Extra).FontSize(12).TextColor(tk.TextDescription).Shrink(0)
+			if it.Extra != "" && k < 1 {
+				ui.Text(c, it.Extra).FontSize(12).TextColor(tk.TextDescription).Shrink(0).Opacity(1 - k)
 			}
 		})
+		if k > 0 {
+			railRow(c, row, lead, k, pad, p.RailWidth, width)
+		}
 		clicked = row.Clicked()
 		if it.Actions != nil && (it.ShowAction || cell.Hovered() || cell.FocusWithin()) {
 			ui.Row(c).Absolute().Right(8).Top(0).Bottom(0).Gap(4).AlignItems(ui.Center).Children(it.Actions)
 		}
 	})
 	return clicked
+}
+
+// railRow narrows row toward a square centered in the rail, its lead centered in the square, as
+// k goes to 1. The sizes are those of the last frame, as the rows keep their height.
+func railRow(c *ui.Context, row, lead ui.Element, k, pad, rail, width float32) {
+	sq, glyph := row.LayoutBounds().H, lead.LayoutBounds().W
+	if sq <= 0 || glyph <= 0 || width <= 0 {
+		c.Invalidate()
+		return
+	}
+	if rail <= 0 {
+		rail = width
+	}
+	lerp := func(a, b float32) float32 { return a + (b-a)*k }
+	row.AlignSelf(ui.Start).Width(lerp(width, sq)).Gap(lerp(12, 0)).
+		Margin(0, 0, 0, lerp(0, (rail-sq)/2)).Padding(6, lerp(pad, 0), 6, lerp(pad, (sq-glyph)/2))
 }

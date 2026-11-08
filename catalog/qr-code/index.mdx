@@ -1,0 +1,25 @@
+---
+title: QRCode
+description: A QR code on a white card, with an optional logo over its middle and loading or expired states.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import status from './status.go?raw';
+
+`code.QRCode` encodes with rsc.io/qr. A logo raises the error level to H and leaves the modules under it out, so the code still reads.
+
+## Basic Usage
+
+<GoDemo name="qr-code/basic" title="Plain, with a logo, in colors" height={240} source={basic} />
+
+## Status
+
+<GoDemo name="qr-code/status" title="Loading and expired with Refresh" height={240} source={status} />
+
+## API
+
+<GoApi data={api} name="QRCodeProps" />

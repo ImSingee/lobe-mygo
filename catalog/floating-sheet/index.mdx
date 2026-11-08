@@ -1,0 +1,26 @@
+---
+title: FloatingSheet
+description: A bottom sheet inside its container that drags taller or shorter by its header, snaps to points, and drags down to close.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`feedback.FloatingSheet` sits along the bottom of its container while its `*bool` is true. Heights up to 1 are fractions of the container's height. Dragging the header resizes it between `MinHeight` and `MaxHeight`, or to the closest of its `SnapPoints`, where a quick flick goes to the next one; dragging it under `CloseThreshold` of the lowest closes it, unless `NoDismiss`.
+
+## Overlay
+
+<GoDemo name="floating-sheet/basic" title="Snap points" height={520} source={basic} />
+
+## Inline
+
+`Inline` puts the sheet in the container's flow, which keeps the room it rests at; dragged taller, it covers the content above. `Embedded` draws a border instead of a shadow.
+
+<GoDemo name="floating-sheet/inline" title="Inline and embedded" height={420} source={basic} />
+
+## API
+
+<GoApi data={api} name="FloatingSheetProps" />

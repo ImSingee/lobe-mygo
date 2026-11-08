@@ -175,7 +175,7 @@ func panelToggle(c *ui.Context, tk *theme.Tokens, root ui.Element, expanded *boo
 		b.Left(offset).TopPercent(50).TranslatePercent(0, -50).Size(16, 40)
 	}
 	shown := float32(0)
-	if !*expanded || root.Hovered() || b.Hovered() || b.Focused() {
+	if !*expanded || root.Hovered() || b.Hovered() || b.FocusVisible() {
 		shown = 1
 	}
 	b.Opacity(b.AnimateTo("shown", shown, seamFade))

@@ -1,0 +1,20 @@
+---
+title: FloatingPanel
+description: A panel floating at a corner of the window beside the page, for side conversations, task runs and inspectors, resizable from its free edges.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`feedback.FloatingPanel` shows while its `*bool` is true, `Offset` DIPs in from the `Placement` corner, 640 DIPs wide unless `Width` says otherwise and never more than the window less 32. The page behind it stays usable: a press on it, Escape or the close button closes the panel, unless `NoOutsideClose` or `NoKeyboard` say otherwise. The edges facing away from its corner resize it between `MinWidth`/`MinHeight` and `MaxWidth`/`MaxHeight`.
+
+## Basic Usage
+
+<GoDemo name="floating-panel/basic" title="Agent run beside a task" height={520} source={basic} />
+
+## API
+
+<GoApi data={api} name="FloatingPanelProps" />

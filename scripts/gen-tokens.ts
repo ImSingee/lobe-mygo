@@ -50,6 +50,8 @@ const PRESETS = ['red', 'volcano', 'orange', 'gold', 'yellow', 'lime', 'green', 
 
 const EXTRA_COLORS = new Set([
   'yellow9',
+  'geekblue8', 'geekblue9', 'gray7', 'gray9', 'gray10', 'gray11', 'magenta8', 'magenta9',
+  'orange9', 'purple8', 'purple9', 'volcano8', 'volcano9',
   ...PRESETS.flatMap((p) => [p, `${p}Active`, `${p}FillTertiary`, `${p}FillQuaternary`]),
 ]);
 

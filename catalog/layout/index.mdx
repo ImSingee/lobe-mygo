@@ -1,0 +1,20 @@
+---
+title: Layout
+description: A documentation page with a header over a resizable sidebar, the content and its table of contents, and a footer.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.Layout` holds the `Header` at the top. The `Sidebar` sits in a `DraggablePanel` and scrolls on its own; the content, the `Toc` and the `Footer` scroll under the header, the table of contents held at the top. `Mobile` leaves out the sidebar and moves the table of contents into the header.
+
+## Basic Usage
+
+<GoDemo name="layout/basic" title="Docs page" height={560} source={basic} />
+
+## API
+
+<GoApi data={api} name="LayoutProps" />
