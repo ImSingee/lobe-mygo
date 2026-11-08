@@ -1,0 +1,35 @@
+---
+title: Motion
+description: Lobe UI's motion tokens and presets for MyGo, springs set by damping and settle time, and the enter and exit transitions of popups, tooltips, modals, drawers, toasts and collapsing panels.
+category: Foundation
+---
+
+import { GoDemo } from '../../docs/components/GoDemo';
+import presets from './presets.go?raw';
+import springs from './springs.go?raw';
+
+Package `motion` turns Lobe UI's motion into MyGo animations: the curves and durations of its tokens, its three springs, and one `ui.ElementTransition` for every kind of surface that comes and goes. Components use these presets, so their motion matches lobe-ui's.
+
+## Springs
+
+Lobe UI's springs are described by their damping ratio and their settle time, so a spring paired with a duration settles in that time. `Smooth` (ζ 1.0) never overshoots, `Snappy` (ζ 0.8) overshoots 1.5% and `Bouncy` (ζ 0.7) 4.6%. `SwitchThumb` is the Switch thumb's spring.
+
+<GoDemo name="motion/springs" title="Springs over 600 ms" height={260} source={springs} />
+
+## Presets
+
+Each button toggles a surface with its preset: `Popup` (150 ms in, 75 ms out), `Tooltip` (a bouncy 280 ms in, 100 ms out), `Modal` with `Backdrop` (220 ms in, 120 ms out), `Drawer` (300 ms in, 220 ms out), `Toast` (400 ms) and `Collapse` (200 ms).
+
+<GoDemo name="motion/presets" title="Enter and exit presets" height={360} source={presets} />
+
+## Tokens
+
+| Go | lobe-ui token | Value |
+| --- | --- | --- |
+| `motion.Fast`, `Mid`, `Slow` | `motionDurationFast`, `Mid`, `Slow` | 100, 200, 300 ms |
+| `motion.SoftEase` | Modal / Drawer ease | `cubic-bezier(0.32, 0.72, 0, 1)` |
+| `motion.ExitEase` | Modal / Drawer exit | `cubic-bezier(0.4, 0, 1, 1)` |
+| `motion.EaseOut` | `motionEaseOut` | `cubic-bezier(0.215, 0.61, 0.355, 1)` |
+| `motion.EaseInOut` | `motionEaseInOut` | `cubic-bezier(0.645, 0.045, 0.355, 1)` |
+| `motion.EaseOutBack` | `motionEaseOutBack` | `cubic-bezier(0.12, 0.4, 0.29, 1.46)` |
+| `motion.Smooth(d)`, `Snappy(d)`, `Bouncy(d)` | `motionSpringSmooth`, `Snappy`, `Bouncy` | ζ 1.0, 0.8, 0.7 |

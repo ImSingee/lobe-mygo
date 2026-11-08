@@ -10,6 +10,7 @@ import (
 	_ "github.com/lobehub/lobe-mygo/catalog/action-icon"
 	_ "github.com/lobehub/lobe-mygo/catalog/button"
 	_ "github.com/lobehub/lobe-mygo/catalog/icon"
+	_ "github.com/lobehub/lobe-mygo/catalog/motion"
 	"github.com/lobehub/lobe-mygo/catalog/registry"
 	_ "github.com/lobehub/lobe-mygo/catalog/tag"
 	_ "github.com/lobehub/lobe-mygo/catalog/tokens"
