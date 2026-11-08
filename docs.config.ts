@@ -1,7 +1,7 @@
 export default {
   atomDirs: [{ dir: 'catalog' }],
   description: 'Lobe UI components for MyGo native UI, drawn on the GPU in Go and shown live here through WebAssembly.',
-  siteUrl: 'https://lobe-mygo.example.com',
+  siteUrl: 'https://mygo.lobehub.com',
   themeConfig: {
     apiHeader: {
       github: 'https://github.com/lobehub/lobe-mygo',
