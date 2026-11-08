@@ -41,6 +41,7 @@ import (
 	_ "github.com/lobehub/lobe-mygo/catalog/guide-card"
 	_ "github.com/lobehub/lobe-mygo/catalog/header"
 	_ "github.com/lobehub/lobe-mygo/catalog/highlighter"
+	_ "github.com/lobehub/lobe-mygo/catalog/home"
 	_ "github.com/lobehub/lobe-mygo/catalog/hotkey"
 	_ "github.com/lobehub/lobe-mygo/catalog/hotkey-input"
 	_ "github.com/lobehub/lobe-mygo/catalog/icon"

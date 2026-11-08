@@ -1,0 +1,20 @@
+[
+  {
+    "key": "button",
+    "label": "Button",
+    "code": "var (\n\tcount   int\n\tprimary = action.ButtonProps{Variant: action.Primary}\n)\n\nfunc Hello(c *ui.Context) {\n\ttheme.Apply(c)\n\tui.Column(c).Gap(12).Children(func() {\n\t\tif action.Button(c, \"Hello\", primary).Clicked() {\n\t\t\tcount++\n\t\t}\n\t\tui.Text(c, fmt.Sprintf(\"Clicked %d times\", count))\n\t})\n}",
+    "image": "snippet-button"
+  },
+  {
+    "key": "markdown",
+    "label": "Markdown",
+    "code": "func Reply(c *ui.Context) {\n\ttheme.Apply(c)\n\tmarkdown.Markdown(c, reply, markdown.MarkdownProps{\n\t\tVariant:  markdown.Chat,\n\t\tAnimated: streaming,\n\t})\n}",
+    "image": "snippet-markdown"
+  },
+  {
+    "key": "agents",
+    "label": "Agent avatar",
+    "code": "var states = []display.AgentState{\n\tdisplay.AgentIdle,\n\tdisplay.AgentThinking,\n\tdisplay.AgentDone,\n}\n\nfunc Agents(c *ui.Context) {\n\ttheme.Apply(c)\n\tui.Row(c).Gap(16).Children(func() {\n\t\tfor _, s := range states {\n\t\t\tp := display.AgentAvatarProps{State: s}\n\t\t\tdisplay.AgentAvatar(c.Key(s), p)\n\t\t}\n\t})\n}",
+    "image": "snippet-agents"
+  }
+]

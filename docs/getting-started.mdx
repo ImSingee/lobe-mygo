@@ -1,0 +1,73 @@
+---
+title: Getting Started
+description: Add Lobe MyGo to a Go module, open a window with a Lobe UI button, and find the components by package.
+---
+
+Lobe MyGo brings the [Lobe UI](https://ui.lobehub.com) design language to desktop apps built with [MyGo](https://github.com/egoist/mygo)'s native UI: no HTML, no JavaScript and no webview. Every component is drawn on the GPU in pure Go.
+
+## Install
+
+```bash
+go get github.com/lobehub/lobe-mygo
+```
+
+Lobe MyGo needs Go 1.27 or later.
+
+## Your first window
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/egoist/mygo"
+	"github.com/egoist/mygo/ui"
+	"github.com/lobehub/lobe-mygo/pkg/action"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
+)
+
+var count int
+
+func view(c *ui.Context) {
+	theme.Apply(c)
+	ui.Column(c).Fill().Center().Gap(12).Background(theme.TokensOf(c).BgContainer).Children(func() {
+		if action.Button(c, "Hello Lobe", action.ButtonProps{Variant: action.Primary}).Clicked() {
+			count++
+		}
+		ui.Text(c, fmt.Sprintf("Clicked %d times", count))
+	})
+}
+
+func main() {
+	mygo.App.WhenReady(func() {
+		mygo.NewWindow(mygo.WindowOptions{Title: "Hello Lobe", Width: 480, Height: 320, Content: ui.View(view)})
+	})
+	if err := mygo.App.Run(); err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
+The view is a function MyGo calls for every frame, and the state is your own variables. Call `theme.Apply(c)` at the top of each view: it picks the light or dark theme from the system, and `theme.TokensOf(c)` gives you the matching design tokens.
+
+## Packages
+
+| Package        | Components                                                                                                                              |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `pkg/action`   | Button, ActionIcon, ActionIconGroup, CopyButton, Segmented                                                                              |
+| `pkg/field`    | Input, TextArea, InputNumber, InputPassword, InputOTP, Select, AutoComplete, SearchBar, HotkeyInput, EditableText, DatePicker, Calendar, Upload |
+| `pkg/choice`   | Checkbox, RadioGroup, Switch, Slider, Rate, ToggleGroup, ColorSwatches, ColorPicker, ImageSelect                                        |
+| `pkg/display`  | Text, Tag, Avatar, GroupAvatar, AgentAvatar, Icon, Hotkey, Image, List, Accordion, Empty, Skeleton                                      |
+| `pkg/feedback` | Alert, Badge, Progress, Spin, Result, Modal, Drawer, Toast, FloatingPanel, FloatingSheet                                                |
+| `pkg/overlay`  | Tooltip, Popover, DropdownMenu, ContextMenu                                                                                             |
+| `pkg/nav`      | Tabs, Pagination, Breadcrumb, Steps, Burger                                                                                             |
+| `pkg/layout`   | Block, Grid, Divider, ScrollArea, DraggablePanel, Header, SideNav, DraggableSideNav, Layout, GuideCard, SortableList                    |
+| `pkg/code`     | Highlighter, Snippet, QRCode                                                                                                            |
+| `pkg/markdown` | Markdown, with streaming                                                                                                                |
+| `pkg/theme`    | Light and dark tokens, sizes, shadows                                                                                                   |
+| `pkg/motion`   | Springs, easings, transitions                                                                                                           |
+| `pkg/lucide`   | Lucide icons                                                                                                                            |
+
+Every component page in this site runs its demo live through WebAssembly, with the Go source one click away.
