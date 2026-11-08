@@ -15,9 +15,9 @@ func TestRevealFromPresetAndGranularity(t *testing.T) {
 		p    MarkdownProps
 		want mmd.Reveal
 	}{
-		{MarkdownProps{}, mmd.Reveal{Unit: mmd.ByCharacter, CatchUp: 120 * time.Millisecond, Fade: 180 * time.Millisecond}},
-		{MarkdownProps{Smoothing: Realtime}, mmd.Reveal{Unit: mmd.ByCharacter, CatchUp: 40 * time.Millisecond, Fade: 180 * time.Millisecond}},
-		{MarkdownProps{Smoothing: Silky, Granularity: ByWord}, mmd.Reveal{Unit: mmd.ByWord, CatchUp: 170 * time.Millisecond, Fade: 180 * time.Millisecond}},
+		{MarkdownProps{}, mmd.Reveal{Unit: mmd.ByCharacter, CatchUp: 120 * time.Millisecond, Fade: 300 * time.Millisecond}},
+		{MarkdownProps{Smoothing: Realtime}, mmd.Reveal{Unit: mmd.ByCharacter, CatchUp: 40 * time.Millisecond, Fade: 300 * time.Millisecond}},
+		{MarkdownProps{Smoothing: Silky, Granularity: ByWord}, mmd.Reveal{Unit: mmd.ByWord, CatchUp: 170 * time.Millisecond, Fade: 300 * time.Millisecond}},
 	}
 	for _, k := range cases {
 		if got := revealFor(k.p); got != k.want {

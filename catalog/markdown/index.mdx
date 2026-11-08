@@ -30,9 +30,9 @@ import stream from './stream.go?raw';
 
 ## Streaming
 
-`Animated` shows a reply still being written through mygo's `Stream`: text comes in at an even pace, a character at a time (`Granularity: ByWord` for words), each fading in over 180 ms, and what is half written shows as it will most likely end. `Smoothing` picks how far behind the source it may fall: `Realtime` 40 ms, `Balanced` 120 ms, `Silky` 170 ms. Clear `Animated` once the reply is complete, and show what follows it once `Revealed` reports it all shown.
+`Animated` shows a reply still being written through mygo's `Stream`: text comes in at an even pace, a character at a time (`Granularity: ByWord` for words), each fading in over 300 ms, and what is half written shows as it will most likely end. `Smoothing` picks how far behind the source it may fall: `Realtime` 40 ms, `Balanced` 120 ms, `Silky` 170 ms. Clear `Animated` once the reply is complete, and show what follows it once `Revealed` reports it all shown.
 
-<GoDemo name="markdown/stream" title="A streaming reply" height={640} scrollable source={stream} />
+<GoDemo name="markdown/stream" title="A streaming reply" height={640} source={stream} />
 
 ## API
 

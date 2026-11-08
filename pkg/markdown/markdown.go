@@ -182,7 +182,7 @@ func Markdown(c *ui.Context, src string, p MarkdownProps) ui.Element {
 func Revealed(el ui.Element) bool { return mmd.Revealed(el) }
 
 func revealFor(p MarkdownProps) mmd.Reveal {
-	r := mmd.Reveal{Unit: mmd.ByCharacter, CatchUp: 120 * time.Millisecond, Fade: 180 * time.Millisecond}
+	r := mmd.Reveal{Unit: mmd.ByCharacter, CatchUp: 120 * time.Millisecond, Fade: 300 * time.Millisecond}
 	switch p.Smoothing {
 	case Realtime:
 		r.CatchUp = 40 * time.Millisecond
