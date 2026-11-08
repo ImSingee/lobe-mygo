@@ -1,0 +1,7 @@
+node_modules/
+.ryugi/
+public/mygo/
+catalog/*/api.json
+.react-router/
+dist/
+react-router.config.mjs

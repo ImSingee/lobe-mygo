@@ -1,0 +1,34 @@
+---
+title: Button
+description: A push button in the Lobe UI look, built on MyGo's ButtonBase, with six variants and three sizes.
+category: General
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import sizes from './sizes.go?raw';
+import variants from './variants.go?raw';
+
+`lobe.Button` draws a button with the Lobe UI look and returns MyGo's `ui.Element`, so `Clicked()`, `Disabled()` and any style call keep working after it.
+
+## Basic Usage
+
+<GoDemo name="button/basic" title="Basic usage" height={160} source={basic} />
+
+## Variants
+
+`Primary` marks the main action. `Default` and `Dashed` sit on the container with a border, `Filled` uses a neutral fill, and `Text` and `Link` carry no surface until hovered.
+
+<GoDemo name="button/variants" title="Variants" height={120} source={variants} />
+
+## Sizes
+
+`Small`, `Middle` and `Large` are 24, 32 and 40 DIPs tall.
+
+<GoDemo name="button/sizes" title="Sizes" height={200} source={sizes} />
+
+## API
+
+<GoApi data={api} name="ButtonProps" />

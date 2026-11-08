@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Lobe MyGo preview</title>
+    <style>
+      :root { color-scheme: light dark; }
+      html, body { margin: 0; height: 100%; background: transparent; }
+      body {
+        display: flex; align-items: center; justify-content: center;
+        font: 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        color: #8e8e93;
+      }
+      .spinner {
+        width: 18px; height: 18px; border-radius: 50%;
+        border: 1.5px solid currentColor; border-top-color: transparent;
+        animation: spin 0.6s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .error { max-width: 80%; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div class="spinner" role="progressbar" aria-label="Loading the preview"></div>
+    <script>
+      // A frame's prefers-color-scheme follows the browser, not the docs page, so the page's
+      // data-theme (docs-kit) is mirrored into data-mygo-theme, which MyGo follows live.
+      try {
+        const page = parent !== window && parent.document.documentElement
+        if (page) {
+          const sync = () => (document.documentElement.dataset.mygoTheme = page.dataset.theme === "dark" ? "dark" : "light")
+          sync()
+          new MutationObserver(sync).observe(page, { attributes: true, attributeFilter: ["data-theme"] })
+        }
+      } catch {}
+    </script>
+    <script src="/mygo/wasm_exec.js"></script>
+    <script>
+      const wasm = __WASM__
+      const dev = __DEV__
+      const params = new URLSearchParams(location.search)
+      const demo = params.get("demo") || ""
+      if (params.get("scroll") !== "1") {
+        // MyGo's canvas cancels every wheel event, which traps the docs page's scrolling over
+        // demos with nothing to scroll; stopping it before the canvas lets the browser chain the
+        // scroll to the page.
+        addEventListener("wheel", (e) => e.stopImmediatePropagation(), { capture: true, passive: true })
+      }
+      const go = new Go()
+      go.argv = ["catalog", demo]
+      const showError = (text) => {
+        const p = document.createElement("p")
+        p.className = "error"
+        p.textContent = text
+        document.body.replaceChildren(p)
+      }
+      WebAssembly.instantiateStreaming(fetch("/mygo/" + wasm, dev ? { cache: "no-store" } : {}), go.importObject)
+        .then((r) => go.run(r.instance))
+        .then(() => showError(`The demo "${demo}" stopped. The browser console has the reason.`))
+        .catch((e) => showError("The preview did not load: " + e))
+    </script>
+  </body>
+</html>

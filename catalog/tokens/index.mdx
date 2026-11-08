@@ -1,0 +1,14 @@
+---
+title: Tokens
+description: The Lobe UI color tokens generated into Go, drawn by MyGo in the current theme.
+category: Foundation
+---
+
+import { GoDemo } from '../../docs/components/GoDemo';
+import swatches from './swatches.go?raw';
+
+`scripts/gen-tokens.ts` generates `tokens_gen.go` from `@lobehub/ui`. `lobe.TokensOf(c)` returns the light or dark set the window uses, and `Color(name)` looks one up by name.
+
+## Semantic Colors
+
+<GoDemo name="tokens/swatches" title="Semantic colors" height={640} scrollable source={swatches} />
