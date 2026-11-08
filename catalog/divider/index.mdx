@@ -1,0 +1,27 @@
+---
+title: Divider
+description: A thin separator line in the Lobe UI look, horizontal or vertical, solid or dashed, with an optional centered label.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import vertical from './vertical.go?raw';
+
+`layout.Divider` draws a one-DIP line in `BorderSecondary` across its column. `Dashed` breaks it into dashes and `Label` centers a caption on it.
+
+## Basic Usage
+
+<GoDemo name="divider/basic" title="Basic usage" height={240} source={basic} />
+
+## Vertical
+
+`Vertical` draws a line one font size tall between the items of a row.
+
+<GoDemo name="divider/vertical" title="Vertical" height={120} source={vertical} />
+
+## API
+
+<GoApi data={api} name="DividerProps" />

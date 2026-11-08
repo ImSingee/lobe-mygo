@@ -71,3 +71,12 @@ func TestThemeMapsLobeTokensOntoMygoTheme(t *testing.T) {
 		}
 	}
 }
+
+func TestThemeScrollbarUsesQuaternaryText(t *testing.T) {
+	for _, tk := range []*Tokens{Light(), Dark()} {
+		th := tk.Theme()
+		if th.Scrollbar != tk.TextQuaternary || th.ScrollbarWidth != 6 {
+			t.Errorf("dark %v: scrollbar %+v width %v, want TextQuaternary %+v at 6", tk.Dark, th.Scrollbar, th.ScrollbarWidth, tk.TextQuaternary)
+		}
+	}
+}

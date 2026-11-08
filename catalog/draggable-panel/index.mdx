@@ -1,0 +1,27 @@
+---
+title: DraggablePanel
+description: A panel at an edge of its container that resizes by dragging its seam and collapses with a button on it or by dragging it small.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import placement from './placement.go?raw';
+
+`layout.DraggablePanel` keeps its size in a `*float32` and its state in a `*bool`. The seam lights up as the pointer nears it and turns primary while dragging; the button on it collapses the panel, whose content slides out at its own width rather than squeezing.
+
+## Basic Usage
+
+<GoDemo name="draggable-panel/basic" title="Basic usage" height={320} source={basic} />
+
+## Placement and Collapse
+
+`Placement` picks the edge. With `CollapseThreshold`, dragging the panel that small collapses it, and it reopens at the size it had before the drag.
+
+<GoDemo name="draggable-panel/placement" title="Left with drag to collapse" height={320} source={placement} />
+
+## API
+
+<GoApi data={api} name="DraggablePanelProps" />

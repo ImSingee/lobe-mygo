@@ -1,0 +1,20 @@
+---
+title: Grid
+description: A responsive grid that fits as many equal columns as its width allows, each at least a set width, up to a column cap.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.Grid` lays its children out in equal columns: as many as fit at `MaxItemWidth` or wider, up to `MaxColumns`, and at least one. Resize the window to watch it drop columns.
+
+## Basic Usage
+
+<GoDemo name="grid/basic" title="Basic usage" height={300} source={basic} />
+
+## API
+
+<GoApi data={api} name="GridProps" />

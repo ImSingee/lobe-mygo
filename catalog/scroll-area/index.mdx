@@ -1,0 +1,25 @@
+---
+title: ScrollArea
+description: A scroll container with Lobe UI's thin scroll bars and edges that fade where there is more to scroll to.
+category: Layout
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import horizontal from './horizontal.go?raw';
+
+`layout.ScrollArea` scrolls the content you pass it. Its thumbs sit 3 DIPs in from the edges, 3 DIPs thin and 6 under the pointer; they show at once while the content scrolls, stay half a second after, fade in while the pointer is over the area, and scroll the content as they are dragged. `Fade` fades the content over 40 DIPs toward each edge it can still scroll toward, and drops the fade at an edge it has reached.
+
+## Basic Usage
+
+<GoDemo name="scroll-area/basic" title="Basic usage" height={300} source={basic} scrollable />
+
+## Horizontal
+
+<GoDemo name="scroll-area/horizontal" title="Horizontal" height={120} source={horizontal} scrollable />
+
+## API
+
+<GoApi data={api} name="ScrollAreaProps" />

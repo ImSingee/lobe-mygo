@@ -55,6 +55,8 @@ func (t *Tokens) Theme() *ui.Theme {
 		Focus:           t.Info.Alpha(0.9),
 		FocusRingWidth:  2,
 		FocusRingOffset: 2,
+		Scrollbar:       t.TextQuaternary,
+		ScrollbarWidth:  6,
 		Radius:          t.BorderRadius,
 		Spacing:         4,
 		FontSize:        t.FontSize,

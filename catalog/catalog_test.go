@@ -123,3 +123,11 @@ func TestOverlayDemosOpen(t *testing.T) {
 		}
 	}
 }
+
+func TestLayoutDemosRegistered(t *testing.T) {
+	for _, demo := range []string{"divider/basic", "divider/vertical", "grid/basic", "scroll-area/basic", "scroll-area/horizontal", "draggable-panel/basic", "draggable-panel/placement"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}
