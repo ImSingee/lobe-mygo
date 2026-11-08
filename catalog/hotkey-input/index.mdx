@@ -1,0 +1,20 @@
+---
+title: HotkeyInput
+description: A field that records a keyboard shortcut, refusing combinations without a modifier and shortcuts taken elsewhere.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`field.HotkeyInput` records the keys pressed while it has the focus, written as `display.Hotkey` takes them. A shortcut needs a modifier and one other key; one listed in `Conflicts` is refused. While not focused, buttons reset the shortcut to `ResetValue` and clear it.
+
+## Basic Usage
+
+<GoDemo name="hotkey-input/basic" title="Shortcuts" height={220} source={basic} />
+
+## API
+
+<GoApi data={api} name="HotkeyInputProps" />

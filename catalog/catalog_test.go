@@ -230,3 +230,11 @@ func TestDataEntryBatchTwoDemos(t *testing.T) {
 		t.Error("editable-text/basic: no field after clicking Edit")
 	}
 }
+
+func TestDataEntryBatchThreeDemos(t *testing.T) {
+	for _, demo := range []string{"auto-complete/basic", "hotkey-input/basic", "color-swatches/basic", "input-otp/basic", "color-picker/basic", "color-picker/triggers"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}

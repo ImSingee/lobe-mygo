@@ -1,0 +1,22 @@
+---
+title: AutoComplete
+description: An Input that suggests options below it as the user types, matching what was typed, with an empty state.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`field.AutoComplete` shows the options whose value or label holds what was typed; clicking the field or Down shows them all. The arrows move among them and Enter or a click writes the one chosen into the field.
+
+## Basic Usage
+
+<GoDemo name="auto-complete/basic" title="Model" height={340} source={basic} />
+
+## API
+
+<GoApi data={api} name="AutoCompleteProps" />
+
+<GoApi data={api} name="AutoCompleteOption" />

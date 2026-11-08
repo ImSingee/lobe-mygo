@@ -225,3 +225,48 @@ func parseHotkey(keys string, apple bool) (ui.Modifiers, ui.Key, bool) {
 	}
 	return mods, key, found
 }
+
+// FormatHotkey writes a key pressed with mods, as an InputEvent reports them, the way Hotkey and
+// HotkeyBinding take keys ("mod+shift+k"). It reports false for a key it cannot name, as a
+// modifier pressed alone.
+func FormatHotkey(mods ui.Modifiers, key ui.Key, platform HotkeyPlatform) (string, bool) {
+	return formatHotkey(swapCmd(mods, browserOnMac()), key, platform == HotkeyApple || platform == HotkeyAuto && isApple())
+}
+
+func formatHotkey(mods ui.Modifiers, key ui.Key, apple bool) (string, bool) {
+	var name string
+	switch {
+	case key >= ui.KeyA && key <= ui.KeyA+25:
+		name = string(rune('a' + key - ui.KeyA))
+	case key >= ui.Key0 && key <= ui.Key0+9:
+		name = string(rune('0' + key - ui.Key0))
+	default:
+		for n, k := range namedKeys {
+			if k == key && n != "esc" {
+				name = n
+			}
+		}
+	}
+	if name == "" {
+		return "", false
+	}
+	var parts []string
+	cmd, other := ui.Ctrl, ui.Super
+	otherName := "meta"
+	if apple {
+		cmd, other, otherName = ui.Super, ui.Ctrl, "ctrl"
+	}
+	if mods&cmd != 0 {
+		parts = append(parts, "mod")
+	}
+	if mods&other != 0 {
+		parts = append(parts, otherName)
+	}
+	if mods&ui.Alt != 0 {
+		parts = append(parts, "alt")
+	}
+	if mods&ui.Shift != 0 {
+		parts = append(parts, "shift")
+	}
+	return strings.Join(append(parts, name), "+"), true
+}

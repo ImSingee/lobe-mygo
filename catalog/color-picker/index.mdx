@@ -1,0 +1,27 @@
+---
+title: ColorPicker
+description: A color picker in a popover, with a saturation area, hue and alpha sliders, a hex field, presets, and three triggers.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import triggers from './triggers.go?raw';
+
+`choice.ColorPicker` opens its panel below the trigger. The value changes as the controls move; the top half of the compare tile shows the color the picker opened with, and clicking it brings that color back. `Alpha` adds an opacity slider and a percent field.
+
+## Basic Usage
+
+<GoDemo name="color-picker/basic" title="Presets and alpha" height={480} source={basic} />
+
+## Triggers
+
+`ColorTriggerField` shows the hex value like an Input; `ColorTriggerChip` is a round chip for toolbars.
+
+<GoDemo name="color-picker/triggers" title="Field and chip" height={480} source={triggers} />
+
+## API
+
+<GoApi data={api} name="ColorPickerProps" />

@@ -1,0 +1,22 @@
+---
+title: ColorSwatches
+description: A row of color swatches choosing one color, round or square, with a check on the chosen one and a tooltip for each.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`choice.ColorSwatches` chooses one of its colors; a fully transparent color shows a checkerboard. The arrows move among the swatches. `EnableColorPicker` adds a button opening a `ColorPicker` for a color of one's own, which then shows as a swatch after the divider.
+
+## Basic Usage
+
+<GoDemo name="color-swatches/basic" title="Round and square" height={500} source={basic} />
+
+## API
+
+<GoApi data={api} name="ColorSwatchesProps" />
+
+<GoApi data={api} name="ColorSwatch" />

@@ -1,0 +1,20 @@
+---
+title: InputOTP
+description: A one-time code field in a row of cells, one character each, that runs a callback once the code is complete.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`field.InputOTP` takes digits, or letters too with `Alphanumeric`, one per cell; the next cell to fill shows the focus. `OnComplete` runs once every cell holds a character.
+
+## Basic Usage
+
+<GoDemo name="input-otp/basic" title="Verification code" height={200} source={basic} />
+
+## API
+
+<GoApi data={api} name="InputOTPProps" />

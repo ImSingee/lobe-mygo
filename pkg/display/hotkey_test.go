@@ -85,3 +85,31 @@ func TestBrowserOnMacSwapsCommandAndControl(t *testing.T) {
 		t.Errorf("native: %v changed", got)
 	}
 }
+
+func TestFormatHotkey(t *testing.T) {
+	for _, c := range []struct {
+		mods  ui.Modifiers
+		key   ui.Key
+		apple bool
+		want  string
+	}{
+		{ui.Super | ui.Shift, ui.KeyK, true, "mod+shift+k"},
+		{ui.Ctrl, ui.KeyK, false, "mod+k"},
+		{ui.Ctrl | ui.Alt, ui.KeyEnter, true, "ctrl+alt+enter"},
+		{ui.Super, ui.Key1, false, "meta+1"},
+		{0, ui.KeyF5, false, "f5"},
+	} {
+		if got, ok := formatHotkey(c.mods, c.key, c.apple); !ok || got != c.want {
+			t.Errorf("%v %v apple %v: %q %v, want %q", c.mods, c.key, c.apple, got, ok, c.want)
+		}
+		if got, ok := formatHotkey(c.mods, c.key, c.apple); ok {
+			mods, key, _ := parseHotkey(got, c.apple)
+			if mods != c.mods || key != c.key {
+				t.Errorf("%q parses back to %v %v", got, mods, key)
+			}
+		}
+	}
+	if _, ok := formatHotkey(ui.Ctrl, ui.KeyUnknown, false); ok {
+		t.Error("a modifier alone formatted")
+	}
+}
