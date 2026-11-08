@@ -114,3 +114,15 @@ func TestActionIconClicks(t *testing.T) {
 		t.Error("Clicked() did not report the click")
 	}
 }
+
+func TestActionIconTitleShowsTheLobeTooltip(t *testing.T) {
+	tk := theme.Light()
+	tt := ui.NewTester(testkit.Centered(func(c *ui.Context) {
+		ActionIcon(c, solidGlyph, ActionIconProps{Title: "Copy"})
+	}), 300, 200)
+	tt.Move(150, 100)
+	tt.Advance(time.Second)
+	if got := testkit.PixelAt(tt, 300, 150, 100-18-6-1.5); !testkit.Near(got, tk.BgElevated) {
+		t.Errorf("tooltip surface above the icon %+v, want BgElevated %+v", got, tk.BgElevated)
+	}
+}

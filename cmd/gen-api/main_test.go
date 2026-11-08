@@ -201,3 +201,30 @@ func TestExtractListsStructsOfPropsFieldsOnTheSamePage(t *testing.T) {
 		t.Error("an enum type is listed as a struct")
 	}
 }
+
+func TestPageDirFallsBackToTheNearestPage(t *testing.T) {
+	out := t.TempDir()
+	for _, d := range []string{"toast", "dropdown-menu"} {
+		if err := os.MkdirAll(filepath.Join(out, d), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for page, want := range map[string]string{
+		"toast":              "toast",
+		"toast-host":         "toast",
+		"dropdown-menu":      "dropdown-menu",
+		"dropdown-menu-item": "dropdown-menu",
+		"slider":             "",
+	} {
+		got, ok := pageDir(out, page)
+		if want == "" {
+			if ok {
+				t.Errorf("%s: found %q, want none", page, got)
+			}
+			continue
+		}
+		if !ok || got != filepath.Join(out, want) {
+			t.Errorf("%s: %q (found %v), want %q", page, got, ok, want)
+		}
+	}
+}

@@ -1,0 +1,32 @@
+---
+title: Alert
+description: A message banner in the Lobe UI look, tinted by its type, with an optional description and close button.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import description from './description.go?raw';
+import variants from './variants.go?raw';
+
+`feedback.Alert` shows a message with the icon and color of its `Type`. The soft surface mixes 5% of that color into the container, with a 14% ring.
+
+## Basic Usage
+
+<GoDemo name="alert/basic" title="Types" height={320} source={basic} />
+
+## Variants
+
+<GoDemo name="alert/variants" title="Variants" height={220} source={variants} />
+
+## Description and Close
+
+A `Description` makes the alert roomier and its icon larger. `Closed` adds a close button that sets it, and the alert collapses away.
+
+<GoDemo name="alert/description" title="Description and close" height={180} source={description} />
+
+## API
+
+<GoApi data={api} name="AlertProps" />

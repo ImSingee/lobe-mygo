@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
-	"github.com/lobehub/lobe-mygo/pkg/action"
 	"github.com/lobehub/lobe-mygo/pkg/internal/testkit"
 	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
@@ -22,7 +21,7 @@ func menuTester(open *bool, chosen *[]string) *ui.Tester {
 	return ui.NewTester(testkit.Centered(func(c *ui.Context) {
 		ui.Column(c).Fill().Children(func() {
 			key := DropdownMenu(c, open, DropdownMenuProps{Items: menuItems}, func(t ui.Element) {
-				action.StyleButton(c, t, "Actions", action.ButtonProps{})
+				t.Padding(6, 12).Children(func() { ui.Text(c, "Actions") })
 			})
 			if key != "" {
 				*chosen = append(*chosen, key)

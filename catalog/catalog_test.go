@@ -131,3 +131,31 @@ func TestLayoutDemosRegistered(t *testing.T) {
 		}
 	}
 }
+
+func TestFeedbackDemos(t *testing.T) {
+	for _, demo := range []string{"alert/basic", "alert/variants", "alert/description", "drawer/basic", "drawer/placement", "toast/basic", "toast/action"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+	for _, c := range []struct{ demo, trigger, shows string }{
+		{"drawer/basic", "Open drawer", "Notification settings"},
+		{"toast/basic", "Success", "Changes saved"},
+	} {
+		view, ok := registry.Get(c.demo)
+		if !ok {
+			continue
+		}
+		tt := ui.NewTester(func(ctx *ui.Context) { preview(ctx, view) }, 720, 400)
+		r, ok := tt.Find(c.trigger)
+		if !ok {
+			t.Errorf("%s: no %q; texts %q", c.demo, c.trigger, tt.Texts())
+			continue
+		}
+		tt.ClickAt(r.X+r.W/2, r.Y+r.H/2)
+		tt.Advance(time.Second)
+		if !tt.HasText(c.shows) {
+			t.Errorf("%s: %q not shown after clicking %q", c.demo, c.shows, c.trigger)
+		}
+	}
+}

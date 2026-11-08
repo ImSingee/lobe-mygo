@@ -2,6 +2,7 @@ package action
 
 import (
 	"github.com/egoist/mygo/ui"
+	"github.com/lobehub/lobe-mygo/pkg/overlay"
 	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
 
@@ -40,7 +41,8 @@ func StyleActionIcon(c *ui.Context, b ui.Element, svg *ui.SVG, p ActionIconProps
 	b.Size(box, box).Radius(radius).
 		Cursor(ui.CursorPointer).Transition(buttonTransition)
 	if p.Title != "" {
-		b.Label(p.Title).Tooltip(p.Title)
+		b.Label(p.Title)
+		overlay.Tooltip(c, b, p.Title, overlay.TooltipProps{})
 	}
 
 	state := stateOf(b)

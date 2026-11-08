@@ -1,0 +1,29 @@
+---
+title: Toast
+description: Brief notifications in the Lobe UI look that stack in a corner, peek behind the newest, and spread out under the pointer.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import action from './action.go?raw';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`feedback.ShowToast` adds a toast and `feedback.ToastHost`, called once in the view, shows them. The newest stands in front with older ones peeking 12 DIPs behind it, each 5% smaller; resting the pointer on them spreads them out and pauses their time.
+
+## Basic Usage
+
+<GoDemo name="toast/basic" title="Types" height={420} source={basic} />
+
+## Action
+
+An `Action` button runs `OnAction` and closes the toast, as Undo.
+
+<GoDemo name="toast/action" title="Undo action" height={320} source={action} />
+
+## API
+
+<GoApi data={api} name="ToastProps" />
+
+<GoApi data={api} name="ToastHostProps" />

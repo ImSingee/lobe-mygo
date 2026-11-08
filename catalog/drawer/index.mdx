@@ -1,0 +1,25 @@
+---
+title: Drawer
+description: A panel in the Lobe UI look that slides in from an edge of the window over a dimmed backdrop, with a header, body and footer.
+category: Feedback
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import placement from './placement.go?raw';
+
+`feedback.Drawer` slides its panel in on `motion.Drawer` while a `*bool` is true, and keeps the focus inside it. The close button, Escape and a click on the backdrop close it; it slides back out before it goes.
+
+## Basic Usage
+
+<GoDemo name="drawer/basic" title="Basic usage" height={420} source={basic} />
+
+## Placement
+
+<GoDemo name="drawer/placement" title="Placement" height={420} source={placement} />
+
+## API
+
+<GoApi data={api} name="DrawerProps" />

@@ -11,6 +11,7 @@ import (
 	"go/token"
 	"go/types"
 	"log"
+	"maps"
 	"os"
 	"path"
 	"path/filepath"
@@ -59,18 +60,41 @@ func main() {
 		}
 		pages[s.Page][name] = s
 	}
+	merged := map[string]map[string]apiStruct{}
 	for page, structs := range pages {
-		pageDir := filepath.Join(*out, page)
-		if _, err := os.Stat(pageDir); err != nil {
+		dir, ok := pageDir(*out, page)
+		if !ok {
 			continue
 		}
+		if merged[dir] == nil {
+			merged[dir] = map[string]apiStruct{}
+		}
+		maps.Copy(merged[dir], structs)
+	}
+	for dir, structs := range merged {
 		data, err := json.MarshalIndent(structs, "", "  ")
 		if err != nil {
 			log.Fatal(err)
 		}
-		if err := writeIfChanged(filepath.Join(pageDir, "api.json"), append(data, '\n')); err != nil {
+		if err := writeIfChanged(filepath.Join(dir, "api.json"), append(data, '\n')); err != nil {
 			log.Fatal(err)
 		}
+	}
+}
+
+// pageDir finds the catalog page a struct's page name belongs to: the page itself, or the nearest
+// shorter one, as toast for ToastHostProps.
+func pageDir(out, page string) (string, bool) {
+	for {
+		dir := filepath.Join(out, page)
+		if info, err := os.Stat(dir); err == nil && info.IsDir() {
+			return dir, true
+		}
+		i := strings.LastIndexByte(page, '-')
+		if i < 0 {
+			return "", false
+		}
+		page = page[:i]
 	}
 }
 

@@ -1,4 +1,4 @@
-package overlay
+package feedback
 
 import (
 	"testing"
@@ -250,4 +250,12 @@ func TestModalOpenedByAClickScalesIn(t *testing.T) {
 	if start := leftInk(tt, 800, title); start-rest < 3 {
 		t.Errorf("title ink at x %v 30 ms after the click, rest %v: want the panel scaled toward its center", start, rest)
 	}
+}
+
+func clickText(t *testing.T, tt *ui.Tester, s string) {
+	t.Helper()
+	if err := tt.Click(s); err != nil {
+		t.Fatal(err)
+	}
+	tt.Advance(time.Second)
 }
