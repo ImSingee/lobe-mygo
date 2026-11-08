@@ -59,9 +59,11 @@ func stepStatus(i, current int, it StepItem) StepStatus {
 // after the steps finished.
 func Steps(c *ui.Context, p StepsProps) ui.Element {
 	tk := theme.TokensOf(c)
-	root := ui.Row(c).Gap(8).AlignItems(ui.Center).AlignSelf(ui.Stretch)
+	var root ui.Element
 	if p.Vertical {
 		root = ui.Column(c).AlignSelf(ui.Stretch)
+	} else {
+		root = ui.Row(c).Gap(8).AlignItems(ui.Center).AlignSelf(ui.Stretch)
 	}
 	root.Children(func() {
 		for i, it := range p.Items {

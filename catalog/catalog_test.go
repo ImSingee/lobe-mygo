@@ -262,3 +262,11 @@ func TestNavigationDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestGeneralBatchDemos(t *testing.T) {
+	for _, demo := range []string{"text/basic", "text/headings", "text/ellipsis", "block/basic", "list/basic", "list/variants", "action-icon-group/basic"} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+}

@@ -1,0 +1,30 @@
+---
+title: Text
+description: Text in the Lobe UI type styles, with status colors, headings, marks, an ellipsis after a number of lines and a shiny sweep for pending states.
+category: Typography
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import ellipsis from './ellipsis.go?raw';
+import headings from './headings.go?raw';
+
+`display.Text` returns the text element, so the caller can still set anything mygo's `ui.Text` takes.
+
+## Basic Usage
+
+<GoDemo name="text/basic" title="Types and styles" height={300} source={basic} />
+
+## Headings
+
+<GoDemo name="text/headings" title="h1 to h5" height={280} source={headings} />
+
+## Ellipsis
+
+<GoDemo name="text/ellipsis" title="One and two rows" height={140} source={ellipsis} />
+
+## API
+
+<GoApi data={api} name="TextProps" />

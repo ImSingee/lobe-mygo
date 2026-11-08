@@ -57,9 +57,11 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(i int)) ui.Eleme
 		height, padding, fontSize = 36, 16, 14
 	}
 
-	root := ui.Column(c).AlignSelf(ui.Stretch)
+	var root ui.Element
 	if p.Vertical {
 		root = ui.Row(c).AlignSelf(ui.Stretch).AlignItems(ui.Start)
+	} else {
+		root = ui.Column(c).AlignSelf(ui.Stretch)
 	}
 	slide := ui.ElementTransition{Duration: tabSlide, Ease: motion.EaseOut, Match: tabsMatch{selected}}
 	root.Children(func() {

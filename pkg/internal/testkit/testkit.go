@@ -34,3 +34,26 @@ func Centered(view func(c *ui.Context)) func(c *ui.Context) {
 		ui.Column(c).Fill().Center().Padding(20).Children(func() { view(c) })
 	}
 }
+
+func Ink(tt *ui.Tester, width int, r ui.Rect, bg ui.Color) ui.Color {
+	img := tt.Image()
+	scale := float32(img.Bounds().Dx()) / float32(width)
+	best, far := bg, -1
+	for y := int(r.Y * scale); y < int((r.Y+r.H)*scale); y++ {
+		for x := int(r.X * scale); x < int((r.X+r.W)*scale); x++ {
+			px := img.RGBAAt(x, y)
+			d := absDiff(px.R, bg.R) + absDiff(px.G, bg.G) + absDiff(px.B, bg.B)
+			if d > far {
+				best, far = ui.RGB(px.R, px.G, px.B), d
+			}
+		}
+	}
+	return best
+}
+
+func absDiff(a, b uint8) int {
+	if a > b {
+		return int(a - b)
+	}
+	return int(b - a)
+}

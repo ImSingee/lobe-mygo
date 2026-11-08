@@ -1,0 +1,22 @@
+---
+title: ActionIconGroup
+description: A row of icon buttons on one surface, as the actions under a chat message, with an optional More menu.
+category: General
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`action.ActionIconGroup` returns the `Key` of the icon or menu item clicked in the frame. Each icon shows its `Label` as a tooltip.
+
+## Basic Usage
+
+<GoDemo name="action-icon-group/basic" title="Filled, outlined, borderless and vertical" height={260} source={basic} />
+
+## API
+
+<GoApi data={api} name="ActionIconGroupProps" />
+
+<GoApi data={api} name="ActionGroupItem" />

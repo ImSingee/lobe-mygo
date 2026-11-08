@@ -50,3 +50,24 @@ func TestStepsVertical(t *testing.T) {
 		t.Errorf("vertical: account %v profile %v desc %v", a, p, d)
 	}
 }
+
+func TestVerticalNavLeavesNoStrayElement(t *testing.T) {
+	sel := 0
+	tt := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		ui.Row(c).Gap(16).Children(func() {
+			Steps(c, StepsProps{Vertical: true, Items: []StepItem{{Title: "One"}}})
+			Tabs(c, &sel, TabsProps{Vertical: true, Items: []TabItem{{Label: "Tab"}}}, nil)
+			ui.Box(c).Size(10, 10).Label("End")
+		})
+	}, 400, 100)
+	one, _ := tt.Find("One")
+	tab := tabBox(t, tt, "Tab")
+	end, _ := tt.Find("End")
+	if gap := tab.X - 3 - (one.X + one.W); gap > 16.5 {
+		t.Errorf("%v DIPs between the steps and the tabs, want one 16 DIP gap", gap)
+	}
+	if gap := end.X - (tab.X + tab.W + 3); gap > 16.5 {
+		t.Errorf("%v DIPs between the tabs and the next element, want one 16 DIP gap", gap)
+	}
+}

@@ -1,0 +1,20 @@
+---
+title: Block
+description: A rounded surface in the filled, outlined or borderless Lobe UI look, optionally clickable with a hover state and a soft shadow.
+category: General
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`layout.Block` returns a column; a clickable one is a button, so ask it whether it was `Clicked`.
+
+## Basic Usage
+
+<GoDemo name="block/basic" title="Variants" height={300} source={basic} />
+
+## API
+
+<GoApi data={api} name="BlockProps" />

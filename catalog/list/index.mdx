@@ -1,0 +1,27 @@
+---
+title: List
+description: Rows for navigation and settings with an icon or avatar, a label, a description, extra text and actions that show on hover.
+category: Navigation
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`display.List` returns the `Key` of the row clicked in the frame; keep the chosen one and pass it back as `Active`.
+
+## Basic Usage
+
+<GoDemo name="list/basic" title="Avatars and hover actions" height={220} source={basic} />
+
+## Variants
+
+<GoDemo name="list/variants" title="Filled and outlined compact" height={260} source={variants} />
+
+## API
+
+<GoApi data={api} name="ListProps" />
+
+<GoApi data={api} name="ListItem" />
