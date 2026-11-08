@@ -2,21 +2,22 @@ package button
 
 import (
 	"fmt"
+	"github.com/lobehub/lobe-mygo/pkg/action"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
 )
 
 var saved int
 
 func Basic(c *ui.Context) {
 	ui.Row(c).Gap(8).Children(func() {
-		if lobe.Button(c, "Reset", lobe.ButtonProps{}).Clicked() {
+		if action.Button(c, "Reset", action.ButtonProps{}).Clicked() {
 			saved = 0
 		}
-		if lobe.Button(c, "Save", lobe.ButtonProps{Variant: lobe.Primary}).Clicked() {
+		if action.Button(c, "Save", action.ButtonProps{Variant: action.Primary}).Clicked() {
 			saved++
 		}
 	})
-	ui.Text(c, fmt.Sprintf("Saved %d times", saved)).TextColor(lobe.TokensOf(c).TextSecondary)
+	ui.Text(c, fmt.Sprintf("Saved %d times", saved)).TextColor(theme.TokensOf(c).TextSecondary)
 }

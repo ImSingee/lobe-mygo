@@ -1,0 +1,27 @@
+---
+title: Segmented
+description: Segments choosing one of a few options in the Lobe UI look, whose indicator slides to the chosen one.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`action.Segmented` chooses an index into its options. The indicator is a shared element that slides from the old choice to the new one over 240 ms.
+
+## Basic Usage
+
+<GoDemo name="segmented/basic" title="Basic usage" height={100} source={basic} />
+
+## Variants and Sizes
+
+Outlined, small, large and block.
+
+<GoDemo name="segmented/variants" title="Variants and sizes" height={250} source={variants} />
+
+## API
+
+<GoApi data={api} name="SegmentedProps" />

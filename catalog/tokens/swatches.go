@@ -2,18 +2,18 @@ package tokens
 
 import (
 	"fmt"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 	"strconv"
 	"strings"
 
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
 )
 
 var groups = []string{"Text", "Bg", "Fill", "Border", "Primary", "Error", "Warning", "Success", "Info"}
 
 func Swatches(c *ui.Context) {
-	tk := lobe.TokensOf(c)
-	names := lobe.ColorTokenNames()
+	tk := theme.TokensOf(c)
+	names := theme.ColorTokenNames()
 	ui.Scroll(c).AlignSelf(ui.Stretch).Grow(1).Children(func() {
 		ui.Column(c).Gap(24).Padding(4).Children(func() {
 			for _, group := range groups {
@@ -33,7 +33,7 @@ func Swatches(c *ui.Context) {
 	})
 }
 
-func swatch(c *ui.Context, tk *lobe.Tokens, name string, color ui.Color) {
+func swatch(c *ui.Context, tk *theme.Tokens, name string, color ui.Color) {
 	ui.Row(c.Key(name)).Width(216).Gap(10).Children(func() {
 		ui.Box(c).Size(36, 36).Radius(tk.BorderRadiusSM).Background(color).Border(1, tk.FillBorder())
 		ui.Column(c).Gap(2).Children(func() {

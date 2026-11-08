@@ -31,11 +31,22 @@ type apiStruct struct {
 }
 
 func main() {
-	dir := flag.String("dir", ".", "package directory to read")
 	out := flag.String("out", "catalog", "catalog directory to write <page>/api.json into")
 	flag.Parse()
+	dirs := flag.Args()
+	if len(dirs) == 0 {
+		found, err := filepath.Glob("pkg/*")
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, d := range found {
+			if info, err := os.Stat(d); err == nil && info.IsDir() && filepath.Base(d) != "internal" {
+				dirs = append(dirs, d)
+			}
+		}
+	}
 
-	api, err := extract(*dir)
+	api, err := extract(dirs...)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -79,7 +90,70 @@ func pageOf(structName string) string {
 	return b.String()
 }
 
-func extract(dir string) (map[string]apiStruct, error) {
+type parsedPackage struct {
+	name       string
+	underlying map[string]string
+	props      []*ast.TypeSpec
+	values     map[string][]string
+	zero       map[string]string
+}
+
+func extract(dirs ...string) (map[string]apiStruct, error) {
+	var pkgs []*parsedPackage
+	byName := map[string]*parsedPackage{}
+	for _, dir := range dirs {
+		pkg, err := parseDir(dir)
+		if err != nil {
+			return nil, err
+		}
+		if pkg != nil {
+			pkgs = append(pkgs, pkg)
+			byName[pkg.name] = pkg
+		}
+	}
+
+	api := map[string]apiStruct{}
+	for _, pkg := range pkgs {
+		for _, ts := range pkg.props {
+			var s apiStruct
+			for _, f := range ts.Type.(*ast.StructType).Fields.List {
+				typ := types.ExprString(f.Type)
+				owner, local := pkg, typ
+				if before, after, ok := strings.Cut(typ, "."); ok && byName[before] != nil {
+					owner, local = byName[before], after
+				}
+				shown := typ
+				if _, declared := owner.underlying[local]; declared && owner == pkg {
+					shown = pkg.name + "." + typ
+				}
+				for _, name := range f.Names {
+					if !name.IsExported() {
+						continue
+					}
+					s.Fields = append(s.Fields, apiField{
+						Name:    name.Name,
+						Type:    shown,
+						Default: owner.defaultOf(local),
+						Doc:     strings.TrimSpace(f.Doc.Text()),
+						Values:  owner.qualified(local),
+					})
+				}
+			}
+			api[ts.Name.Name] = s
+		}
+	}
+	return api, nil
+}
+
+func (p *parsedPackage) qualified(typ string) []string {
+	var out []string
+	for _, v := range p.values[typ] {
+		out = append(out, p.name+"."+v)
+	}
+	return out
+}
+
+func parseDir(dir string) (*parsedPackage, error) {
 	files, err := filepath.Glob(filepath.Join(dir, "*.go"))
 	if err != nil {
 		return nil, err
@@ -87,10 +161,8 @@ func extract(dir string) (map[string]apiStruct, error) {
 	slices.Sort(files)
 
 	fset := token.NewFileSet()
-	underlying := map[string]string{}
+	pkg := &parsedPackage{underlying: map[string]string{}}
 	var parsed []*ast.File
-	var props []*ast.TypeSpec
-
 	for _, file := range files {
 		if strings.HasSuffix(file, "_test.go") {
 			continue
@@ -100,6 +172,7 @@ func extract(dir string) (map[string]apiStruct, error) {
 			return nil, err
 		}
 		parsed = append(parsed, f)
+		pkg.name = f.Name.Name
 		for _, decl := range f.Decls {
 			gen, ok := decl.(*ast.GenDecl)
 			if !ok || gen.Tok != token.TYPE {
@@ -107,39 +180,18 @@ func extract(dir string) (map[string]apiStruct, error) {
 			}
 			for _, spec := range gen.Specs {
 				ts := spec.(*ast.TypeSpec)
-				underlying[ts.Name.Name] = types.ExprString(ts.Type)
+				pkg.underlying[ts.Name.Name] = types.ExprString(ts.Type)
 				if _, isStruct := ts.Type.(*ast.StructType); isStruct && ts.Name.IsExported() && strings.HasSuffix(ts.Name.Name, "Props") {
-					props = append(props, ts)
+					pkg.props = append(pkg.props, ts)
 				}
 			}
 		}
 	}
 	if len(parsed) == 0 {
-		return map[string]apiStruct{}, nil
+		return nil, nil
 	}
-	enums, zero := collectEnums(fset, parsed)
-
-	api := map[string]apiStruct{}
-	for _, ts := range props {
-		var s apiStruct
-		for _, f := range ts.Type.(*ast.StructType).Fields.List {
-			typ := types.ExprString(f.Type)
-			for _, name := range f.Names {
-				if !name.IsExported() {
-					continue
-				}
-				s.Fields = append(s.Fields, apiField{
-					Name:    name.Name,
-					Type:    typ,
-					Default: defaultOf(typ, underlying, zero),
-					Doc:     strings.TrimSpace(f.Doc.Text()),
-					Values:  enums[typ],
-				})
-			}
-		}
-		api[ts.Name.Name] = s
-	}
-	return api, nil
+	pkg.values, pkg.zero = collectEnums(fset, parsed)
+	return pkg, nil
 }
 
 type stubImporter struct{}
@@ -193,12 +245,12 @@ func collectEnums(fset *token.FileSet, files []*ast.File) (values map[string][]s
 	return values, zero
 }
 
-func defaultOf(typ string, underlying map[string]string, zero map[string]string) string {
-	if name, ok := zero[typ]; ok {
-		return name
+func (p *parsedPackage) defaultOf(typ string) string {
+	if name, ok := p.zero[typ]; ok {
+		return p.name + "." + name
 	}
 	for seen := 0; seen < 8; seen++ {
-		next, ok := underlying[typ]
+		next, ok := p.underlying[typ]
 		if !ok {
 			break
 		}

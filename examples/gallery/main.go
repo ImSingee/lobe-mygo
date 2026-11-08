@@ -2,38 +2,39 @@ package main
 
 import (
 	"flag"
+	"github.com/lobehub/lobe-mygo/pkg/action"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 	"image/png"
 	"log"
 	"os"
 
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
 )
 
 var variants = []struct {
 	name    string
-	variant lobe.ButtonVariant
+	variant action.ButtonVariant
 }{
-	{"Default", lobe.Default},
-	{"Primary", lobe.Primary},
-	{"Dashed", lobe.Dashed},
-	{"Filled", lobe.Filled},
-	{"Text", lobe.Text},
-	{"Link", lobe.Link},
+	{"Default", action.Default},
+	{"Primary", action.Primary},
+	{"Dashed", action.Dashed},
+	{"Filled", action.Filled},
+	{"Text", action.Text},
+	{"Link", action.Link},
 }
 
-var sizes = []lobe.Size{lobe.Small, lobe.Middle, lobe.Large}
+var sizes = []theme.Size{theme.Small, theme.Middle, theme.Large}
 
 func view(c *ui.Context) {
-	lobe.Apply(c)
+	theme.Apply(c)
 	ui.Row(c).Fill().AlignItems(ui.Stretch).Children(func() {
-		for _, tk := range []*lobe.Tokens{lobe.Light(), lobe.Dark()} {
+		for _, tk := range []*theme.Tokens{theme.Light(), theme.Dark()} {
 			ui.Themed(c, tk.Theme()).Grow(1).Padding(24).Gap(16).Children(func() {
 				for _, size := range sizes {
 					ui.Row(c).Gap(8).Children(func() {
 						for _, v := range variants {
-							lobe.Button(c, v.name, lobe.ButtonProps{Variant: v.variant, Size: size})
+							action.Button(c, v.name, action.ButtonProps{Variant: v.variant, Size: size})
 						}
 					})
 				}

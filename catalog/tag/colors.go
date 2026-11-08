@@ -2,26 +2,26 @@ package tag
 
 import (
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
+	"github.com/lobehub/lobe-mygo/pkg/display"
 )
 
-var presets = []lobe.TagColor{
-	lobe.TagRed, lobe.TagVolcano, lobe.TagOrange, lobe.TagGold, lobe.TagYellow, lobe.TagLime, lobe.TagGreen,
-	lobe.TagCyan, lobe.TagBlue, lobe.TagGeekblue, lobe.TagPurple, lobe.TagMagenta, lobe.TagGray,
+var presets = []display.TagColor{
+	display.TagRed, display.TagVolcano, display.TagOrange, display.TagGold, display.TagYellow, display.TagLime, display.TagGreen,
+	display.TagCyan, display.TagBlue, display.TagGeekblue, display.TagPurple, display.TagMagenta, display.TagGray,
 }
 
-var statuses = []lobe.TagColor{lobe.TagSuccess, lobe.TagProcessing, lobe.TagWarning, lobe.TagError}
+var statuses = []display.TagColor{display.TagSuccess, display.TagProcessing, display.TagWarning, display.TagError}
 
 func Colors(c *ui.Context) {
 	ui.Row(c).Wrap().Gap(8).Justify(ui.Center).Children(func() {
 		for _, color := range presets {
-			lobe.Tag(c, string(color), lobe.TagProps{Color: color})
+			display.Tag(c, string(color), display.TagProps{Color: color})
 		}
 	})
 	ui.Row(c).Gap(8).Children(func() {
 		for _, color := range statuses {
-			lobe.Tag(c, string(color), lobe.TagProps{Color: color})
+			display.Tag(c, string(color), display.TagProps{Color: color})
 		}
-		lobe.Tag(c, "#7c3aed", lobe.TagProps{Color: lobe.TagColor("#7c3aed")})
+		display.Tag(c, "#7c3aed", display.TagProps{Color: display.TagColor("#7c3aed")})
 	})
 }

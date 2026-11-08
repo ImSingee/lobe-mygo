@@ -2,15 +2,16 @@ package button
 
 import (
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
+	"github.com/lobehub/lobe-mygo/pkg/action"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
 
 func Sizes(c *ui.Context) {
-	for _, size := range []lobe.Size{lobe.Small, lobe.Middle, lobe.Large} {
+	for _, size := range []theme.Size{theme.Small, theme.Middle, theme.Large} {
 		ui.Row(c).Gap(8).Children(func() {
-			lobe.Button(c, "Primary", lobe.ButtonProps{Variant: lobe.Primary, Size: size})
-			lobe.Button(c, "Default", lobe.ButtonProps{Size: size})
-			lobe.Button(c, "Filled", lobe.ButtonProps{Variant: lobe.Filled, Size: size})
+			action.Button(c, "Primary", action.ButtonProps{Variant: action.Primary, Size: size})
+			action.Button(c, "Default", action.ButtonProps{Size: size})
+			action.Button(c, "Filled", action.ButtonProps{Variant: action.Filled, Size: size})
 		})
 	}
 }

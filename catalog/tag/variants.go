@@ -2,23 +2,23 @@ package tag
 
 import (
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
+	"github.com/lobehub/lobe-mygo/pkg/display"
 )
 
 func Variants(c *ui.Context) {
 	variants := []struct {
 		name    string
-		variant lobe.TagVariant
+		variant display.TagVariant
 	}{
-		{"Filled", lobe.TagFilled},
-		{"Outlined", lobe.TagOutlined},
-		{"Borderless", lobe.TagBorderless},
-		{"Solid", lobe.TagSolid},
+		{"Filled", display.TagFilled},
+		{"Outlined", display.TagOutlined},
+		{"Borderless", display.TagBorderless},
+		{"Solid", display.TagSolid},
 	}
-	for _, color := range []lobe.TagColor{"", lobe.TagBlue, lobe.TagError} {
+	for _, color := range []display.TagColor{"", display.TagBlue, display.TagError} {
 		ui.Row(c).Gap(8).Children(func() {
 			for _, v := range variants {
-				lobe.Tag(c, v.name, lobe.TagProps{Variant: v.variant, Color: color})
+				display.Tag(c, v.name, display.TagProps{Variant: v.variant, Color: color})
 			}
 		})
 	}

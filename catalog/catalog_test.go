@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -9,7 +10,6 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
 	"github.com/lobehub/lobe-mygo/catalog/registry"
 )
 
@@ -40,7 +40,7 @@ func TestPreviewPaintsContainerSurface(t *testing.T) {
 	img := tt.Image()
 	scale := img.Bounds().Dx() / 320
 	px := img.RGBAAt(4*scale, 4*scale)
-	if got, want := ui.RGB(px.R, px.G, px.B), lobe.Light().BgContainer; got != want {
+	if got, want := ui.RGB(px.R, px.G, px.B), theme.Light().BgContainer; got != want {
 		t.Errorf("corner = %+v, want BgContainer %+v", got, want)
 	}
 }

@@ -1,17 +1,18 @@
 package motion
 
 import (
+	"github.com/lobehub/lobe-mygo/pkg/action"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 	"time"
 
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
-	"github.com/lobehub/lobe-mygo/motion"
+	"github.com/lobehub/lobe-mygo/pkg/motion"
 )
 
 var played bool
 
 func Springs(c *ui.Context) {
-	tk := lobe.TokensOf(c)
+	tk := theme.TokensOf(c)
 	springs := []struct {
 		name string
 		anim ui.Animation
@@ -37,7 +38,7 @@ func Springs(c *ui.Context) {
 			})
 		}
 	})
-	if lobe.Button(c, "Play", lobe.ButtonProps{Variant: lobe.Primary}).Clicked() {
+	if action.Button(c, "Play", action.ButtonProps{Variant: action.Primary}).Clicked() {
 		played = !played
 	}
 }

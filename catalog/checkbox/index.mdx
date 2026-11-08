@@ -1,0 +1,32 @@
+---
+title: Checkbox
+description: A check box in the Lobe UI look, square or round, with an indeterminate state for a box over a group.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import group from './group.go?raw';
+import shapes from './shapes.go?raw';
+
+`choice.Checkbox` toggles a `*bool`; a click on its label toggles it too, and `Changed()` reports it.
+
+## Basic Usage
+
+<GoDemo name="checkbox/basic" title="Basic usage" height={100} source={basic} />
+
+## Group
+
+The box over the group is indeterminate while some fruits are checked.
+
+<GoDemo name="checkbox/group" title="Check all" height={130} source={group} />
+
+## Shapes and Sizes
+
+<GoDemo name="checkbox/shapes" title="Shapes and sizes" height={100} source={shapes} />
+
+## API
+
+<GoApi data={api} name="CheckboxProps" />

@@ -19,7 +19,7 @@ func field(t *testing.T, s apiStruct, name string) apiField {
 }
 
 func TestExtractButtonProps(t *testing.T) {
-	api, err := extract("../..")
+	api, err := extract("../../pkg/action", "../../pkg/theme")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,14 +28,18 @@ func TestExtractButtonProps(t *testing.T) {
 		t.Fatalf("no ButtonProps in %v", api)
 	}
 	v := field(t, props, "Variant")
-	if v.Type != "ButtonVariant" || v.Default != "Default" || v.Doc == "" {
+	if v.Type != "action.ButtonVariant" || v.Default != "action.Default" || v.Doc == "" {
 		t.Errorf("Variant = %+v", v)
 	}
-	if want := []string{"Default", "Primary", "Dashed", "Filled", "Text", "Link"}; !slices.Equal(v.Values, want) {
+	if want := []string{"action.Default", "action.Primary", "action.Dashed", "action.Filled", "action.Text", "action.Link"}; !slices.Equal(v.Values, want) {
 		t.Errorf("Variant values = %v, want %v", v.Values, want)
 	}
-	if s := field(t, props, "Size"); s.Default != "Middle" || s.Doc == "" {
+	s := field(t, props, "Size")
+	if s.Type != "theme.Size" || s.Default != "theme.Middle" || s.Doc == "" {
 		t.Errorf("Size = %+v", s)
+	}
+	if want := []string{"theme.Middle", "theme.Small", "theme.Large"}; !slices.Equal(s.Values, want) {
+		t.Errorf("Size values = %v, want %v", s.Values, want)
 	}
 }
 
@@ -69,7 +73,7 @@ type CardProps struct {
 		t.Fatal(err)
 	}
 	card := api["CardProps"]
-	if tone := field(t, card, "Tone"); !slices.Equal(tone.Values, []string{"ToneSoft", "ToneLoud"}) || tone.Default != "ToneSoft" || tone.Doc != "Tone colors the card." {
+	if tone := field(t, card, "Tone"); !slices.Equal(tone.Values, []string{"demo.ToneSoft", "demo.ToneLoud"}) || tone.Default != "demo.ToneSoft" || tone.Doc != "Tone colors the card." {
 		t.Errorf("Tone = %+v", tone)
 	}
 	if count := field(t, card, "Count"); count.Values != nil || count.Default != "0" {
@@ -140,10 +144,10 @@ type PanelProps struct {
 	if f := field(t, panel, "Fade"); f.Values != nil {
 		t.Errorf("Fade = %+v, want no values", f)
 	}
-	if tone := field(t, panel, "Tone"); !slices.Equal(tone.Values, []string{"ToneLoud", "ToneSoft"}) || tone.Default != "0" {
-		t.Errorf("Tone = %+v, want values [ToneLoud ToneSoft] and default 0", tone)
+	if tone := field(t, panel, "Tone"); !slices.Equal(tone.Values, []string{"demo.ToneLoud", "demo.ToneSoft"}) || tone.Default != "0" {
+		t.Errorf("Tone = %+v, want qualified values and default 0", tone)
 	}
-	if mode := field(t, panel, "Mode"); !slices.Equal(mode.Values, []string{"ModeNone", "ModeAuto"}) || mode.Default != "ModeNone" {
-		t.Errorf("Mode = %+v, want values [ModeNone ModeAuto] and default ModeNone", mode)
+	if mode := field(t, panel, "Mode"); !slices.Equal(mode.Values, []string{"demo.ModeNone", "demo.ModeAuto"}) || mode.Default != "demo.ModeNone" {
+		t.Errorf("Mode = %+v, want qualified values and default demo.ModeNone", mode)
 	}
 }

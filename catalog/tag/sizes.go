@@ -2,15 +2,16 @@ package tag
 
 import (
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
+	"github.com/lobehub/lobe-mygo/pkg/display"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
 
 func Sizes(c *ui.Context) {
 	for _, round := range []bool{false, true} {
 		ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
-			lobe.Tag(c, "Small", lobe.TagProps{Size: lobe.Small, Round: round, Color: lobe.TagGeekblue})
-			lobe.Tag(c, "Middle", lobe.TagProps{Size: lobe.Middle, Round: round, Color: lobe.TagGeekblue})
-			lobe.Tag(c, "Large", lobe.TagProps{Size: lobe.Large, Round: round, Color: lobe.TagGeekblue})
+			display.Tag(c, "Small", display.TagProps{Size: theme.Small, Round: round, Color: display.TagGeekblue})
+			display.Tag(c, "Middle", display.TagProps{Size: theme.Middle, Round: round, Color: display.TagGeekblue})
+			display.Tag(c, "Large", display.TagProps{Size: theme.Large, Round: round, Color: display.TagGeekblue})
 		})
 	}
 }

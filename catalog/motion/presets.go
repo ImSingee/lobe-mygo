@@ -2,21 +2,22 @@ package motion
 
 import (
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
-	"github.com/lobehub/lobe-mygo/motion"
+	"github.com/lobehub/lobe-mygo/pkg/action"
+	"github.com/lobehub/lobe-mygo/pkg/motion"
+	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
 
 var shown = map[string]bool{}
 
 func Presets(c *ui.Context) {
-	tk := lobe.TokensOf(c)
+	tk := theme.TokensOf(c)
 	ui.Row(c).Gap(8).Wrap().Justify(ui.Center).Children(func() {
 		for _, name := range []string{"Popup", "Tooltip", "Modal", "Drawer", "Toast", "Collapse"} {
-			variant := lobe.Default
+			variant := action.Default
 			if shown[name] {
-				variant = lobe.Primary
+				variant = action.Primary
 			}
-			if lobe.Button(c.Key(name), name, lobe.ButtonProps{Variant: variant, Size: lobe.Small}).Clicked() {
+			if action.Button(c.Key(name), name, action.ButtonProps{Variant: variant, Size: theme.Small}).Clicked() {
 				shown[name] = !shown[name]
 			}
 		}
@@ -58,7 +59,7 @@ func Presets(c *ui.Context) {
 	})
 }
 
-func card(c *ui.Context, tk *lobe.Tokens, key, title string) ui.Element {
+func card(c *ui.Context, tk *theme.Tokens, key, title string) ui.Element {
 	return ui.Column(c).Key(key).Padding(12).Gap(4).Radius(tk.BorderRadius).
 		Background(tk.BgElevated).Border(1, tk.FillBorder()).
 		Shadow(0, 6, 16, 0, ui.RGBA(0, 0, 0, 0.12)).

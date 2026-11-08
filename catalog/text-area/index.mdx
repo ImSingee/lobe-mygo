@@ -1,0 +1,20 @@
+---
+title: TextArea
+description: A multi-line text input in the Lobe UI look that grows with its text between a minimum and a maximum number of lines.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`field.TextArea` edits a `*string` over several lines, with the variants of `field.Input`. It grows with its text from `MinRows` to `MaxRows`, past which it scrolls.
+
+## Basic Usage
+
+<GoDemo name="text-area/basic" title="Basic usage" height={260} source={basic} />
+
+## API
+
+<GoApi data={api} name="TextAreaProps" />

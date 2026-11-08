@@ -2,13 +2,13 @@ package icon
 
 import (
 	"github.com/egoist/mygo/ui"
-	lobe "github.com/lobehub/lobe-mygo"
-	"github.com/lobehub/lobe-mygo/lucide"
+	"github.com/lobehub/lobe-mygo/pkg/display"
+	"github.com/lobehub/lobe-mygo/pkg/lucide"
 )
 
 func Spin(c *ui.Context) {
 	ui.Row(c).Gap(16).Children(func() {
-		lobe.Icon(c, lucide.LoaderCircle(), lobe.IconProps{Size: lobe.IconLarge, Spin: true})
-		lobe.Icon(c, lucide.RefreshCw(), lobe.IconProps{Size: lobe.IconLarge, Spin: true})
+		display.Icon(c, lucide.LoaderCircle(), display.IconProps{Size: display.IconLarge, Spin: true})
+		display.Icon(c, lucide.RefreshCw(), display.IconProps{Size: display.IconLarge, Spin: true})
 	})
 }

@@ -1,0 +1,32 @@
+---
+title: Input
+description: A one-line text input in the Lobe UI look, outlined, filled or borderless, with icons before and after the text and an invalid state.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import sizes from './sizes.go?raw';
+import variants from './variants.go?raw';
+
+`field.Input` edits a `*string` and returns the text input itself, so `Changed()`, `Submitted()` and `Focus()` work on it. It stretches across its parent, as Lobe UI's input does.
+
+## Basic Usage
+
+The email field turns invalid while what is typed has no `@`.
+
+<GoDemo name="input/basic" title="Basic usage" height={150} source={basic} />
+
+## Variants
+
+<GoDemo name="input/variants" title="Variants" height={190} source={variants} />
+
+## Sizes
+
+<GoDemo name="input/sizes" title="Sizes" height={190} source={sizes} />
+
+## API
+
+<GoApi data={api} name="InputProps" />

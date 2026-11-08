@@ -1,0 +1,20 @@
+---
+title: Switch
+description: A switch in the Lobe UI look whose thumb moves on Lobe UI's spring and stretches while pressed.
+category: Data Entry
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+
+`choice.Switch` turns a `*bool` on and off. Give it a `Label` when no text names it. Press and hold to see the thumb stretch; it moves on `motion.SwitchThumb`.
+
+## Basic Usage
+
+<GoDemo name="switch/basic" title="Basic usage" height={160} source={basic} />
+
+## API
+
+<GoApi data={api} name="SwitchProps" />
