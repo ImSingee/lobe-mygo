@@ -3,6 +3,9 @@ export default {
   homePage: './docs/home/home.tsx',
   publicDocs: ['docs/getting-started.mdx'],
   description: 'Lobe UI components for MyGo desktop apps, drawn on the GPU in pure Go.',
+  favicons: {
+    icon: '/favicon.svg',
+  },
   siteUrl: 'https://mygo.lobehub.com',
   themeConfig: {
     apiHeader: {
