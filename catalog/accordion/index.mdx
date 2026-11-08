@@ -1,0 +1,29 @@
+---
+title: Accordion
+description: Sections that open and close below their headers, borderless, filled or outlined, with an arrow before or after the title.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`display.Accordion` keeps which sections are open in a map from their keys. The panel grows open while its content fades in and rises 6 DIPs; Up, Down, Home and End move the focus between headers.
+
+## Basic Usage
+
+`Single` keeps one section open at a time.
+
+<GoDemo name="accordion/basic" title="FAQ" height={260} source={basic} />
+
+## Variants
+
+<GoDemo name="accordion/variants" title="Variants" height={560} source={variants} />
+
+## API
+
+<GoApi data={api} name="AccordionProps" />
+
+<GoApi data={api} name="AccordionItem" />

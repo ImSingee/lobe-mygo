@@ -1,0 +1,29 @@
+---
+title: Skeleton
+description: Placeholder blocks for loading content, as single blocks, avatars and lines of text, that pulse or sweep.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import animation from './animation.go?raw';
+import basic from './basic.go?raw';
+
+`display.Skeleton` is one block; `SkeletonText` is lines as tall as text, the last of several 66% wide; `SkeletonAvatar` is an avatar's shape.
+
+## Basic Usage
+
+<GoDemo name="skeleton/basic" title="Card" height={160} source={basic} />
+
+## Animation
+
+Fade pulses the opacity every 1.6 seconds, Sweep runs a highlight across every 1.4 seconds, Static keeps still.
+
+<GoDemo name="skeleton/animation" title="Animation" height={280} source={animation} />
+
+## API
+
+<GoApi data={api} name="SkeletonProps" />
+
+<GoApi data={api} name="SkeletonTextProps" />

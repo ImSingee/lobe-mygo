@@ -159,3 +159,27 @@ func TestFeedbackDemos(t *testing.T) {
 		}
 	}
 }
+
+func TestDataDisplayDemos(t *testing.T) {
+	for _, demo := range []string{
+		"hotkey/basic", "hotkey/variants", "avatar/basic", "avatar/fallback", "avatar/sizes",
+		"skeleton/basic", "skeleton/animation", "empty/basic", "empty/page",
+		"accordion/basic", "accordion/variants",
+	} {
+		if _, ok := registry.Get(demo); !ok {
+			t.Errorf("%s not registered", demo)
+		}
+	}
+	view, ok := registry.Get("accordion/basic")
+	if !ok {
+		return
+	}
+	tt := ui.NewTester(func(ctx *ui.Context) { preview(ctx, view) }, 720, 400)
+	if err := tt.Click("What is Lobe UI?"); err != nil {
+		t.Fatalf("accordion/basic: %v; texts %q", err, tt.Texts())
+	}
+	tt.Advance(time.Second)
+	if !tt.HasText("Lobe UI is an open-source component library for AI apps.") {
+		t.Errorf("accordion/basic: answer not shown after clicking the question; texts %q", tt.Texts())
+	}
+}

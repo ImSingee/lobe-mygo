@@ -1,0 +1,27 @@
+---
+title: Hotkey
+description: A keyboard shortcut drawn as key caps, named for Apple devices with ⌘ ⌥ ⇧ glyphs and for others with Ctrl, Alt and Shift.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import variants from './variants.go?raw';
+
+`display.Hotkey` takes keys joined by `+`, such as `mod+shift+k`. `mod` is Command on Apple devices and Ctrl elsewhere; `Platform` picks the naming, or asks the device when left at `HotkeyAuto`.
+
+## Basic Usage
+
+<GoDemo name="hotkey/basic" title="Apple and other platforms" height={140} source={basic} />
+
+## Variants
+
+`Compact` puts every key in one cap, as tooltips show them. `Borderless` shows the keys as text.
+
+<GoDemo name="hotkey/variants" title="Variants" height={180} source={variants} />
+
+## API
+
+<GoApi data={api} name="HotkeyProps" />

@@ -49,18 +49,21 @@ func TestTooltipShowsOnTheSideAsked(t *testing.T) {
 
 func TestTooltipUsesElevatedSurfaceAndHotkey(t *testing.T) {
 	tk := theme.Light()
-	tt := tooltipTester("Search", TooltipProps{Hotkey: "⌘K"})
+	tt := tooltipTester("Search", TooltipProps{Hotkey: "mod+k"})
 	hoverAnchor(tt)
 	text, ok := tt.Find("Search")
 	if !ok {
 		t.Fatal("no tip text")
 	}
-	key, ok := tt.Find("⌘K")
+	key, ok := tt.Find("K")
 	if !ok {
-		t.Fatal("no hotkey in the tip")
+		t.Fatalf("no hotkey in the tip: %q", tt.Texts())
 	}
 	if key.X <= text.X+text.W || key.Y > text.Y+text.H || key.Y+key.H < text.Y {
 		t.Errorf("hotkey at %+v, want after the text %+v on its line", key, text)
+	}
+	if got := testkit.PixelAt(tt, 400, key.X+key.W+3, key.Y+key.H/2); !testkit.Near(got, testkit.Over(tk.BgElevated, tk.FillTertiary)) {
+		t.Errorf("hotkey cap %+v, want FillTertiary on the tip", got)
 	}
 	if got := testkit.PixelAt(tt, 400, text.X-4, text.Y+text.H/2); !testkit.Near(got, tk.BgElevated) {
 		t.Errorf("tip padding = %+v, want BgElevated %+v", got, tk.BgElevated)

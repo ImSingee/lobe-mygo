@@ -1,0 +1,34 @@
+---
+title: Avatar
+description: A user or agent avatar in the Lobe UI look, showing an image, an emoji, letters, or marbled colors seeded by the name.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import fallback from './fallback.go?raw';
+import sizes from './sizes.go?raw';
+
+`display.Avatar` draws a name as marbled colors by default: the same name always gets the same colors, in light and dark.
+
+## Basic Usage
+
+<GoDemo name="avatar/basic" title="Marble" height={120} source={basic} />
+
+## Text and Emoji
+
+`AvatarText` shows the first two letters on the border color, or on `Background` in the color that reads on it. An emoji shows as is.
+
+<GoDemo name="avatar/fallback" title="Text and emoji" height={120} source={fallback} />
+
+## Sizes and Shapes
+
+Square corners round by a sixth of the size; `AvatarCircle` makes it round.
+
+<GoDemo name="avatar/sizes" title="Sizes and shapes" height={200} source={sizes} />
+
+## API
+
+<GoApi data={api} name="AvatarProps" />

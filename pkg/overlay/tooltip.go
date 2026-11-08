@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/lobehub/lobe-mygo/pkg/display"
 	"github.com/lobehub/lobe-mygo/pkg/motion"
 	"github.com/lobehub/lobe-mygo/pkg/theme"
 )
@@ -21,7 +22,7 @@ func tipTransition(p Placement) ui.ElementTransition {
 type TooltipProps struct {
 	// Placement is the side of the anchor the tip shows on.
 	Placement Placement
-	// Hotkey shows a key combination after the text, as "⌘K".
+	// Hotkey shows a key combination after the text, written as display.Hotkey takes it, as "mod+k".
 	Hotkey string
 }
 
@@ -43,7 +44,7 @@ func Tooltip(c *ui.Context, anchor ui.Element, text string, p TooltipProps) ui.E
 			ui.Row(c.Key(text)).Gap(6).Transition(tipContentTransition).Children(func() {
 				ui.Text(c, text)
 				if p.Hotkey != "" {
-					ui.Text(c, p.Hotkey).TextColor(tk.TextTertiary).SingleLine()
+					display.Hotkey(c, p.Hotkey, display.HotkeyProps{Compact: true})
 				}
 			})
 		})

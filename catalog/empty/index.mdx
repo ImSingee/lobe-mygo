@@ -1,0 +1,27 @@
+---
+title: Empty
+description: A placeholder for a list or page with nothing in it yet, with an icon, title, description and actions.
+category: Data Display
+---
+
+import { GoApi } from '../../docs/components/GoApi';
+import { GoDemo } from '../../docs/components/GoDemo';
+import api from './api.json';
+import basic from './basic.go?raw';
+import page from './page.go?raw';
+
+`display.Empty` centers its icon and text in the place of the missing content.
+
+## Basic Usage
+
+<GoDemo name="empty/basic" title="Empty list" height={240} source={basic} />
+
+## Page
+
+`Page` lays it out for a whole page: the icon beside larger text, aligned to the start.
+
+<GoDemo name="empty/page" title="Empty page" height={200} source={page} />
+
+## API
+
+<GoApi data={api} name="EmptyProps" />
